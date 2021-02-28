@@ -4,9 +4,13 @@ Team Members: Megan Lu, Esha Lakhotia, Suyash Kothari, Anika Bahl
 Team Strengths and Weaknesses: 
 
 Suyash - has done some web scraping before. Not great at front-end handlers and design 
+
 Esha - has done basic front end working with widgets, etc; not too familiar with backend databases, etc
+
 Megan - has art/graphics experience that could be applied to front-end aesthetics. Not familiar with getting/storing information from databases
+
 Anika - Has done some graphic design and web-scraping. Not familiar with front-end handlers.
+
 Project Idea(s): Fill this in with three unique ideas! (Due by March 1)
 
 Idea 1
