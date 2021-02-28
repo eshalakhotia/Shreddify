@@ -1,11 +1,14 @@
 # cs0320 Term Project 2021
 Team Members: Megan Lu, Esha Lakhotia, Suyash Kothari, Anika Bahl
+
 Team Strengths and Weaknesses: 
+
 Suyash - has done some web scraping before. Not great at front-end handlers and design 
 Esha - has done basic front end working with widgets, etc; not too familiar with backend databases, etc
 Megan - has art/graphics experience that could be applied to front-end aesthetics. Not familiar with getting/storing information from databases
 Anika - Has done some graphic design and web-scraping. Not familiar with front-end handlers.
 Project Idea(s): Fill this in with three unique ideas! (Due by March 1)
+
 Idea 1
 We’re thinking of making a Courses@Brown extension that could include:
 Integrating the Critical Review and CAB in a more intuitive way than having to open up millions of tabs to choose courses
@@ -31,6 +34,7 @@ Main components:
 - Storing both user accounts (whose data will be protected) and workouts on graphs with weighted edges so their similarities regarding different metrics can be kept track of easily
 - Creating an algorithm to recommend workouts using information from questionnaire, check-ins, and user ratings
 Challenges: suggesting related workouts based on previous workouts/questionnaire (would need some type of database of workouts, nutrition, etc), account system, correlating the different questionnaires, and testing accuracy of suggestions.
+
 Idea 3
 As someone who doesn't know a lot of art history but enjoys art/decorating the spaces around me with art, I've often thought it would be useful to have a website that can suggest famous artworks that fit a specific theme the user is going for. Users can then use the suggestions to purchase prints/posters/other decor, as inspiration for their own artistic endeavors, or just for pure enjoyment.
 
