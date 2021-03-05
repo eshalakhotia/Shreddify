@@ -28,6 +28,8 @@ Challenges:
 - Updating data when webpages are updated (how often? How can we ensure that web page updates will maintain data types / integrity to make scraping viable?)
 - Different departments will store their requirements in different formats - how do we make a generalized parser?
 
+**HTA Approval (crusch):** Rejected — if you come up with a sufficiently feasible + complex algorithm and resubmit, this idea can be reevaluated. 
+
 **Idea 2**
 
 Staying fit can be tough, especially when it involves having to plan your workouts around your work, current fitness, diet, and of course, energy level. I want to create a website/app (not sure yet) which will suggest a daily workout for the user based on both an initial questionnaire to establish long-term goals and daily check-ins.
@@ -44,6 +46,8 @@ Main components:
 
 Challenges: suggesting related workouts based on previous workouts/questionnaire (would need some type of database of workouts, nutrition, etc), account system, correlating the different questionnaires, and testing accuracy of suggestions.
 
+**HTA Approval (crusch):** Accepted, but contingent on having a more complex/well-defined algorithm — the algorithms you propose are ambiguous and could turn out poorly.
+
 **Idea 3**
 
 As someone who doesn't know a lot of art history but enjoys art/decorating the spaces around me with art, I've often thought it would be useful to have a website that can suggest famous artworks that fit a specific theme the user is going for. Users can then use the suggestions to purchase prints/posters/other decor, as inspiration for their own artistic endeavors, or just for pure enjoyment.
@@ -59,6 +63,8 @@ Challenges:
 - Maintaining a database of paintings--where to get info from and how to store it
 - Efficiently doing step 2) for all paintings (?) every time the user enters a query
 - Coming up with an algorithm that generates a reasonable overall color profile for a piece
+
+**HTA Approval (crusch):** Rejected — this does not sound sufficiently algorithmically complex for a 32 project.
 
 
 **Mentor TA:** _Put your mentor TA's name and email here once you're assigned one!_
