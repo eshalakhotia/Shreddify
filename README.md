@@ -33,13 +33,20 @@ Challenges: suggesting related workouts based on previous workouts/questionnaire
 **HTA Approval (crusch):** Accepted, but contingent on having a more complex/well-defined algorithm — the algorithms you propose are ambiguous and could turn out poorly.
 
 Main components:
+
 Questionnaire asking preliminary questions and storing those responses for the first generation of suggestions
+
 KD Tree to store different workouts, where each dimension will represent a different metric about the workout (e.g. intensity, cardio focus, time required, etc) and workouts can be recommended to user using some sort of nearest algorithm based on their preferences as defined in the questionnaire and their history/past ratings of workouts
+
 New data points can be added to KDTree when users add customizations to their recommended workout, so that other users can be recommended this option
 Graph containing nodes representing workouts and edges indicating their relatedness to each other uses AI algorithm to change preference metric of all workouts every time user ranks a newly completed workout (preference metric changes different magnitudes based on how similar a workout is to the workout the user just completed)
+
 Pull from a database with specific exercise with the components (intensity, cardio focus, etc) as attributes. Workout information and instructions can also be pulled from online databases
+
 https://www.acefitness.org/education-and-resources/lifestyle/exercise-library/
+
 Storing both user accounts (whose data will be protected) and workouts on graphs with weighted edges so their similarities regarding different metrics can be kept track of easily
+
 Challenges: suggesting related workouts based on previous workouts/questionnaire (would need some type of database of workouts, nutrition, etc), account system, correlating the different workouts, and testing accuracy of suggestions.
 
 Tabled Ideas:
