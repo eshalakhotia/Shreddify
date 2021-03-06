@@ -31,6 +31,7 @@ Main components:
 Challenges: suggesting related workouts based on previous workouts/questionnaire (would need some type of database of workouts, nutrition, etc), account system, correlating the different questionnaires, and testing accuracy of suggestions.
 
 **HTA Approval (crusch):** Accepted, but contingent on having a more complex/well-defined algorithm — the algorithms you propose are ambiguous and could turn out poorly.
+
 Main components:
 Questionnaire asking preliminary questions and storing those responses for the first generation of suggestions
 KD Tree to store different workouts, where each dimension will represent a different metric about the workout (e.g. intensity, cardio focus, time required, etc) and workouts can be recommended to user using some sort of nearest algorithm based on their preferences as defined in the questionnaire and their history/past ratings of workouts
