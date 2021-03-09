@@ -30,8 +30,6 @@ Main components:
 
 Challenges: suggesting related workouts based on previous workouts/questionnaire (would need some type of database of workouts, nutrition, etc), account system, correlating the different questionnaires, and testing accuracy of suggestions.
 
-**HTA Approval (crusch):** Accepted, but contingent on having a more complex/well-defined algorithm — the algorithms you propose are ambiguous and could turn out poorly.
-
 Main components:
 
 Questionnaire asking preliminary questions and storing those responses for the first generation of suggestions
@@ -48,6 +46,8 @@ https://www.acefitness.org/education-and-resources/lifestyle/exercise-library/
 Storing both user accounts (whose data will be protected) and workouts on graphs with weighted edges so their similarities regarding different metrics can be kept track of easily
 
 Challenges: suggesting related workouts based on previous workouts/questionnaire (would need some type of database of workouts, nutrition, etc), account system, correlating the different workouts, and testing accuracy of suggestions.
+
+**HTA Approval (crusch):** Approved!
 
 Tabled Ideas:
 
