@@ -1,21 +1,26 @@
 package edu.brown.cs.abahl1elakhotimlu39skothar7;
-
-import java.util.Comparator;
 import java.util.List;
+import java.util.ArrayList;
 
+
+/**
+ * Represents a KdTree of any dimension and contains KDNode objects.
+ */
 public class KDTree {
+  private int dimensions;
   private KDNode root;
   private KDTree left;
   private KDTree right;
+  private List<KDNode> neighbors;
 
-  public KDTree() {
-    this.root = null;
-    this.left = null;
-    this.right = null;
-  }
-
-  public KDTree(List<KDNode> nodes) {
-    this.buildTree(nodes, 0);
+  /**
+   *Constructor for KDTree.
+   * @param d       the number of dimensions of each node
+   * @param nodes   an ArrayList of KDNode objects
+   */
+  public KDTree(int d, List<KDNode> nodes) {
+    this.buildTree(nodes, d);
+    neighbors = new ArrayList<>();
   }
 
   public void buildTree(List<KDNode> nodes, int curDim) throws RuntimeException {
@@ -25,18 +30,7 @@ public class KDTree {
       validList = validList && (nodes.get(i).getDim() == numDim);
     }
     if (validList) {
-      nodes.sort(new Comparator<KDNode>() {
-        @Override
-        public int compare(KDNode kdn1, KDNode kdn2) {
-          if (kdn1.getMetric(curDim % numDim) > kdn2.getMetric(curDim % numDim)) {
-            return 1;
-          } else if (kdn1.getMetric(curDim % numDim) < kdn2.getMetric(curDim % numDim)) {
-            return -1;
-          } else {
-            return 0;
-          }
-        }
-      });
+      nodes.sort(new NodeDimComparator<KDNode>(numDim));
       if (nodes.size() == 1) {
         this.root = nodes.get(0);
         this.left = null;
@@ -52,7 +46,16 @@ public class KDTree {
     }
   }
 
-  public void nearest() {
+  /**
+   * Searches through KdTree to return a list of k nearest neighbors.
+   * @param target    the node from which to find the nearest neighbors
+   * @param currRoot  the current tree node during each level of the traversal
+   * @param dim       the current axis to be compared during each level of the traversal
+   * @param k         the number of nearest neighbors to return
+   * @return          an ArrayList of nodes representing the nearest neighbors
+   */
+  public List<KDNode> kNearestNeighbors(KDNode target, KDNode currRoot, int dim, int k) {
+    return null;
   }
 
   public void add(KDNode n, int curDim) {
@@ -67,7 +70,10 @@ public class KDTree {
     }
   }
 
-  public void remove(KDNode n) {
-    
+  public void remove(KDNode n) { }
+
+  public KDNode getRoot() {
+    return root;
   }
+
 }
