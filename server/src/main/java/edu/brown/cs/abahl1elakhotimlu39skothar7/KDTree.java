@@ -14,9 +14,10 @@ public class KDTree {
   private List<KDNode> neighbors;
 
   /**
-   *Constructor for KDTree.
-   * @param d       the number of dimensions of each node
-   * @param nodes   an ArrayList of KDNode objects
+   * Constructor for KDTree.
+   *
+   * @param d     the number of dimensions of each node
+   * @param nodes an ArrayList of KDNode objects
    */
   public KDTree(int d, List<KDNode> nodes) {
     this.buildTree(nodes, d);
@@ -48,11 +49,12 @@ public class KDTree {
 
   /**
    * Searches through KdTree to return a list of k nearest neighbors.
-   * @param target    the node from which to find the nearest neighbors
-   * @param currRoot  the current tree node during each level of the traversal
-   * @param dim       the current axis to be compared during each level of the traversal
-   * @param k         the number of nearest neighbors to return
-   * @return          an ArrayList of nodes representing the nearest neighbors
+   *
+   * @param target   the node from which to find the nearest neighbors
+   * @param currRoot the current tree node during each level of the traversal
+   * @param dim      the current axis to be compared during each level of the traversal
+   * @param k        the number of nearest neighbors to return
+   * @return an ArrayList of nodes representing the nearest neighbors
    */
   public List<KDNode> kNearestNeighbors(KDNode target, KDNode currRoot, int dim, int k) {
     return null;

@@ -16,9 +16,6 @@ public interface KDNode {
 
   // boolean getFlexibility();
 
-  /*
-  //Stuff likely needed for KDTree building and searching
-   */
   //calculates aggregate "closeness"/similarity with provided workout node using the Metrics
   double calcDistance(KDNode n);
 }
