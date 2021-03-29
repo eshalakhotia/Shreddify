@@ -70,7 +70,68 @@ public class KDTree {
     }
   }
 
-  public void remove(KDNode n) { }
+  public KDNode findMin(KDNode curMin, int dim) {
+    // if the KDTree's data attribute is null, this is a leaf node, so the curMin is returned.
+    if (this.root == null) {
+      return curMin;
+    } else {
+      // if a leaf node has not yet been reached
+      // usableDim determines which coordinate in the points need to be compared
+      int usableDim = dim % dimensions;
+      if (curMin.getMetric(usableDim) < this.root.getMetric(usableDim)) {
+        curMin = this.root;
+      }
+      // Right child KDTree is searched for min using result of left child KDTree search as curMin
+      return this.right.findMin(this.left.findMin(curMin, dim), dim);
+    }
+  }
+
+  public void rebalance(int dim) {
+    if (this.right == null) {
+      if (this.left == null) {
+        // if both children are null, the data attribute is set to null
+        this.root = null;
+      } else {
+        // if right child KDTree is null but left child KDTree is not
+        // min at given coordLevel is found in the left child KDTree
+        KDNode newMin = this.left.findMin(this.left.root, dim);
+        // this min is set to current KDTree's data attribute
+        this.root = newMin;
+        // the min is removed from its previous position in the left child KDTree
+        this.left.remove(newMin, dim + 1);
+        // right child KDTree is replaced with left child KDTree
+        this.right = this.left;
+        // left child KDTree is set to an empty KDTree with same dimensions as current KDTree
+        this.left = new KDTree(dimensions, new ArrayList<>());
+      }
+    } else {
+      // if right child KDTree is not null
+      // min at given coordLevel is found in the right child KDTree
+      KDNode newMin = this.right.findMin(this.right.root, dim);
+      // this min is set to current KDTree's data attribute
+      this.root = newMin;
+      // the min is removed from its previous position in the right child KDTree
+      this.right.remove(newMin, dim + 1);
+    }
+  }
+
+  public void remove(KDNode n, int dim) {
+    // when the current data attribute is the pao to be removed, rebalance() is called
+    if (this.root.hashCode() == (n.hashCode())) {
+      this.rebalance(dim);
+    } else if (this.root == null) {
+      // if leaf node is reached without having found the point to be removed, exception is thrown
+      throw new RuntimeException("ERROR: The point couldn't be found in this tree");
+    } else {
+      // iterates down the tree to find the place that pao will be if it is in the KDTree
+      int curDim = dim % dimensions;
+      if (n.getMetric(curDim) < this.root.getMetric(curDim)) {
+        this.left.remove(n, dim + 1);
+      } else {
+        this.right.remove(n, dim + 1);
+      }
+    }
+  }
 
   public KDNode getRoot() {
     return root;
