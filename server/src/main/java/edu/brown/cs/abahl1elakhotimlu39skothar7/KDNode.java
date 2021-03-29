@@ -12,14 +12,19 @@ public interface KDNode {
    */
   //sets root of left subtree
   void setLeft(KDNode n);
+
   //sets root of right subtree
   void setRight(KDNode n);
+
   //gets value of provided dimension (value of time, equip, or difficulty, or %abs etc.)
   double getDim(int dim);
+
   //gets root of left subtree, possibly null
   KDNode getLeft();
+
   //gets root of right subtree, possibly null
   KDNode getRight();
+
   //calculates aggregate "closeness"/similarity with provided workout node using the Metrics
   double calcDistance(KDNode n);
 }

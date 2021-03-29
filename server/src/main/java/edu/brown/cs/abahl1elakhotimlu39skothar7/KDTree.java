@@ -6,6 +6,7 @@ import java.util.List;
 
 /**
  * Represents a KdTree of any dimension and contains KDNode objects.
+ *
  * @param <T> Object implementing KDNode (a Workout in this case)
  */
 public class KDTree<T extends KDNode> {
@@ -14,9 +15,10 @@ public class KDTree<T extends KDNode> {
   private List<T> neighbors;
 
   /**
-   *Constructor for KDTree.
-   * @param d       the number of dimensions of each node
-   * @param nodes   an ArrayList of KDNode objects
+   * Constructor for KDTree.
+   *
+   * @param d     the number of dimensions of each node
+   * @param nodes an ArrayList of KDNode objects
    */
   public KDTree(int d, List<T> nodes) {
     dimensions = d;
@@ -26,11 +28,12 @@ public class KDTree<T extends KDNode> {
 
   /**
    * Recursively builds tree with given nodes.
-   * @param nodes   nodes to build subtree with at current level of recursion
-   * @param dim     dimension to sort nodes on at this level
-   * @param left    left half of node list to build next left subtree with
-   * @param right   right half of node list to build next right subtree with
-   * @return        root of whole tree
+   *
+   * @param nodes nodes to build subtree with at current level of recursion
+   * @param dim   dimension to sort nodes on at this level
+   * @param left  left half of node list to build next left subtree with
+   * @param right right half of node list to build next right subtree with
+   * @return root of whole tree
    */
   public T buildTree(List<T> nodes, int dim, int left, int right) {
     //no more nodes left to build subtree with
@@ -54,11 +57,12 @@ public class KDTree<T extends KDNode> {
 
   /**
    * Searches through KdTree to return a list of k nearest neighbors.
-   * @param target    the node from which to find the nearest neighbors
-   * @param currRoot  the current tree node during each level of the traversal
-   * @param dim       the current axis to be compared during each level of the traversal
-   * @param k         the number of nearest neighbors to return
-   * @return          an ArrayList of nodes representing the nearest neighbors
+   *
+   * @param target   the node from which to find the nearest neighbors
+   * @param currRoot the current tree node during each level of the traversal
+   * @param dim      the current axis to be compared during each level of the traversal
+   * @param k        the number of nearest neighbors to return
+   * @return an ArrayList of nodes representing the nearest neighbors
    */
   public List<T> kNearestNeighbors(T target, T currRoot, int dim, int k) {
     return null;
