@@ -26,9 +26,9 @@ public final class NodeDimComparator<T extends KDNode> implements Comparator<T> 
    */
   @Override
   public int compare(T a, T b) {
-    if (a.getDim(dim) < b.getDim(dim)) {
+    if (a.getMetric(dim) < b.getMetric(dim)) {
       return -1;
-    } else if (a.getDim(dim) > b.getDim(dim)) {
+    } else if (a.getMetric(dim) > b.getMetric(dim)) {
       return 1;
     }
     return 0;
