@@ -1,4 +1,4 @@
-package edu.brown.cs.abahl1elakhotimlu39skothar7;
+package edu.brown.cs.abahl1elakhotimlu39skothar7.kdtree;
 
 import java.util.Comparator;
 
