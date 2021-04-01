@@ -1,7 +1,7 @@
 /* The side navigation menu */
 .sidenav {
     height: 100%; /* 100% Full-height */
-    width: 200; /* 0 width - change this with JavaScript */
+    width: 0; /* 0 width - change this with JavaScript */
     position: fixed; /* Stay in place */
     z-index: 1; /* Stay on top */
     top: 0; /* Stay at the top */
@@ -40,4 +40,9 @@
 #main {
     transition: margin-left .5s;
     padding: 20px;
+}
+
+span {
+    font-size:30px;
+    cursor:pointer
 }

@@ -11,16 +11,16 @@ class Home extends React.Component {
 
     /* Set the width of the side navigation to 250px and the left margin of the page content to 250px */
     openNav() {
-        //document.getElementById("mySidenav").style.width = "250px";
-        //document.getElementById("main").style.marginLeft = "250px";
+        document.getElementById("mySidenav").style.width = "250px";
+        document.getElementById("main").style.marginLeft = "250px";
     }
 
     /* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
     closeNav() {
         console.log("in closeNav")
         console.log(document.getElementById("mySidenav"))
-        //document.getElementById("mySidenav").style.width = "0";
-        //document.getElementById("main").style.marginLeft = "0";
+        document.getElementById("mySidenav").style.width = "0";
+        document.getElementById("main").style.marginLeft = "0";
     }
 
     render() {
@@ -35,9 +35,10 @@ class Home extends React.Component {
                     <a href="#">Questionnaire</a>
                 </div>
 
-                <span onClick={this.openNav}>open</span>
+
                 <div id="main">
                     <h1>Home</h1>
+                    <span onClick={this.openNav}>click to open left sidebar</span>
                 </div>
             </div>
         );
