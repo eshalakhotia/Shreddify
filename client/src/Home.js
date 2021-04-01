@@ -1,6 +1,7 @@
 import React from 'react';
 import './Home.css';
 import Sidebar from './Sidebar';
+import Questionnaire from "./Questionnaire";
 
 class Home extends React.Component {
 
@@ -10,36 +11,45 @@ class Home extends React.Component {
     }
 
     /* Set the width of the side navigation to 250px and the left margin of the page content to 250px */
-    openNav() {
-        document.getElementById("mySidenav").style.width = "250px";
-        document.getElementById("main").style.marginLeft = "250px";
-    }
+    /*openNav() {
+        document.getElementById("mySidenav").style.width = "300px";
+        document.getElementById("main").style.marginLeft = "300px";
+        document.getElementById("mySidenav").getElementsByClassName("closebtn")[0].style.display = "block";
+        document.getElementById("mySidenav").getElementsByClassName("openbtn")[0].style.display = "none";
+        document.getElementById("mySidenav").getElementsByClassName("links")[0].style.display = "block";
+    }*/
 
     /* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
-    closeNav() {
-        console.log("in closeNav")
-        console.log(document.getElementById("mySidenav"))
-        document.getElementById("mySidenav").style.width = "0";
-        document.getElementById("main").style.marginLeft = "0";
+    /*closeNav() {
+        document.getElementById("mySidenav").style.width = "80px";
+        document.getElementById("main").style.marginLeft = "80px";
+        document.getElementById("mySidenav").getElementsByClassName("closebtn")[0].style.display = "none";
+        document.getElementById("mySidenav").getElementsByClassName("openbtn")[0].style.display = "block";
+        document.getElementById("mySidenav").getElementsByClassName("links")[0].style.display = "none";
+    }*/
+
+    findWorkouts() {
+        document.getElementById("questionnaire").style.display = "block";
     }
+
+    /*closeFindWorkouts() {
+        document.getElementById("questionnaire").style.display = "none";
+    }*/
+
 
     render() {
         console.log("rendering Home")
         return (
             <div id="Home" className="Home">
-                <div id="mySidenav" className="sidenav">
-                    <a href="javascript:void(0)" className="closebtn" onClick={this.closeNav}>&times;</a>
-                    <a href="#">Create New</a>
-                    <a href="#">Explore</a>
-                    <a href="#">Discover</a>
-                    <a href="#">Questionnaire</a>
-                </div>
-
+                <Sidebar className="Sidebar" findWorkouts={this.findWorkouts}/*closeNav={this.closeNav} openNav={this.openNav}*//>
 
                 <div id="main">
-                    <h1>Home</h1>
-                    <span onClick={this.openNav}>click to open left sidebar</span>
+                    <h1>Welcome Back, [User]!</h1>
+                    <h2>My Workouts</h2>
+                    <h2>My Achievements</h2>
                 </div>
+
+                <Questionnaire/>
             </div>
         );
     }

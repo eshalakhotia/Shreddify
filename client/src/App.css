@@ -16,17 +16,17 @@ h1 {
   margin-top: 200px;
 }
 
-input {
+.App input {
   border:none;
   width: 300px;
   border-bottom: 1px solid gray;
   padding: 5px 10px;
   outline: none;
 }
-input:focus {
+.App input:focus {
   border-color: orangered;
 }
-input:focus::-webkit-input-placeholder {
+.App input:focus::-webkit-input-placeholder {
   font-size: 15px;
   position: relative;
   top: -20px;

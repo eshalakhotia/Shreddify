@@ -52,9 +52,8 @@ class App extends React.Component {
                     </div>
 
                     <div id="password">
-                        <input id="password" name="password" placeholder="Password" onChange={(e) => this.onUserInput(e.target)} value={this.state.password}/>
+                        <input type="password" id="password" name="password" placeholder="Password" onChange={(e) => this.onUserInput(e.target)} value={this.state.password}/>
                     </div>
-
 
                     <div id="login">
                         <Link to="/Home"><button>Log In</button></Link>
