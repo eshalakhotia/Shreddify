@@ -4,16 +4,17 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 
 import edu.brown.cs.abahl1elakhotimlu39skothar7.graph.Workout;
+import edu.brown.cs.abahl1elakhotimlu39skothar7.kdtree.KDTree;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import spark.*;
 import spark.template.freemarker.FreeMarkerEngine;
@@ -165,7 +166,7 @@ public class Main {
       // gets username, password from frontend
       String username = data.getString("username");
       String pwd = data.getString("password");
-      int fitnessLevel = (int) data.getDouble("level");
+      double fitnessLevel = data.getDouble("level");
       if (users.get(username) == null) {
         if (username.length() > 3 && username.length() < 16) {
           if (username.split(" ").length == 1) {
@@ -206,4 +207,52 @@ public class Main {
       return new Gson().toJson(variables);
     }
   }
+
+  private static class RecommendWorkoutsHandler implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      JSONObject data = new JSONObject(request.body());
+      String error = "";
+      String[] results = new String[4];
+      boolean usernameOK = false;
+      boolean pwdOK = true;
+      // gets username, password from frontend
+      int time = data.getInt("time");
+      boolean flexibility = data.getBoolean("flexibility");
+      double energy = data.getDouble("energy");
+      double difficulty = data.getDouble("difficulty");
+      JSONArray unusableTargetAreas = data.getJSONArray("targetAreas");
+      List<String> targetAreas = new ArrayList<String>();
+      for (int i = 0; i < unusableTargetAreas.length(); i++) {
+        targetAreas.add(unusableTargetAreas.getString(i));
+      }
+      KDTree toSearch;
+      if (flexibility) {
+        List<Workout> workouts = new ArrayList<Workout>();
+        Set<String> keys = allWorkouts.keySet();
+        Iterator<String> iterate = keys.iterator();
+        while (iterate.hasNext()) {
+          workouts.add(allWorkouts.get(iterate.next()));
+        }
+        if (workouts.size() > 0) {
+          toSearch = new KDTree(workouts, workouts.get(0).getAllMetrics().size());
+        } else {
+          toSearch = new KDTree(new ArrayList<>(), 0);
+        }
+        // finish when Workout constructor done
+        // Workout idealWorkout = new Workout()
+
+      }
+      // In the React files, use the success boolean to check whether to display the results
+      // or the error that prevented results from being obtained
+      Map<String, Object> variables = ImmutableMap.of(
+              "success", (usernameOK && pwdOK),
+              "results", results,
+              "error", error);
+      return new Gson().toJson(variables);
+    }
+  }
+
+
+
 }

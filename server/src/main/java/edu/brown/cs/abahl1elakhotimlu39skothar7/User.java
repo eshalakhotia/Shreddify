@@ -9,7 +9,7 @@ import java.util.HashMap;
 public class User {
   private String username;
   private int password;
-  private int overallFitnessLevel;
+  private double overallFitnessLevel;
   private int totalNumWorkouts;
   private int streak;
   private Graph connectedPreferences;
@@ -17,7 +17,7 @@ public class User {
   public User(
           String username,
           String password,
-          int overallFitnessLevel,
+          double overallFitnessLevel,
           HashMap<String, Workout> allWorkouts) {
     this.username = username;
     this.password = password.hashCode();
@@ -36,7 +36,7 @@ public class User {
   }
 
 
-  public int getOFL() {
+  public double getOFL() {
     return this.overallFitnessLevel;
   }
 

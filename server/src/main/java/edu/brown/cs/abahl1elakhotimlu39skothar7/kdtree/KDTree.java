@@ -7,12 +7,13 @@ import java.util.Random;
 
 /**
  * Represents a KdTree of any dimension and contains KDNode objects.
+ * @param <N> a KDNode of any type
  */
-public class KDTree {
+public class KDTree<N extends KDNode> {
   private int dimensions;
-  private KDNode root;
-  private KDTree left;
-  private KDTree right;
+  private N root;
+  private KDTree<N> left;
+  private KDTree<N> right;
 
   /**
    * Constructor for KDTree.
@@ -20,7 +21,7 @@ public class KDTree {
    * @param d     the number of dimensions of each node
    * @param nodes an ArrayList of KDNode objects
    */
-  public KDTree(List<KDNode> nodes, int d) {
+  public KDTree(List<N> nodes, int d) {
     this.buildTree(nodes, d);
   }
 
@@ -30,14 +31,14 @@ public class KDTree {
    * @param nodes an ArrayList of KDNode objects to be added to the tree
    * @param curDim the current depth of the tree that KDNodes are being added to
    */
-  public void buildTree(List<KDNode> nodes, int curDim) throws RuntimeException {
+  public void buildTree(List<N> nodes, int curDim) throws RuntimeException {
     boolean validList = true;
     int numDim = nodes.get(0).getDim();
     for (int i = 0; i < nodes.size(); i++) {
       validList = validList && (nodes.get(i).getDim() == numDim);
     }
     if (validList) {
-      nodes.sort(new NodeDimComparator<KDNode>(numDim));
+      nodes.sort(new NodeDimComparator<N>(numDim));
       if (nodes.size() == 1) {
         this.root = nodes.get(0);
         this.left = null;
@@ -63,8 +64,8 @@ public class KDTree {
    * @param dim the current depth of the tree being searched
    */
   public void neighborsHelper(
-          KDNode target,
-          PriorityQueue<KDNode> nearNeighbors,
+          N target,
+          PriorityQueue<N> nearNeighbors,
           int numNeighbors,
           double furthestDistance,
           int dim) {
@@ -138,13 +139,13 @@ public class KDTree {
    * @param numNeighbors        the number of nearest neighbors to return
    * @return an ArrayList of nodes representing the nearest neighbors
    */
-  public List<KDNode> kNearestNeighbors(KDNode target, int numNeighbors) {
+  public List<N> kNearestNeighbors(N target, int numNeighbors) {
     // creates list to be returned
-    List<KDNode> neighbors = new ArrayList<KDNode>();
+    List<N> neighbors = new ArrayList<N>();
     // creates PriorityQueue to sort KDNodes based on distance from target in descending order
-    PriorityQueue<KDNode> neighborsPQ = new PriorityQueue<KDNode>(new Comparator<KDNode>() {
+    PriorityQueue<N> neighborsPQ = new PriorityQueue<N>(new Comparator<N>() {
       @Override
-      public int compare(KDNode kdn1, KDNode kdn2) {
+      public int compare(N kdn1, N kdn2) {
         if (target.calcDistance(kdn1) > target.calcDistance(kdn2)) {
           return 1;
         } else if (target.calcDistance(kdn1) < target.calcDistance(kdn2)) {
@@ -166,7 +167,7 @@ public class KDTree {
    * @param n the KDNode to be added to the KDTree.
    * @param curDim the current dimension to be compared as based on the current depth of KDTree.
    */
-  public void add(KDNode n, int curDim) {
+  public void add(N n, int curDim) {
     if (this.root == null) {
       this.root = n;
     } else {
@@ -184,7 +185,7 @@ public class KDTree {
    * @param dim the current dimension to be compared as based on the current depth of KDTree.
    * @return KDNode with the min metric at the given dim.
    */
-  public KDNode findMin(KDNode curMin, int dim) {
+  public N findMin(N curMin, int dim) {
     // if the KDTree's data attribute is null, this is a leaf node, so the curMin is returned.
     if (this.root == null) {
       return curMin;
@@ -215,7 +216,7 @@ public class KDTree {
       } else {
         // if right child KDTree is null but left child KDTree is not
         // min at given dim is found in the left child KDTree
-        KDNode newMin = this.left.findMin(this.left.root, dim);
+        N newMin = this.left.findMin(this.left.root, dim);
         // this min is set to current KDTree's root
         this.root = newMin;
         // the min is removed from its previous position in the left child KDTree
@@ -228,7 +229,7 @@ public class KDTree {
     } else {
       // if right child KDTree is not null
       // min at given dim is found in the right child KDTree
-      KDNode newMin = this.right.findMin(this.right.root, dim);
+      N newMin = this.right.findMin(this.right.root, dim);
       // this min is set to current KDTree's root
       this.root = newMin;
       // the min is removed from its previous position in the right child KDTree
@@ -241,7 +242,7 @@ public class KDTree {
    * @param n the KDNode to be removed from the KDTree.
    * @param dim the current dimension to be compared as based on the current depth of KDTree.
    */
-  public void remove(KDNode n, int dim) {
+  public void remove(N n, int dim) {
     // when the current root is the KDNode to be removed, rebalance() is called
     if (this.root.hashCode() == (n.hashCode())) {
       this.rebalance(dim);
@@ -262,7 +263,7 @@ public class KDTree {
   /**
    * @return the root KDNode of the current KDTree
    */
-  public KDNode getRoot() {
+  public N getRoot() {
     return root;
   }
 
