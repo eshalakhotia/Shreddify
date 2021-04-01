@@ -2,6 +2,7 @@ package edu.brown.cs.abahl1elakhotimlu39skothar7;
 
 import edu.brown.cs.abahl1elakhotimlu39skothar7.graph.Graph;
 import edu.brown.cs.abahl1elakhotimlu39skothar7.graph.Vertex;
+import edu.brown.cs.abahl1elakhotimlu39skothar7.graph.Workout;
 
 import java.util.HashMap;
 
@@ -17,7 +18,7 @@ public class User {
           String username,
           String password,
           double overallFitnessLevel,
-          HashMap<String, Vertex> allWorkouts) {
+          HashMap<String, Workout> allWorkouts) {
     this.username = username;
     this.password = password.hashCode();
     this.overallFitnessLevel = overallFitnessLevel;
@@ -30,7 +31,7 @@ public class User {
     return (this.password == enteredPassword.hashCode());
   }
 
-  public String getUser() {
+  public String getUsername() {
     return this.username;
   }
 
