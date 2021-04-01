@@ -14,7 +14,7 @@ public class Workout implements KDNode, Vertex<WorkoutConnection, Workout> {
   private String name;
   // all metrics of a workout that we want to look at
   // (String array necassary to support comparing dimensions on KDTree)
-  private String[] metricNames = new String[]{"time", "difficulty", "target matching"};
+  private String[] metricNames = new String[]{"time", "difficulty", "cardio", "abs", "legs", "arms", "glutes", "HIIT"};
   // Getting a specific metric calls from HashMap for constant time access
   private HashMap<String, Double> metrics;
   // we somehow need to figure out a way to turn the target areas and their percentages
@@ -64,9 +64,12 @@ public class Workout implements KDNode, Vertex<WorkoutConnection, Workout> {
   @Override
   //calculates aggregate "closeness"/similarity with provided workout node using the Metrics
   public double calcDistance(KDNode other) {
-    // we need to decide how we want to calculate the similarity between two different workouts
-    // maybe some kind of dot product
-    return 0;
+    double differenceSum = 0;
+    for (int i = 0; i < metricNames.length; i++) {
+      double difference = Math.abs(metrics.get(metricNames[i]) - other.getAllMetrics().get(metricNames[i]));
+      differenceSum += difference;
+    }
+    return (differenceSum / (metricNames.length));
   }
 
   @Override
