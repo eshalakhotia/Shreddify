@@ -10,9 +10,7 @@ import java.util.Map;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 
-import edu.brown.cs.abahl1elakhotimlu39skothar7.graph.Graph;
 import edu.brown.cs.abahl1elakhotimlu39skothar7.graph.Workout;
-import edu.brown.cs.abahl1elakhotimlu39skothar7.graph.WorkoutConnection;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 
@@ -70,7 +68,7 @@ public class Main {
       config.setDirectoryForTemplateLoading(templates);
     } catch (IOException ioe) {
       System.out.printf("ERROR: Unable use %s for template loading.%n",
-        templates);
+              templates);
       System.exit(1);
     }
     return new FreeMarkerEngine(config);
@@ -196,6 +194,8 @@ public class Main {
         results[1] = String.valueOf(newUser.getOFL());
         results[2] = String.valueOf(newUser.getTotalNumWorkouts());
         results[3] = String.valueOf(newUser.getStreak());
+        users.put(results[0], newUser);
+        // add database command to add new user to user database here
       }
       // In the React files, use the success boolean to check whether to display the results
       // or the error that prevented results from being obtained
