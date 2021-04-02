@@ -212,10 +212,9 @@ public class Main {
     @Override
     public Object handle(Request request, Response response) throws Exception {
       JSONObject data = new JSONObject(request.body());
+      boolean success = true;
       String error = "";
-      String[] results = new String[4];
-      boolean usernameOK = false;
-      boolean pwdOK = true;
+      List<Workout> bestRecommendations = new ArrayList<>();
       // gets username, password from frontend
       int time = data.getInt("time");
       boolean flexibility = data.getBoolean("flexibility");
@@ -241,13 +240,14 @@ public class Main {
         }
         // finish when Workout constructor done
         // Workout idealWorkout = new Workout()
-
+        Workout idealWorkout = null;
+        bestRecommendations = toSearch.kNearestNeighbors(idealWorkout, 5);
       }
       // In the React files, use the success boolean to check whether to display the results
       // or the error that prevented results from being obtained
       Map<String, Object> variables = ImmutableMap.of(
-              "success", (usernameOK && pwdOK),
-              "results", results,
+              "success", success,
+              "results", bestRecommendations,
               "error", error);
       return new Gson().toJson(variables);
     }

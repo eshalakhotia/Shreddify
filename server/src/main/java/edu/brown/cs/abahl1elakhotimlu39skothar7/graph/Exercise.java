@@ -11,14 +11,12 @@ public class Exercise {
   private String name;
   private int time;
   private int reps;
-  private int difficulty;
+  private double difficulty;
   private Map<String, Double> muscle;
   private Set<String> equipment;
-  private DatabaseConn base;
   private List<String[]> usersList = new ArrayList<>();
   
-  public Exercise(String id, String eName, int eTime, int eReps, Map<String, Double> eMuscle, Set<String> equip, int diff)
-    throws SQLException, ClassNotFoundException {
+  public Exercise(String id, String eName, double diff, int eTime, int eReps, Map<String, Double> eMuscle, Set<String> equip) {
     iD = id;
     name = eName;
     time = eTime;
@@ -26,22 +24,17 @@ public class Exercise {
     muscle = eMuscle;
     difficulty = diff;
     equipment = equip;
-    base = new DatabaseConn();
   }
   public String getExerciseName() throws SQLException {
-    name = base.getAllExerciseAttributes().get(1);
     return name;
   }
   public int getExerciseTime() throws SQLException {
-    time = Integer.valueOf(base.getAllExerciseAttributes().get(5));
     return time;
   }
   public int getExerciseReps() throws SQLException {
-    reps = Integer.valueOf(base.getAllExerciseAttributes().get(4));
     return reps;
   }
-  public int getExerciseDifficulty() throws SQLException {
-    difficulty = Integer.valueOf(base.getAllExerciseAttributes().get(3));
+  public double getExerciseDifficulty() throws SQLException {
     return difficulty;
   }
   public Map<String, Double> getExerciseMuscle() {
