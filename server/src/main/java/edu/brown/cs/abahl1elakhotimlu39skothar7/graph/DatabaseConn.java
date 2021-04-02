@@ -1,10 +1,13 @@
 package edu.brown.cs.abahl1elakhotimlu39skothar7.graph;
 
+import edu.brown.cs.abahl1elakhotimlu39skothar7.User;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.*;
 
 
@@ -97,4 +100,38 @@ public class DatabaseConn {
     }
     return workouts;
   }
+
+  public Map<String, User> getAllUsers() throws SQLException {
+    Map<String, User> users = new HashMap<String, User>();
+    PreparedStatement userInfo = conn.prepareStatement(
+            "SELECT * FROM users;");
+    ResultSet resulting = userInfo.executeQuery();
+    while (resulting.next()) {
+      String newUserName = resulting.getString(1);
+      int newUserPassword = resulting.getInt(2);
+      double newUserOFL = resulting.getDouble(3);
+      int newUserNumWorkouts = resulting.getInt(4);
+      String lastWorkoutAsString = resulting.getString(5);
+      String[] lastWorkoutAsArray = lastWorkoutAsString.split(",");
+      LocalDateTime newUserLastWorkout;
+      if (lastWorkoutAsArray.length == 7) {
+        newUserLastWorkout = LocalDateTime.of(
+                Integer.parseInt(lastWorkoutAsArray[0]),
+                Integer.parseInt(lastWorkoutAsArray[1]),
+                Integer.parseInt(lastWorkoutAsArray[2]),
+                Integer.parseInt(lastWorkoutAsArray[3]),
+                Integer.parseInt(lastWorkoutAsArray[4]),
+                Integer.parseInt(lastWorkoutAsArray[5]),
+                Integer.parseInt(lastWorkoutAsArray[6]));
+      } else {
+        newUserLastWorkout = null;
+      }
+      int newUserStreak = resulting.getInt(5);
+      // allWorkouts must be adjusted
+      User newUser = new User(newUserName, newUserPassword, newUserOFL, newUserNumWorkouts, newUserStreak, newUserLastWorkout, getAllWorkouts());
+      users.put(newUserName, newUser);
+    }
+    return users;
+  }
+
 }

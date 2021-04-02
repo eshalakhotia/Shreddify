@@ -37,6 +37,7 @@ public class Exercise {
   public double getExerciseDifficulty() throws SQLException {
     return difficulty;
   }
+
   public Map<String, Double> getExerciseMuscle() {
     return muscle;
   }
