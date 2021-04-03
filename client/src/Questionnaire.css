@@ -51,24 +51,29 @@
 
 #time{
     margin-left: 60px;
-    margin-top:30px;
+    margin-top:40px;
 }
 
-.questionnaire #energyp {
+#targets {
+    margin-left: 60px;
+    margin-top:40px;
+}
+
+#energyp {
     margin-top: 50px;
     margin-left: 450px;
     word-spacing: 100px;
 }
-#slider1 {
+#energySlider {
     margin-left: 200px;
     width: 380px;
 }
-.questionnaire #timep {
+#timep {
     margin-top: 30px;
-    margin-left: 90px;
-    word-spacing: 100px;
+    margin-left: 80px;
+    word-spacing: 50px;
 }
-#slider2 {
+#timeSlider {
     margin-left: 60px;
     width: 500px;
 }
@@ -92,7 +97,7 @@
     transition: 0.2s ease-out;
 }
 
-.list {
+/*.list, .options{
     margin-left:60px;
     margin-top: 10px;
 }
@@ -106,10 +111,32 @@
     margin-right: 20px;
     padding: 10px;
     height: 100%;
+}*/
+
+.options {
+    margin-left:60px;
+    margin-top: 10px;
 }
 
 #targetItem {
     margin: 0px;
+}
+
+.targetButton {
+    border-radius: 5px;
+    background-color: white;
+    border: 1px solid hotpink;
+    color: hotpink;
+    display: inline-block;
+
+    margin-right: 20px;
+    padding: 10px;
+    height: 100%;
+}
+
+.targetButton:active {
+    /*background-color: hotpink;
+    color: white;*/
 }
 
 #go {
@@ -118,5 +145,5 @@
     background-color: limegreen;
     color: white;
     margin-left: 800px;
-    margin-top: 50px;
+    margin-top: 30px;
 }
