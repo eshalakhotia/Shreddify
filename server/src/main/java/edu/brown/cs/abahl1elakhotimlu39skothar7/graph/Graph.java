@@ -2,6 +2,7 @@ package edu.brown.cs.abahl1elakhotimlu39skothar7.graph;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.PriorityQueue;
 
 /**
@@ -11,7 +12,7 @@ import java.util.PriorityQueue;
  * @param <V> represent Vertices of graph
  */
 public class Graph<E extends Edge<E, V>, V extends Vertex<E, V>> {
-  private final HashMap<String, V> allNodes;
+  private final Map<String, V> allNodes;
   /**
    * Creates Graph object with empty HashMap containing all Nodes to be contained by the Graph.
    */

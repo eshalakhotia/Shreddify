@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.time.LocalDateTime;
 import java.util.*;
 
 import com.google.common.collect.ImmutableMap;
@@ -124,7 +125,6 @@ public class Main {
     public Object handle(Request request, Response response) throws Exception {
       JSONObject data = new JSONObject(request.body());
       String error = "";
-      String[] results = new String[4];
       boolean userpwdMatch;
       // gets username, password from frontend
       String user = data.getString("username");
@@ -137,10 +137,13 @@ public class Main {
         userpwdMatch = userWithUsername.checkPassword(pwd);
         if (userpwdMatch) {
           curUser = userWithUsername;
-          results[0] = userWithUsername.getUsername();
-          results[1] = String.valueOf(userWithUsername.getOFL());
-          results[2] = String.valueOf(userWithUsername.getTotalNumWorkouts());
-          results[3] = String.valueOf(userWithUsername.getStreak());
+          if (curUser.getLastWorkout() != null) {
+            LocalDateTime now = LocalDateTime.now();
+            LocalDateTime dayAfter = curUser.getLastWorkout().plusDays(1);
+            if (dayAfter.getDayOfYear() != now.getDayOfYear()) {
+              curUser.breakStreak();
+            }
+          }
         } else {
           error = "ERROR: incorrect password for this user";
         }
@@ -149,7 +152,7 @@ public class Main {
       // or the error that prevented results from being obtained
       Map<String, Object> variables = ImmutableMap.of(
               "success", userpwdMatch,
-              "results", results,
+              "results", curUser,
               "error", error);
       return new Gson().toJson(variables);
     }
@@ -160,7 +163,6 @@ public class Main {
     public Object handle(Request request, Response response) throws Exception {
       JSONObject data = new JSONObject(request.body());
       String error = "";
-      String[] results = new String[4];
       boolean usernameOK = false;
       boolean pwdOK = true;
       // gets username, password from frontend
@@ -191,18 +193,15 @@ public class Main {
       }
       if (usernameOK && pwdOK) {
         User newUser = new User(username, pwd, fitnessLevel, allWorkouts);
-        results[0] = newUser.getUsername();
-        results[1] = String.valueOf(newUser.getOFL());
-        results[2] = String.valueOf(newUser.getTotalNumWorkouts());
-        results[3] = String.valueOf(newUser.getStreak());
-        users.put(results[0], newUser);
+        users.put(newUser.getUsername(), newUser);
+        curUser = newUser;
         // add database command to add new user to user database here
       }
       // In the React files, use the success boolean to check whether to display the results
       // or the error that prevented results from being obtained
       Map<String, Object> variables = ImmutableMap.of(
               "success", (usernameOK && pwdOK),
-              "results", results,
+              "results", curUser,
               "error", error);
       return new Gson().toJson(variables);
     }
@@ -212,10 +211,9 @@ public class Main {
     @Override
     public Object handle(Request request, Response response) throws Exception {
       JSONObject data = new JSONObject(request.body());
+      boolean success = true;
       String error = "";
-      String[] results = new String[4];
-      boolean usernameOK = false;
-      boolean pwdOK = true;
+      List<Workout> bestRecommendations = new ArrayList<>();
       // gets username, password from frontend
       int time = data.getInt("time");
       boolean flexibility = data.getBoolean("flexibility");
@@ -241,13 +239,14 @@ public class Main {
         }
         // finish when Workout constructor done
         // Workout idealWorkout = new Workout()
-
+        Workout idealWorkout = null;
+        bestRecommendations = toSearch.kNearestNeighbors(idealWorkout, 5);
       }
       // In the React files, use the success boolean to check whether to display the results
       // or the error that prevented results from being obtained
       Map<String, Object> variables = ImmutableMap.of(
-              "success", (usernameOK && pwdOK),
-              "results", results,
+              "success", success,
+              "results", bestRecommendations,
               "error", error);
       return new Gson().toJson(variables);
     }
