@@ -32,17 +32,24 @@ h1 {
   top: -20px;
   transition: 0.2s ease-out;
 }
-button {
+#loginButton, #signupButton {
   margin-top: 20px;
   padding: 6px 10px;
   width: 330px;
   border-radius: 5px;
   font-size: 20px;
   border-style: none;
-  background-color: #ff8854;
   color: white;
 }
-button:hover {
+#loginButton {
+  background-color: #ff8854;
+}
+#signupButton {
+  background-color: #89e33b;
+}
+#loginButton:hover {
   background-color: #ff6b2b;
-  color: white;
+}
+#signupButton:hover {
+  background-color: limegreen;
 }

@@ -1,23 +1,32 @@
-package edu.brown.cs.abahl1elakhotimlu39skothar7;
+package edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 
-import edu.brown.cs.abahl1elakhotimlu39skothar7.graph.Workout;
-import edu.brown.cs.abahl1elakhotimlu39skothar7.kdtree.KDTree;
+import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.graph.Workout;
+import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.kdtree.KDTree;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import spark.*;
+import spark.ExceptionHandler;
+import spark.Request;
+import spark.Response;
+import spark.Route;
+import spark.Spark;
 import spark.template.freemarker.FreeMarkerEngine;
 
 import freemarker.template.Configuration;
@@ -25,7 +34,7 @@ import freemarker.template.Configuration;
 /**
  * The Main class of our project. This is where execution begins.
  */
-public class Main {
+public final class Main {
   private static final int DEFAULT_PORT = 4567;
   private static final Gson GSON = new Gson();
 
@@ -83,6 +92,12 @@ public class Main {
 
     FreeMarkerEngine freeMarker = createEngine();
 
+
+    //maps routes
+    Spark.post("/login", new LoginHandler());
+    Spark.post("/recs", new RecommendWorkoutsHandler());
+
+
     Spark.options("/*", (request, response) -> {
       String accessControlRequestHeaders = request.headers("Access-Control-Request-Headers");
       if (accessControlRequestHeaders != null) {
@@ -123,18 +138,31 @@ public class Main {
   private static class LoginHandler implements Route {
     @Override
     public Object handle(Request request, Response response) throws Exception {
+
       JSONObject data = new JSONObject(request.body());
       String error = "";
       boolean userpwdMatch;
       // gets username, password from frontend
       String user = data.getString("username");
       String pwd = data.getString("password");
+
+      //System.out.println("username input: " + user);
+      //System.out.println("password input: " + pwd);
+
+      //TEMPORARY!! for testing purposes
+      users = new HashMap<>();
+      users.put("asdf", new User("asdf", "qwer", 5.0, new HashMap<>()));
+      users.put("test", new User("test", "test", 2.0, new HashMap<>()));
+
       User userWithUsername = users.get(user);
       if (userWithUsername == null) {
         error = "ERROR: user with given username was not found";
         userpwdMatch = false;
+        //System.out.println(error);
       } else {
+        //System.out.println("user found!");
         userpwdMatch = userWithUsername.checkPassword(pwd);
+        //System.out.println("password match? " + userpwdMatch);
         if (userpwdMatch) {
           curUser = userWithUsername;
           if (curUser.getLastWorkout() != null) {
@@ -146,8 +174,10 @@ public class Main {
           }
         } else {
           error = "ERROR: incorrect password for this user";
+          //System.out.println(error);
         }
       }
+      //System.out.println("returning results");
       // In the React files, use the success boolean to check whether to display the results
       // or the error that prevented results from being obtained
       Map<String, Object> variables = ImmutableMap.of(
@@ -214,16 +244,21 @@ public class Main {
       boolean success = true;
       String error = "";
       List<Workout> bestRecommendations = new ArrayList<>();
-      // gets username, password from frontend
+
+      // gets energy, time, target areas, (flexibility, difficulty) from request body
+      double energy = data.getDouble("energy");
       int time = data.getInt("time");
       boolean flexibility = data.getBoolean("flexibility");
-      double energy = data.getDouble("energy");
-      double difficulty = data.getDouble("difficulty");
-      JSONArray unusableTargetAreas = data.getJSONArray("targetAreas");
+      JSONArray unusableTargetAreas = data.getJSONArray("targets");
       List<String> targetAreas = new ArrayList<String>();
       for (int i = 0; i < unusableTargetAreas.length(); i++) {
         targetAreas.add(unusableTargetAreas.getString(i));
       }
+
+      //not implemented in frontend yet
+      double difficulty = data.getDouble("difficulty");
+
+
       KDTree toSearch;
       List<Workout> workouts = new ArrayList<Workout>();
       Set<String> keys = allWorkouts.keySet();

@@ -1,8 +1,7 @@
-package edu.brown.cs.abahl1elakhotimlu39skothar7;
+package edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify;
 
-import edu.brown.cs.abahl1elakhotimlu39skothar7.graph.Graph;
-import edu.brown.cs.abahl1elakhotimlu39skothar7.graph.Vertex;
-import edu.brown.cs.abahl1elakhotimlu39skothar7.graph.Workout;
+import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.graph.Graph;
+import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.graph.Workout;
 import java.time.LocalDateTime;
 
 import java.util.HashMap;

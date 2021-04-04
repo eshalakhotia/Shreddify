@@ -1,4 +1,4 @@
-package edu.brown.cs.abahl1elakhotimlu39skothar7.graph;
+package edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.graph;
 
 import java.util.ArrayList;
 import java.util.HashMap;

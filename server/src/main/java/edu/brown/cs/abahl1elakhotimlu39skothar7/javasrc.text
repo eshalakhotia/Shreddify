@@ -1,0 +1,2 @@
+Shreddify code needs to be in additional package for ./run -gui to work, added text file to check in
+directory structure to git

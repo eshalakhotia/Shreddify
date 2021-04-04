@@ -1,6 +1,6 @@
-package edu.brown.cs.abahl1elakhotimlu39skothar7.graph;
+package edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.graph;
 
-import edu.brown.cs.abahl1elakhotimlu39skothar7.User;
+import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.User;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
