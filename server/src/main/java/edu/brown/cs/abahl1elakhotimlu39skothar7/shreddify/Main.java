@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,6 +16,7 @@ import java.util.Set;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 
+import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.graph.DatabaseConn;
 import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.graph.Workout;
 import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.kdtree.KDTree;
 import joptsimple.OptionParser;
@@ -48,12 +50,20 @@ public final class Main {
   }
 
   private String[] args;
-  private static HashMap<String, User> users;
+  private static DatabaseConn mainDatabase;
+  private static Map<String, User> users;
   private static User curUser;
-  private static HashMap<String, Workout> allWorkouts;
+  private static Map<String, Workout> allWorkouts;
 
   private Main(String[] args) {
     this.args = args;
+    try {
+      mainDatabase = new DatabaseConn();
+      users = mainDatabase.getUsers();
+      allWorkouts = mainDatabase.getWorkouts();
+    } catch (Exception e) {
+      mainDatabase = null;
+    }
   }
 
   private void run() {

@@ -7,6 +7,12 @@ public class WorkoutConnection implements Edge<WorkoutConnection, Workout> {
   private Workout end;
   private double weight;
 
+  public WorkoutConnection(Workout start, Workout end) {
+    this.start = start;
+    this.end = end;
+    this.weight = start.calcDistance(end);
+  }
+
   @Override
   /**
    * @return Vertex edge is pointing from

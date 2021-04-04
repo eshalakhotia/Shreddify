@@ -27,15 +27,16 @@ public class Workout implements KDNode, Vertex<WorkoutConnection, Workout> {
   private Double difficulty;
   private HashSet<String> equipment;
   // delete outgoingEdges soon
-  private ArrayList<WorkoutConnection> outgoingEdges;
   private double preference = 0.5;
+  private OutEdgeCache cache;
 
-  public Workout(String name, String id, int numCycles, List<Exercise> exercises) {
+  public Workout(String name, String id, int numCycles, List<Exercise> exercises, OutEdgeCache cache) {
     this.workoutID = id;
     this.name = name;
     this.numCycles = numCycles;
     this.metrics = new HashMap<String, Double>();
     this.equipment = new HashSet<String>();
+    this.cache = cache;
     int oneCycleTime = 0;
     double totalDifficulty = 0;
     for (int i = 0; i < metricNames.length; i++) {
@@ -111,14 +112,34 @@ public class Workout implements KDNode, Vertex<WorkoutConnection, Workout> {
   }
 
   @Override
-  public ArrayList<WorkoutConnection> getTraversableEdgesFromNode(
+  public List<WorkoutConnection> getEdgesFromNode(
           Graph<WorkoutConnection, Workout> graph) {
-    // check if data in cache
-    // if not need to use function that queries from database here
-    // database query should find other workouts
-    // that have one or more of the same metrics as current Workout
-    return outgoingEdges;
+    List<WorkoutConnection> cacheEdges = cache.getOutgoingEs(this.getID());
+    if (cacheEdges != null) {
+      return cacheEdges;
+    } else {
+      List<WorkoutConnection> edges = new ArrayList<WorkoutConnection>();
+      Map<String, Workout> workouts = graph.getAllNodes();
+      Set<String> keys = workouts.keySet();
+      Iterator iterate = keys.iterator();
+      while (iterate.hasNext()) {
+        Workout curWorkout = workouts.get(iterate.next());
+        if (!curWorkout.getID().equals(this.getID())) {
+          for (int i = 0; i < curWorkout.getAllMetrics().size(); i++) {
+            if ((curWorkout.getMetric(i) / this.getMetric(i)) > 0.95
+                    && (curWorkout.getMetric(i) / this.getMetric(i)) < 1.05) {
+              WorkoutConnection newConnection = new WorkoutConnection(this, curWorkout);
+              edges.add(newConnection);
+              break;
+            }
+          }
+        }
+      }
+      cache.addToCache(this, edges);
+      return edges;
+    }
   }
+
 
 
   @Override
