@@ -1,6 +1,6 @@
-package edu.brown.cs.abahl1elakhotimlu39skothar7.graph;
+package edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.graph;
 
-import edu.brown.cs.abahl1elakhotimlu39skothar7.kdtree.KDNode;
+import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.kdtree.KDNode;
 
 import java.util.ArrayList;
 import java.util.HashMap;

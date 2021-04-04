@@ -1,4 +1,4 @@
-package edu.brown.cs.abahl1elakhotimlu39skothar7;
+package edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,8 +15,8 @@ import java.util.Set;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 
-import edu.brown.cs.abahl1elakhotimlu39skothar7.graph.Workout;
-import edu.brown.cs.abahl1elakhotimlu39skothar7.kdtree.KDTree;
+import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.graph.Workout;
+import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.kdtree.KDTree;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 
@@ -138,18 +138,31 @@ public final class Main {
   private static class LoginHandler implements Route {
     @Override
     public Object handle(Request request, Response response) throws Exception {
+
       JSONObject data = new JSONObject(request.body());
       String error = "";
       boolean userpwdMatch;
       // gets username, password from frontend
       String user = data.getString("username");
       String pwd = data.getString("password");
+
+      //System.out.println("username input: " + user);
+      //System.out.println("password input: " + pwd);
+
+      //TEMPORARY!! for testing purposes
+      users = new HashMap<>();
+      users.put("asdf", new User("asdf", "qwer", 5.0, new HashMap<>()));
+      users.put("test", new User("test", "test", 2.0, new HashMap<>()));
+
       User userWithUsername = users.get(user);
       if (userWithUsername == null) {
         error = "ERROR: user with given username was not found";
         userpwdMatch = false;
+        //System.out.println(error);
       } else {
+        //System.out.println("user found!");
         userpwdMatch = userWithUsername.checkPassword(pwd);
+        //System.out.println("password match? " + userpwdMatch);
         if (userpwdMatch) {
           curUser = userWithUsername;
           if (curUser.getLastWorkout() != null) {
@@ -161,8 +174,10 @@ public final class Main {
           }
         } else {
           error = "ERROR: incorrect password for this user";
+          //System.out.println(error);
         }
       }
+      //System.out.println("returning results");
       // In the React files, use the success boolean to check whether to display the results
       // or the error that prevented results from being obtained
       Map<String, Object> variables = ImmutableMap.of(

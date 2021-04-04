@@ -40,6 +40,7 @@ function getRecs(energy, time, flexibility, targets) {
 
 //returns info about login (success, error, specified user)
 async function login(username, password) {
+    console.log("in Backend post request")
     return makePOST(backendURL + '/login', {
         username: username,
         password: password

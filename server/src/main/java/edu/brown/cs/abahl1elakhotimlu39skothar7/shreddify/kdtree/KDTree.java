@@ -1,4 +1,4 @@
-package edu.brown.cs.abahl1elakhotimlu39skothar7.kdtree;
+package edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.kdtree;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Comparator;
