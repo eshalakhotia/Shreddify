@@ -64,10 +64,10 @@ public class DatabaseConn {
       int newExerciseTime = resulting.getInt(4);
       int newExerciseReps = resulting.getInt(5);
       String[] targetAreasColumns = new String[]{"Cardio", "Abs", "Legs", "Arms", "Glutes", "HIIT"};
-      HashMap<String, Double> targetAreas = new HashMap<String, Double>();
+      Set<String> targetAreas = new HashSet<String>();
       for (int i = 6; i < 11; i++) {
         if (resulting.getDouble(i) != 0) {
-          targetAreas.put(targetAreasColumns[i - 6], resulting.getDouble(i));
+          targetAreas.add(targetAreasColumns[i - 6]);
         }
       }
       // figure out how to express equipment

@@ -2,9 +2,7 @@ package edu.brown.cs.abahl1elakhotimlu39skothar7.graph;
 
 import edu.brown.cs.abahl1elakhotimlu39skothar7.kdtree.KDNode;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 /**
  * Edge that connects different Workout objects.
@@ -32,6 +30,42 @@ public class Workout implements KDNode, Vertex<WorkoutConnection, Workout> {
   private ArrayList<WorkoutConnection> outgoingEdges;
   private double preference = 0.5;
 
+  public Workout(String name, String id, int numCycles, List<Exercise> exercises) {
+    this.workoutID = id;
+    this.name = name;
+    this.numCycles = numCycles;
+    this.metrics = new HashMap<String, Double>();
+    this.equipment = new HashSet<String>();
+    int oneCycleTime = 0;
+    double totalDifficulty = 0;
+    for (int i = 0; i < metricNames.length; i++) {
+      metrics.put(metricNames[i], Double.valueOf(0));
+    }
+    for (int i = 0; i < exercises.size(); i++) {
+      oneCycleTime += exercises.get(i).getExerciseTime();
+    }
+    metrics.put("time", Double.valueOf(oneCycleTime * numCycles));
+    for (int i = 0; i < exercises.size(); i++) {
+      Exercise curExercise = exercises.get(i);
+      Set<String> curExerciseMuscles = curExercise.getExerciseMuscle();
+      Iterator<String> iterate = curExerciseMuscles.iterator();
+      while (iterate.hasNext()) {
+        String curMuscle = iterate.next();
+        metrics.put(curMuscle, metrics.get(curMuscle)
+                + ((curExercise.getExerciseTime())
+                / (oneCycleTime * curExerciseMuscles.size())));
+      }
+      totalDifficulty +=
+              ((curExercise.getExerciseTime()) / oneCycleTime)
+                      * (curExercise.getExerciseDifficulty());
+    }
+    metrics.put("difficulty", totalDifficulty);
+    for (int i = 0; i < exercises.size(); i++) {
+      Exercise curExercise = exercises.get(i);
+      equipment.addAll(curExercise.getExerciseEquipment());
+    }
+  }
+
   @Override
   public int getDim() {
     return metricNames.length;
@@ -41,6 +75,10 @@ public class Workout implements KDNode, Vertex<WorkoutConnection, Workout> {
   public double getMetric(int dimLevel) {
     int scaledDimLevel = dimLevel % this.getDim();
     String metricName = metricNames[scaledDimLevel];
+    return metrics.get(metricName);
+  }
+
+  public double getMetric(String metricName) {
     return metrics.get(metricName);
   }
 

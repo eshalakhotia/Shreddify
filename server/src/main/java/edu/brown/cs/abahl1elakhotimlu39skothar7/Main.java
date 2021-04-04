@@ -225,23 +225,30 @@ public class Main {
         targetAreas.add(unusableTargetAreas.getString(i));
       }
       KDTree toSearch;
+      List<Workout> workouts = new ArrayList<Workout>();
+      Set<String> keys = allWorkouts.keySet();
+      Iterator<String> iterate = keys.iterator();
       if (flexibility) {
-        List<Workout> workouts = new ArrayList<Workout>();
-        Set<String> keys = allWorkouts.keySet();
-        Iterator<String> iterate = keys.iterator();
         while (iterate.hasNext()) {
           workouts.add(allWorkouts.get(iterate.next()));
         }
-        if (workouts.size() > 0) {
-          toSearch = new KDTree(workouts, workouts.get(0).getAllMetrics().size());
-        } else {
-          toSearch = new KDTree(new ArrayList<>(), 0);
+      } else {
+        while (iterate.hasNext()) {
+          Workout newWorkout = allWorkouts.get(iterate.next());
+          if (newWorkout.getMetric("time") < time) {
+            workouts.add(newWorkout);
+          }
         }
-        // finish when Workout constructor done
-        // Workout idealWorkout = new Workout()
-        Workout idealWorkout = null;
-        bestRecommendations = toSearch.kNearestNeighbors(idealWorkout, 5);
       }
+      if (workouts.size() > 0) {
+        toSearch = new KDTree(workouts, workouts.get(0).getAllMetrics().size());
+      } else {
+        toSearch = new KDTree(new ArrayList<>(), 0);
+      }
+      // finish when Workout constructor done
+      // Workout idealWorkout = new Workout()
+      Workout idealWorkout = null;
+      bestRecommendations = toSearch.kNearestNeighbors(idealWorkout, 5);
       // In the React files, use the success boolean to check whether to display the results
       // or the error that prevented results from being obtained
       Map<String, Object> variables = ImmutableMap.of(

@@ -24,7 +24,7 @@ public class Graph<E extends Edge<E, V>, V extends Vertex<E, V>> {
    * Creates Graph object with HashMap containing all Nodes to be contained by the Graph.
    * @param allNodes the nodes that the graph object is intended to contain
    */
-  public Graph(HashMap<String, V> allNodes) {
+  public Graph(Map<String, V> allNodes) {
     this.allNodes = allNodes;
   }
 
