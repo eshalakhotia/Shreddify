@@ -1,5 +1,10 @@
 import './Sidebar.css';
-import {Link} from "react-router-dom";
+
+
+/**
+ * Side navigation bar
+ */
+
 
 /* Set the width of the side navigation to 250px and the left margin of the page content to 250px */
 function openNav() {
@@ -38,9 +43,9 @@ function Sidebar(props) {
         <div id="mySidenav" className="sidenav">
             <a href="javascript:void(0)" className="closebtn" onClick={closeNav}>&times;</a>
             <a href="javascript:void(0)" className="openbtn" onClick={openNav}>
-                <div className="bar1"></div>
-                <div className="bar2"></div>
-                <div className="bar3"></div>
+                <div className="bar1"/>
+                <div className="bar2"/>
+                <div className="bar3"/>
             </a>
             <div className="links">
                 <a href="#" onClick={findWorkouts}>Find Workouts</a>

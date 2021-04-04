@@ -3,6 +3,9 @@ import './Home.css';
 import Sidebar from './Sidebar';
 import Questionnaire from "./Questionnaire";
 
+/**
+ * Home screen/profile
+ */
 class Home extends React.Component {
 
     constructor(props) {

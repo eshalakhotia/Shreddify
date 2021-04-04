@@ -5,7 +5,12 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
@@ -17,7 +22,11 @@ import joptsimple.OptionSet;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import spark.*;
+import spark.ExceptionHandler;
+import spark.Request;
+import spark.Response;
+import spark.Route;
+import spark.Spark;
 import spark.template.freemarker.FreeMarkerEngine;
 
 import freemarker.template.Configuration;
@@ -25,7 +34,7 @@ import freemarker.template.Configuration;
 /**
  * The Main class of our project. This is where execution begins.
  */
-public class Main {
+public final class Main {
   private static final int DEFAULT_PORT = 4567;
   private static final Gson GSON = new Gson();
 
@@ -82,6 +91,12 @@ public class Main {
     Spark.exception(Exception.class, new ExceptionPrinter());
 
     FreeMarkerEngine freeMarker = createEngine();
+
+
+    //maps routes
+    Spark.post("/login", new LoginHandler());
+    Spark.post("/recs", new RecommendWorkoutsHandler());
+
 
     Spark.options("/*", (request, response) -> {
       String accessControlRequestHeaders = request.headers("Access-Control-Request-Headers");
@@ -214,16 +229,21 @@ public class Main {
       boolean success = true;
       String error = "";
       List<Workout> bestRecommendations = new ArrayList<>();
-      // gets username, password from frontend
+
+      // gets energy, time, target areas, (flexibility, difficulty) from request body
+      double energy = data.getDouble("energy");
       int time = data.getInt("time");
       boolean flexibility = data.getBoolean("flexibility");
-      double energy = data.getDouble("energy");
-      double difficulty = data.getDouble("difficulty");
-      JSONArray unusableTargetAreas = data.getJSONArray("targetAreas");
+      JSONArray unusableTargetAreas = data.getJSONArray("targets");
       List<String> targetAreas = new ArrayList<String>();
       for (int i = 0; i < unusableTargetAreas.length(); i++) {
         targetAreas.add(unusableTargetAreas.getString(i));
       }
+
+      //not implemented in frontend yet
+      double difficulty = data.getDouble("difficulty");
+
+
       KDTree toSearch;
       if (flexibility) {
         List<Workout> workouts = new ArrayList<Workout>();

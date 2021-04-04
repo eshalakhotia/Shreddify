@@ -1,4 +1,5 @@
 import './App.css';
+import Backend from "./Backend";
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import {
@@ -7,6 +8,9 @@ import {
     Link,
 } from "react-router-dom";
 
+/**
+ * Login page
+ */
 class App extends React.Component {
     constructor(props) {
         super(props)
@@ -42,6 +46,18 @@ class App extends React.Component {
         //console.log(document.getElementById("username").style);
     }
 
+    async onLogin() {
+        //gets boolean success, User, error message
+        const info = await Backend.login(this.state.username, this.state.password)
+        if (info === null) {
+            console.log("response is null, something wrong with backend handler")
+        } else {
+            console.log("success: " + info.success)
+            console.log("error: " + info.error)
+            console.log("User: " + info.results)
+        }
+    }
+
     render() {
         return (
             <div className="App">
@@ -56,7 +72,11 @@ class App extends React.Component {
                     </div>
 
                     <div id="login">
-                        <Link to="/Home"><button>Log In</button></Link>
+                        <Link to="/Home"><button id="loginButton" onClick={this.onLogin.bind(this)}>Log In</button></Link>
+                    </div>
+
+                    <div id="signup">
+                        <Link to="/Home"><button id="signupButton">Sign Up</button></Link>
                     </div>
 
                 </div>
