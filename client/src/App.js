@@ -102,7 +102,9 @@ class App extends React.Component {
 
 
                     <div id="signup">
-                        <Link to="/Home"><button id="signupButton">Sign Up</button></Link>
+                        <Link to="/Home">
+                            <button id="signupButton">Sign Up</button>
+                        </Link>
                     </div>
 
                 </div>

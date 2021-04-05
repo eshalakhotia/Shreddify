@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import Home from './Home';
+import Recommendations from './Recommendations'
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import {Redirect} from "react-router";
@@ -16,6 +17,7 @@ ReactDOM.render(
         <Switch>
             <Route exact path="/" component={App} />
             <Route path="/Home" component={Home} />
+            <Route path="/Recommendations" component={Recommendations} />
         </Switch>
     </BrowserRouter>,
   document.getElementById('root')
