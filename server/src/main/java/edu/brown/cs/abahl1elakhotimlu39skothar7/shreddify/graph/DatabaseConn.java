@@ -83,15 +83,16 @@ public class DatabaseConn {
       double newExerciseDifficulty = resulting.getDouble(3);
       int newExerciseTime = resulting.getInt(4);
       int newExerciseReps = resulting.getInt(5);
-      String[] targetAreasColumns = new String[]{"Cardio", "Abs", "Legs", "Arms", "Glutes", "HIIT"};
+      String[] targetAreasColumns = new String[]{"Cardio", "Abs", "Legs", "Arms", "Glutes", "Back", "Chest"};
       Set<String> targetAreas = new HashSet<String>();
-      for (int i = 6; i < 11; i++) {
+      for (int i = 6; i < 13; i++) {
         if (resulting.getDouble(i) != 0) {
           targetAreas.add(targetAreasColumns[i - 6]);
         }
       }
-      // figure out how to express equipment
-      Set<String> equip = new HashSet<String>();
+      // equipment field is a comma delimited string which we split and put into a HashSet
+      String[] equipmentList = resulting.getString(13).split(",");
+      Set<String> equip = new HashSet<String>(Arrays.asList(equipmentList));
       Exercise newExercise = new Exercise(newExerciseID, newExerciseName, newExerciseDifficulty, newExerciseTime, newExerciseReps, targetAreas, equip);
       exercises.put(newExerciseID, newExercise);
     }
