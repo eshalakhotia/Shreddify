@@ -1,6 +1,7 @@
 package edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.graph;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The Node interface includes methods that set and get the Edges that are traversable from it.
@@ -15,7 +16,7 @@ public interface Vertex<E extends Edge<E, V>, V extends Vertex<E, V>> {
    * @param graph the graph from which we want to see the traversable edges from.
    * @return List of Edges that have their start at this Node
    */
-  ArrayList<E> getTraversableEdgesFromNode(Graph<E, V> graph);
+  List<E> getEdgesFromNode(Graph<E, V> graph);
 
   /**
    * Returns the ID or name of this Node.

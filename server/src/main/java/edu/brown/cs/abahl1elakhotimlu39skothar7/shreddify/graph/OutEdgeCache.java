@@ -5,6 +5,7 @@ import com.google.common.cache.CacheBuilder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -15,7 +16,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class OutEdgeCache<E extends Edge<E, V>, V extends Vertex<E, V>> {
   //this maps holds each id with its corresponding node object and list of outgoing edges
-  private Cache<String, Map<V, ArrayList<E>>> outgoingEs;
+  private Cache<String, Map<V, List<E>>> outgoingEs;
   private final int cacheSize = 200000;
   private final int expirationMins = 15;
 
@@ -31,8 +32,8 @@ public class OutEdgeCache<E extends Edge<E, V>, V extends Vertex<E, V>> {
    * @param curNode node for which we are saving outgoing edges
    * @param edges edges to add to node
    */
-  public void addToMap(V curNode, ArrayList<E> edges) {
-    Map<V, ArrayList<E>> map = new HashMap<>();
+  public void addToCache(V curNode, List<E> edges) {
+    Map<V, List<E>> map = new HashMap<>();
     map.put(curNode, edges);
     outgoingEs.put(curNode.getID(), map);
   }
@@ -41,8 +42,8 @@ public class OutEdgeCache<E extends Edge<E, V>, V extends Vertex<E, V>> {
    * @param id corresponding to node for which we want to retrieve outgoing edges
    * @return list of outgoing edges
    */
-  public ArrayList<E> getOutgoingEs(String id) {
-    Map<V, ArrayList<E>> map = outgoingEs.getIfPresent(id);
+  public List<E> getOutgoingEs(String id) {
+    Map<V, List<E>> map = outgoingEs.getIfPresent(id);
     if (map == null) {
       return null;
     }
@@ -54,7 +55,7 @@ public class OutEdgeCache<E extends Edge<E, V>, V extends Vertex<E, V>> {
    * @return node object corresponding to inputted id
    */
   public V getNode(String id) {
-    Map<V, ArrayList<E>> map = outgoingEs.getIfPresent(id);
+    Map<V, List<E>> map = outgoingEs.getIfPresent(id);
     if (map == null) {
       return null;
     }

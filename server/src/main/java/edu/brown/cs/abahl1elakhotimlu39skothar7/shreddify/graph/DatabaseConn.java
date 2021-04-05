@@ -14,6 +14,10 @@ import java.util.*;
 public class DatabaseConn {
   private static Connection conn;
   private List<String> usersList;
+  private Map<String, User> users;
+  private Map<String, Workout> workouts;
+  private Map<String, Exercise> exercises;
+  private OutEdgeCache cache = new OutEdgeCache();
   
   public DatabaseConn() throws SQLException, ClassNotFoundException {
     conn = null;
@@ -27,6 +31,22 @@ public class DatabaseConn {
     Class.forName("org.sqlite.JDBC");
     String urlToDB = "jdbc:sqlite:" + filename;
     conn = DriverManager.getConnection(urlToDB);
+    exercises = getAllExercises();
+    workouts = getAllWorkouts(exercises);
+    users = getAllUsers(workouts);
+
+  }
+
+  public Map<String, Exercise> getExercises() {
+    return new HashMap<String, Exercise>(exercises);
+  }
+
+  public Map<String, Workout> getWorkouts() {
+    return new HashMap<String, Workout>(workouts);
+  }
+
+  public Map<String, User> getUsers() {
+    return new HashMap<String, User>(users);
   }
   public Connection getConn() {
     return conn;
@@ -64,10 +84,10 @@ public class DatabaseConn {
       int newExerciseTime = resulting.getInt(4);
       int newExerciseReps = resulting.getInt(5);
       String[] targetAreasColumns = new String[]{"Cardio", "Abs", "Legs", "Arms", "Glutes", "HIIT"};
-      HashMap<String, Double> targetAreas = new HashMap<String, Double>();
+      Set<String> targetAreas = new HashSet<String>();
       for (int i = 6; i < 11; i++) {
         if (resulting.getDouble(i) != 0) {
-          targetAreas.put(targetAreasColumns[i - 6], resulting.getDouble(i));
+          targetAreas.add(targetAreasColumns[i - 6]);
         }
       }
       // figure out how to express equipment
@@ -78,7 +98,7 @@ public class DatabaseConn {
     return exercises;
   }
 
-  public Map<String, Workout> getAllWorkouts() throws SQLException {
+  public Map<String, Workout> getAllWorkouts(Map<String, Exercise> allExercises) throws SQLException {
     Map<String, Workout> workouts = new HashMap<String, Workout>();
     PreparedStatement workoutInfo = conn.prepareStatement(
             "SELECT * FROM workouts;");
@@ -86,22 +106,20 @@ public class DatabaseConn {
     while (resulting.next()) {
       String newWorkoutID = resulting.getString(1);
       String newWorkoutName = resulting.getString(2);
-      double newWorkoutCycles = resulting.getInt(3);
+      int newWorkoutCycles = resulting.getInt(3);
       String newWorkoutExerciseIDList = resulting.getString(4);
       String[] newWorkoutExerciseIDArray = newWorkoutExerciseIDList.split(",");
       List<Exercise> newWorkoutExercises = new LinkedList<Exercise>();
-      Map<String, Exercise> allExercises = getAllExercises();
       for (int i = 0; i < newWorkoutExerciseIDArray.length; i++) {
         newWorkoutExercises.add(allExercises.get(newWorkoutExerciseIDArray[i]));
       }
-      //uncomment when Workout constructor created
-      //Workout newWorkout = new Workout(newWorkoutID, newWorkoutName, newWorkoutCycles, newWorkoutExercises);
-      //workouts.put(newWorkoutID, newWorkout);
+      Workout newWorkout = new Workout(newWorkoutID, newWorkoutName, newWorkoutCycles, newWorkoutExercises, cache);
+      workouts.put(newWorkoutID, newWorkout);
     }
     return workouts;
   }
 
-  public Map<String, User> getAllUsers() throws SQLException {
+  public Map<String, User> getAllUsers(Map<String, Workout> allWorkouts) throws SQLException {
     Map<String, User> users = new HashMap<String, User>();
     PreparedStatement userInfo = conn.prepareStatement(
             "SELECT * FROM users;");
@@ -128,10 +146,11 @@ public class DatabaseConn {
       }
       int newUserStreak = resulting.getInt(5);
       // allWorkouts must be adjusted
-      User newUser = new User(newUserName, newUserPassword, newUserOFL, newUserNumWorkouts, newUserStreak, newUserLastWorkout, getAllWorkouts());
+      User newUser = new User(newUserName, newUserPassword, newUserOFL, newUserNumWorkouts, newUserStreak, newUserLastWorkout, allWorkouts);
       users.put(newUserName, newUser);
     }
     return users;
   }
+
 
 }

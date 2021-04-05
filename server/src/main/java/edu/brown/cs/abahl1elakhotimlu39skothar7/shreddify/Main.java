@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,6 +16,7 @@ import java.util.Set;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 
+import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.graph.DatabaseConn;
 import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.graph.Workout;
 import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.kdtree.KDTree;
 import joptsimple.OptionParser;
@@ -48,12 +50,20 @@ public final class Main {
   }
 
   private String[] args;
-  private static HashMap<String, User> users;
+  private static DatabaseConn mainDatabase;
+  private static Map<String, User> users;
   private static User curUser;
-  private static HashMap<String, Workout> allWorkouts;
+  private static Map<String, Workout> allWorkouts;
 
   private Main(String[] args) {
     this.args = args;
+    try {
+      mainDatabase = new DatabaseConn();
+      users = mainDatabase.getUsers();
+      allWorkouts = mainDatabase.getWorkouts();
+    } catch (Exception e) {
+      mainDatabase = null;
+    }
   }
 
   private void run() {
@@ -260,23 +270,30 @@ public final class Main {
 
 
       KDTree toSearch;
+      List<Workout> workouts = new ArrayList<Workout>();
+      Set<String> keys = allWorkouts.keySet();
+      Iterator<String> iterate = keys.iterator();
       if (flexibility) {
-        List<Workout> workouts = new ArrayList<Workout>();
-        Set<String> keys = allWorkouts.keySet();
-        Iterator<String> iterate = keys.iterator();
         while (iterate.hasNext()) {
           workouts.add(allWorkouts.get(iterate.next()));
         }
-        if (workouts.size() > 0) {
-          toSearch = new KDTree(workouts, workouts.get(0).getAllMetrics().size());
-        } else {
-          toSearch = new KDTree(new ArrayList<>(), 0);
+      } else {
+        while (iterate.hasNext()) {
+          Workout newWorkout = allWorkouts.get(iterate.next());
+          if (newWorkout.getMetric("time") < time) {
+            workouts.add(newWorkout);
+          }
         }
-        // finish when Workout constructor done
-        // Workout idealWorkout = new Workout()
-        Workout idealWorkout = null;
-        bestRecommendations = toSearch.kNearestNeighbors(idealWorkout, 5);
       }
+      if (workouts.size() > 0) {
+        toSearch = new KDTree(workouts, workouts.get(0).getAllMetrics().size());
+      } else {
+        toSearch = new KDTree(new ArrayList<>(), 0);
+      }
+      // finish when Workout constructor done
+      // Workout idealWorkout = new Workout()
+      Workout idealWorkout = null;
+      bestRecommendations = toSearch.kNearestNeighbors(idealWorkout, 5);
       // In the React files, use the success boolean to check whether to display the results
       // or the error that prevented results from being obtained
       Map<String, Object> variables = ImmutableMap.of(

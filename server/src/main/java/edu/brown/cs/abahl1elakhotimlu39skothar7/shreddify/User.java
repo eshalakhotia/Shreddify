@@ -20,7 +20,7 @@ public class User {
           String username,
           String password,
           double overallFitnessLevel,
-          HashMap<String, Workout> allWorkouts) {
+          Map<String, Workout> allWorkouts) {
     this.username = username;
     this.password = password.hashCode();
     this.overallFitnessLevel = overallFitnessLevel;
@@ -89,7 +89,9 @@ public class User {
     return lastWorkout;
   }
 
-  //Void updatePreferences(String workoutID, double newPreference)
+  public void updatePreferences(String workoutID, double newPreference) {
+    connectedPreferences.updateParameter(workoutID, newPreference);
+  }
 
 
 

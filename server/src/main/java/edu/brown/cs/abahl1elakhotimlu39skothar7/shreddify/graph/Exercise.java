@@ -12,11 +12,11 @@ public class Exercise {
   private int time;
   private int reps;
   private double difficulty;
-  private Map<String, Double> muscle;
+  private Set<String> muscle;
   private Set<String> equipment;
   private List<String[]> usersList = new ArrayList<>();
   
-  public Exercise(String id, String eName, double diff, int eTime, int eReps, Map<String, Double> eMuscle, Set<String> equip) {
+  public Exercise(String id, String eName, double diff, int eTime, int eReps, Set<String> eMuscle, Set<String> equip) {
     iD = id;
     name = eName;
     time = eTime;
@@ -25,22 +25,23 @@ public class Exercise {
     difficulty = diff;
     equipment = equip;
   }
-  public String getExerciseName() throws SQLException {
+  public String getExerciseName() {
     return name;
   }
-  public int getExerciseTime() throws SQLException {
+  public int getExerciseTime() {
     return time;
   }
-  public int getExerciseReps() throws SQLException {
+  public int getExerciseReps() {
     return reps;
   }
-  public double getExerciseDifficulty() throws SQLException {
+  public double getExerciseDifficulty() {
     return difficulty;
   }
 
-  public Map<String, Double> getExerciseMuscle() {
+  public Set<String> getExerciseMuscle() {
     return muscle;
   }
+
   public Set<String> getExerciseEquipment() {
     return equipment;
   }

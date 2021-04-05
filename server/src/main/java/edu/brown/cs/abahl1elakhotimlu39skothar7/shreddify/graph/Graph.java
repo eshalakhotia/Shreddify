@@ -1,9 +1,6 @@
 package edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.graph;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.PriorityQueue;
+import java.util.*;
 
 /**
  * This class handles the dijkstra algorithm to find the shortest path between
@@ -78,7 +75,7 @@ public class Graph<E extends Edge<E, V>, V extends Vertex<E, V>> {
           throw new RuntimeException("ERROR: no path to start node");
         } else {
           // gets traversable nodes from current start node
-          ArrayList<E> waysFromStartNode = allNodes.get(startNodeID).getTraversableEdgesFromNode(this);
+          List<E> waysFromStartNode = allNodes.get(startNodeID).getEdgesFromNode(this);
           for (int i = 0; i < waysFromStartNode.size(); i++) {
             ArrayList<E> pathToStartNodeCopy = new ArrayList<E>(pathToStartNode);
             E curMapWay = waysFromStartNode.get(i);
@@ -155,7 +152,7 @@ public class Graph<E extends Edge<E, V>, V extends Vertex<E, V>> {
           throw new RuntimeException("ERROR: no path to start node");
         } else {
           // gets traversable nodes from current start node
-          ArrayList<E> waysFromStartNode = allNodes.get(startNodeID).getTraversableEdgesFromNode(this);
+          List<E> waysFromStartNode = allNodes.get(startNodeID).getEdgesFromNode(this);
           for (E e : waysFromStartNode) {
             addNode(e.getEnd().getID(), e.getEnd());
           }
@@ -215,7 +212,7 @@ public class Graph<E extends Edge<E, V>, V extends Vertex<E, V>> {
   public void updateParameter(String id, double scaledRating) {
     V curVertex = this.getAllNodes().get(id);
     curVertex.setParameterToUpdate(scaledRating);
-    ArrayList<E> outEdges = curVertex.getTraversableEdgesFromNode(this);
+    List<E> outEdges = curVertex.getEdgesFromNode(this);
     for (int i = 0; i < outEdges.size(); i++) {
       E edgeToConnectedVertex = outEdges.get(i);
       V vertexToUpdate = edgeToConnectedVertex.getEnd();
