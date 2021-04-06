@@ -7,7 +7,7 @@ import java.util.*;
 /**
  * Edge that connects different Workout objects.
  */
-public class Workout implements KDNode, Vertex<WorkoutConnection, Workout> {
+public class Workout implements KDNode<Workout>, Vertex<WorkoutConnection, Workout> {
   private String workoutID;
   private String name;
   // all metrics of a workout that we want to look at
@@ -102,7 +102,7 @@ public class Workout implements KDNode, Vertex<WorkoutConnection, Workout> {
 
   @Override
   //calculates aggregate "closeness"/similarity with provided workout node using the Metrics
-  public double calcDistance(KDNode other) {
+  public double calcDistance(Workout other) {
     double differenceSum = 0;
     for (int i = 0; i < metricNames.length; i++) {
       double difference = Math.abs(metrics.get(metricNames[i]) - other.getAllMetrics().get(metricNames[i]));

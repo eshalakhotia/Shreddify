@@ -1,9 +1,5 @@
 package edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.kdtree;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.PriorityQueue;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Represents a KdTree of any dimension and contains KDNode objects.
@@ -25,6 +21,13 @@ public class KDTree<N extends KDNode> {
     this.buildTree(nodes, d);
   }
 
+  public KDTree() {
+    this.root = null;
+    this.right = null;
+    this.left = null;
+    this.dimensions = 0;
+  }
+
   /**
    * Builds a balanced KDTree from the provided list of nodes.
    *
@@ -32,26 +35,45 @@ public class KDTree<N extends KDNode> {
    * @param curDim the current depth of the tree that KDNodes are being added to
    */
   public void buildTree(List<N> nodes, int curDim) throws RuntimeException {
-    boolean validList = true;
-    int numDim = nodes.get(0).getDim();
-    for (int i = 0; i < nodes.size(); i++) {
-      validList = validList && (nodes.get(i).getDim() == numDim);
-    }
-    if (validList) {
-      nodes.sort(new NodeDimComparator<N>(numDim));
-      if (nodes.size() == 1) {
-        this.root = nodes.get(0);
-        this.left = null;
-        this.right = null;
-      } else if (nodes.size() > 1) {
-        int curMid = (nodes.size() - 1) / 2;
-        this.root = nodes.get(curMid);
-        this.left.buildTree(nodes.subList(0, curMid), curDim + 1);
-        this.right.buildTree(nodes.subList(curMid + 1, nodes.size()), curDim + 1);
+    boolean validList;
+    if (!nodes.isEmpty()) {
+      validList = true;
+      dimensions = nodes.get(0).getDim();
+      for (int i = 0; i < nodes.size(); i++) {
+        validList = validList && (nodes.get(i).getDim() == dimensions);
+      }
+      if (validList) {
+        nodes.sort(new NodeDimComparator<N>(curDim));
+        if (nodes.size() == 1) {
+          this.root = nodes.get(0);
+          this.left = new KDTree();
+          this.right = new KDTree();
+        } else if (nodes.size() > 1) {
+          int curMid = (nodes.size() - 1) / 2;
+          this.root = nodes.get(curMid);
+          List<N> leftList = nodes.subList(0, curMid);
+          List<N> rightList = nodes.subList(curMid + 1, nodes.size());
+          if (leftList.isEmpty()) {
+            this.left = new KDTree();
+          } else {
+            this.left = new KDTree<N>(leftList, curDim + 1);
+          }
+          if (rightList.isEmpty()) {
+            this.right = new KDTree();
+          } else {
+            this.right = new KDTree<N>(rightList, curDim + 1);
+          }
+        }
+      } else {
+        throw new RuntimeException("ERROR: the list of KDNodes passed to the KDTree was invalid");
       }
     } else {
-      throw new RuntimeException("ERROR: the list of KDNodes passed to the KDTree was invalid");
+      this.root = null;
+      this.dimensions = 0;
+      this.left = null;
+      this.right = null;
     }
+
   }
 
   /**
@@ -147,16 +169,16 @@ public class KDTree<N extends KDNode> {
       @Override
       public int compare(N kdn1, N kdn2) {
         if (target.calcDistance(kdn1) > target.calcDistance(kdn2)) {
-          return 1;
-        } else if (target.calcDistance(kdn1) < target.calcDistance(kdn2)) {
           return -1;
+        } else if (target.calcDistance(kdn1) < target.calcDistance(kdn2)) {
+          return 1;
         } else {
           return 0;
         }
       }
     });
     neighborsHelper(target, neighborsPQ, numNeighbors, Integer.MAX_VALUE, 0);
-    for (int i = 0; i < neighborsPQ.size(); i++) {
+    for (int i = 0; i < numNeighbors; i++) {
       neighbors.add(0, neighborsPQ.poll());
     }
     return neighbors;
@@ -170,6 +192,8 @@ public class KDTree<N extends KDNode> {
   public void add(N n, int curDim) {
     if (this.root == null) {
       this.root = n;
+      this.right = new KDTree<>();
+      this.left = new KDTree<>();
     } else {
       if (n.getMetric(curDim) < this.root.getMetric(curDim)) {
         this.left.add(n, curDim + 1);
@@ -193,10 +217,9 @@ public class KDTree<N extends KDNode> {
       // if a leaf node has not yet been reached
       // usableDim determines which coordinate in the points need to be compared
       int usableDim = dim % dimensions;
-      if (curMin.getMetric(usableDim) < this.root.getMetric(usableDim)) {
+      if (curMin.getMetric(usableDim) > this.root.getMetric(usableDim)) {
         curMin = this.root;
       }
-      // Right child KDTree is searched for min using result of left child KDTree search as curMin
       return this.right.findMin(this.left.findMin(curMin, dim), dim);
     }
   }
@@ -209,10 +232,13 @@ public class KDTree<N extends KDNode> {
    * @param dim the dimension that we want to find the minimum coordinate in.
    */
   public void rebalance(int dim) {
-    if (this.right == null) {
-      if (this.left == null) {
+    if (this.right.getRoot() == null) {
+      if (this.left.getRoot() == null) {
         // if both children are null, the root is set to null
+        // THE PROBLEM IS HERE ON LINE 269
         this.root = null;
+        this.left = null;
+        this.right = null;
       } else {
         // if right child KDTree is null but left child KDTree is not
         // min at given dim is found in the left child KDTree
@@ -224,7 +250,7 @@ public class KDTree<N extends KDNode> {
         // right child KDTree is replaced with left child KDTree
         this.right = this.left;
         // left child KDTree is set to an empty KDTree with same dimensions as current KDTree
-        this.left = new KDTree(new ArrayList<>(), dimensions);
+        this.left = new KDTree();
       }
     } else {
       // if right child KDTree is not null
@@ -244,18 +270,29 @@ public class KDTree<N extends KDNode> {
    */
   public void remove(N n, int dim) {
     // when the current root is the KDNode to be removed, rebalance() is called
-    if (this.root.hashCode() == (n.hashCode())) {
-      this.rebalance(dim);
-    } else if (this.root == null) {
-      // if leaf node is reached without having found the point to be removed, exception is thrown
-      throw new RuntimeException("ERROR: The point couldn't be found in this tree");
-    } else {
-      // iterates down the tree to find the place that KDNode will be if it is in the KDTree
-      int curDim = dim % dimensions;
-      if (n.getMetric(curDim) < this.root.getMetric(curDim)) {
-        this.left.remove(n, dim + 1);
+    if (this.root != null) {
+      boolean sameMetrics = (this.root.getAllMetrics().size() == n.getAllMetrics().size());
+      Set<String> thisKeys = this.root.getAllMetrics().keySet();
+      Iterator iterate = thisKeys.iterator();
+      while (iterate.hasNext()) {
+        Object curKey = iterate.next();
+        sameMetrics = sameMetrics
+                && (this.root.getAllMetrics().get(curKey).equals(n.getAllMetrics().get(curKey)));
+      }
+      if (sameMetrics) {
+        this.rebalance(dim);
       } else {
-        this.right.remove(n, dim + 1);
+        // iterates down the tree to find the place that KDNode will be if it is in the KDTree
+        int curDim = dim % dimensions;
+        if (n.getMetric(curDim) < this.root.getMetric(curDim)) {
+          if (this.left != null) {
+            this.left.remove(n, dim + 1);
+          }
+        } else {
+          if (this.right != null) {
+            this.right.remove(n, dim + 1);
+          }
+        }
       }
     }
   }
@@ -265,6 +302,20 @@ public class KDTree<N extends KDNode> {
    */
   public N getRoot() {
     return root;
+  }
+
+  /**
+   * @return the left subchild of the current KDTree
+   */
+  public KDTree<N> getLeft() {
+    return this.left;
+  }
+
+  /**
+   * @return the right subchild of the current KDTree
+   */
+  public KDTree<N> getRight() {
+    return this.right;
   }
 
 }

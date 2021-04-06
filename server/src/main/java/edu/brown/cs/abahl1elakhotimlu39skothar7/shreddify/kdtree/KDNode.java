@@ -2,7 +2,7 @@ package edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.kdtree;
 
 import java.util.HashMap;
 
-public interface KDNode {
+public interface KDNode<N extends KDNode> {
 
   //gets number of dimensions in node?
   // current dimension of node? (time, equip, difficulty, % abs, % arms, etc.)
@@ -17,5 +17,5 @@ public interface KDNode {
   // boolean getFlexibility();
 
   //calculates aggregate "closeness"/similarity with provided workout node using the Metrics
-  double calcDistance(KDNode n);
+  double calcDistance(N n);
 }
