@@ -12,7 +12,7 @@ public class Workout implements KDNode<Workout>, Vertex<WorkoutConnection, Worko
   private String name;
   // all metrics of a workout that we want to look at
   // (String array necassary to support comparing dimensions on KDTree)
-  private String[] metricNames = new String[]{"time", "difficulty", "cardio", "abs", "legs", "arms", "glutes", "HIIT"};
+  private String[] metricNames = new String[]{"time", "difficulty", "cardio", "abs", "legs", "arms", "glutes"};
   // Getting a specific metric calls from HashMap for constant time access
   private HashMap<String, Double> metrics;
   // we somehow need to figure out a way to turn the target areas and their percentages
@@ -37,7 +37,7 @@ public class Workout implements KDNode<Workout>, Vertex<WorkoutConnection, Worko
     this.metrics = new HashMap<String, Double>();
     this.equipment = new HashSet<String>();
     this.cache = cache;
-    int oneCycleTime = 0;
+    double oneCycleTime = 0;
     double totalDifficulty = 0;
     for (int i = 0; i < metricNames.length; i++) {
       metrics.put(metricNames[i], Double.valueOf(0));
@@ -139,8 +139,6 @@ public class Workout implements KDNode<Workout>, Vertex<WorkoutConnection, Worko
       return edges;
     }
   }
-
-
 
   @Override
   /**
