@@ -1,7 +1,7 @@
 import './Questionnaire.css';
 import Backend from './Backend.js'
 import React from "react";
-import {Link} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 
 /**
  * Find Workouts questionnaire, opened from Sidebar
@@ -9,20 +9,28 @@ import {Link} from "react-router-dom";
 class Questionnaire {
 
     constructor() {
-        this.energy = 0
-        this.time = 0
-        this.targets = []
-        this.flexibility = true;
+        this.input = {
+            energy: 0,
+            time: 0,
+            targets: [],
+            flexibility: true
+        }
+        this.output = {
+            success: false,
+            results: [],
+            error: ''
+        }
+        this.submitted = false
     }
 
     //closes questionnaire modal
     closeQuestionnaire() {
-        document.getElementById("questionnaire").style.display = "none";
-        //remove options so they are not re-rendered
+        //remove options so they are not re-rendered when questionnaire is opened again
         const options = document.getElementById("options")
         while (options.firstChild) {
             options.removeChild(options.firstChild)
         }
+        document.getElementById("questionnaire").style.display = "none";
     }
 
     //renders a target area option on the form
@@ -50,46 +58,77 @@ class Questionnaire {
             el.style.color = "white";
 
             //add to targets list
-            this.targets.push(option)
+            this.input.targets.push(option)
         } else {
             //deselect
             el.style.backgroundColor = "white";
             el.style.color = "hotpink";
 
             //remove from targets list
-            const index = this.targets.indexOf(option)
-            this.targets.splice(index, 1)
+            const index = this.input.targets.indexOf(option)
+            this.input.targets.splice(index, 1)
         }
     }
 
     //updates energy field when user changes slider
     changeEnergy() {
         //console.log("energy: " + document.getElementById("energySlider").value)
-        this.energy = document.getElementById("energySlider").value
-        console.log("energy: " + this.energy)
+        this.input.energy = document.getElementById("energySlider").value
+        console.log("energy: " + this.input.energy)
     }
 
     //updates time field when user changes slider
     changeTime() {
-        this.time = document.getElementById("timeSlider").value
-        console.log("time: " + this.time)
+        this.input.time = document.getElementById("timeSlider").value
+        console.log("time: " + this.input.time)
     }
 
     changeFlexibility() {
         //console.log("toggle: " + document.getElementById("toggle").checked);
         //checked true = Not flexible, checked false = flexible
-        this.flexibility = !document.getElementById("toggle").checked;
+        this.input.flexibility = !document.getElementById("toggle").checked;
     }
 
-    //sends request to Backend when Go button is pressed
-    onSubmit() {
-        console.log("energy: " + this.energy)
-        console.log("time: " + this.time)
-        console.log("flexibility: " + this.flexibility)
-        console.log("targets: " + this.targets)
-        const recs = Backend.getRecs(this.energy, this.time, this.flexibility, this.targets)
-        //give result to Recommendations page
+    //(!!IGNORE, DOING IN RECOMMENDATIONS CURRENTLY) sends request to Backend when Go button is pressed
+    async onSubmit() {
+        console.log("energy: " + this.input.energy)
+        console.log("time: " + this.input.time)
+        console.log("flexibility: " + this.input.flexibility)
+        console.log("targets: " + this.input.targets)
+        const recs = await Backend.getRecs(this.input.energy, this.input.time, this.input.flexibility, this.input.targets)
+        //results passed to Recommendations.js through Link
+
+        if (recs === null) {
+            console.log("something wrong with backend, response is null")
+            this.output.error = 'Sorry, something went wrong with getting your recommendations :('
+        }
+        else {
+            this.output.success = recs.success
+            this.output.error = recs.error
+            this.output.results = recs.results
+            console.log("success? " + this.output.success)
+            console.log("error? " + this.output.error)
+            console.log("results" + this.output.results)
+        }
+
+        this.submitted = true;
+
+        //closes Questionnaire
+        this.closeQuestionnaire()
     }
+
+    //redirects to Recommendations once necessary, passes recs info
+    renderRedirect() {
+        if (this.submitted) {
+            return <Redirect
+                to={{
+                    pathname: "/Recommendations",
+                    state: {
+                        error: this.output.error}
+                }}/>
+        }
+    }
+
 
     //renders questionnaire
     renderQuestionnaire() {
@@ -129,8 +168,16 @@ class Questionnaire {
                             {this.addTargets("cardio")}
                         </div>
 
+
                         <div id="right">
-                           <button id='go' onClick={this.onSubmit.bind(this)}>Go!</button>
+                            <Link to={{
+                                pathname: "/Recommendations",
+                                state: {
+                                    input: this.input
+                                }
+                            }}>
+                                <button id='go'>Go!</button>
+                            </Link>
                         </div>
                     </div>
                 </div>
@@ -139,6 +186,19 @@ class Questionnaire {
     }
 }
 export default Questionnaire;
+
+/*
+<Link to={{
+   pathname: "/Recommendations",
+   state: {
+       success: this.output.success,
+       error: this.output.error,
+       results: this.output.results
+   }
+}}>
+   <button id='go' onClick={this.onSubmit.bind(this)}>Go!</button>
+</Link>
+ */
 
 /*
     <input id="target" name="target" placeholder="What areas do you want to target?"/>

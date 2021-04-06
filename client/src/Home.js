@@ -17,16 +17,18 @@ class Home extends React.Component {
 
     }
 
-    findWorkouts() {
+    //opens Questionnaire modal when needed
+    openQuestionnaire() {
         document.getElementById("questionnaire").style.display = "block";
     }
 
 
+    //renders Homepage/profile
     render() {
         console.log("rendering Home")
         return (
             <div id="Home" className="Home">
-                <Sidebar className="Sidebar" findWorkouts={this.findWorkouts}/*closeNav={this.closeNav} openNav={this.openNav}*//>
+                <Sidebar className="Sidebar" findWorkouts={this.openQuestionnaire}/*closeNav={this.closeNav} openNav={this.openNav}*//>
 
                 <div id="main">
                     <h1>Welcome Back, [User]!</h1>
