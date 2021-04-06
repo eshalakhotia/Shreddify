@@ -45,7 +45,6 @@ public class WorkoutConnection implements Edge<WorkoutConnection, Workout> {
    * @return a double that equals the heuristic distance.
    */
   public double heuristic(Workout s, Workout e) {
-    //TODO: finish after Workout class
     return s.calcDistance(e);
   }
 

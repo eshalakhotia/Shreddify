@@ -27,7 +27,7 @@ public class Workout implements KDNode<Workout>, Vertex<WorkoutConnection, Worko
   private Double difficulty;
   private HashSet<String> equipment;
   // delete outgoingEdges soon
-  private double preference = 0.5;
+  private double preference = 50;
   private OutEdgeCache cache;
 
   public Workout(String name, String id, int numCycles, List<Exercise> exercises, OutEdgeCache cache) {
@@ -52,10 +52,11 @@ public class Workout implements KDNode<Workout>, Vertex<WorkoutConnection, Worko
       Iterator<String> iterate = curExerciseMuscles.iterator();
       while (iterate.hasNext()) {
         String curMuscle = iterate.next();
-        metrics.put(curMuscle, metrics.get(curMuscle)
+        metrics.put(curMuscle, (metrics.get(curMuscle)
                 + ((curExercise.getExerciseTime())
-                / (oneCycleTime * curExerciseMuscles.size())));
+                / (oneCycleTime * curExerciseMuscles.size()))));
       }
+
       totalDifficulty +=
               ((curExercise.getExerciseTime()) / oneCycleTime)
                       * (curExercise.getExerciseDifficulty());
@@ -64,6 +65,9 @@ public class Workout implements KDNode<Workout>, Vertex<WorkoutConnection, Worko
     for (int i = 0; i < exercises.size(); i++) {
       Exercise curExercise = exercises.get(i);
       equipment.addAll(curExercise.getExerciseEquipment());
+    }
+    for (int i = 2; i < getDim(); i++) {
+      metrics.put(metricNames[i], getMetric(i) * 100);
     }
   }
 
@@ -105,7 +109,13 @@ public class Workout implements KDNode<Workout>, Vertex<WorkoutConnection, Worko
   public double calcDistance(Workout other) {
     double differenceSum = 0;
     for (int i = 0; i < metricNames.length; i++) {
-      double difference = Math.abs(metrics.get(metricNames[i]) - other.getAllMetrics().get(metricNames[i]));
+      double difference;
+      if (i == 0) {
+        difference = Math.abs((metrics.get(metricNames[i]) / 60)
+                - (other.getAllMetrics().get(metricNames[i])) / 60);
+      } else {
+        difference = Math.abs(metrics.get(metricNames[i]) - other.getAllMetrics().get(metricNames[i]));
+      }
       differenceSum += difference;
     }
     return (differenceSum / (metricNames.length));
@@ -147,6 +157,11 @@ public class Workout implements KDNode<Workout>, Vertex<WorkoutConnection, Worko
    */
   public String getID() {
     return workoutID;
+  }
+
+  @Override
+  public String getName() {
+    return name;
   }
 
 }

@@ -214,17 +214,28 @@ public class Graph<E extends Edge<E, V>, V extends Vertex<E, V>> {
     curVertex.setParameterToUpdate(scaledRating);
     List<E> outEdges = curVertex.getEdgesFromNode(this);
     for (int i = 0; i < outEdges.size(); i++) {
+      final double cappedMaxDist = 27;
+      double adjustedWeight;
       E edgeToConnectedVertex = outEdges.get(i);
+      double rawWeight = edgeToConnectedVertex.getWeight();
+      System.out.println(rawWeight);
+      if (rawWeight >= cappedMaxDist) {
+        adjustedWeight = cappedMaxDist;
+      } else {
+        adjustedWeight = rawWeight;
+      }
       V vertexToUpdate = edgeToConnectedVertex.getEnd();
       double parameterToUpdate = vertexToUpdate.getParameterToUpdate();
       if (parameterToUpdate < scaledRating) {
         vertexToUpdate.setParameterToUpdate(
                 parameterToUpdate
-                        + ((scaledRating - parameterToUpdate) * edgeToConnectedVertex.getWeight()));
+                        + ((scaledRating - parameterToUpdate)
+                        * ((cappedMaxDist - adjustedWeight) / cappedMaxDist)));
       } else {
         vertexToUpdate.setParameterToUpdate(
                 parameterToUpdate
-                        - ((parameterToUpdate - scaledRating) * edgeToConnectedVertex.getWeight()));
+                        - ((parameterToUpdate - scaledRating)
+                        * ((cappedMaxDist - adjustedWeight) / cappedMaxDist)));
       }
     }
   }

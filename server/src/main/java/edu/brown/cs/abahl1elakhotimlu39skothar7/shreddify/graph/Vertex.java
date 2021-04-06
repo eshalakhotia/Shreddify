@@ -24,6 +24,8 @@ public interface Vertex<E extends Edge<E, V>, V extends Vertex<E, V>> {
    */
   String getID();
 
+  String getName();
+
   void setParameterToUpdate(double newPreference);
 
   double getParameterToUpdate();

@@ -14,7 +14,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class WorkoutExerciseTest {
+public class ExerciseTest {
 
   private Workout _workout1;
   private Workout _workout2;
@@ -109,62 +109,6 @@ public class WorkoutExerciseTest {
     assertTrue(_bicycleCrunches.getExerciseEquipment().equals(new HashSet<String>()));
     assertTrue(_wallSit.getExerciseEquipment().equals(equipment1));
     assertTrue(_russianTwists.getExerciseEquipment().equals(equipment2));
-    tearDown();
-  }
-
-  /**
-   ** Tests the get methods in Exercise objects
-   */
-  @Test
-  public void testWorkoutConstructor() {
-    List<Exercise> exerciseList1 = new ArrayList<Exercise>();
-    exerciseList1.add(_jumpingJacks);
-    exerciseList1.add( _pushUps);
-    List<Exercise> exerciseList2 = new ArrayList<Exercise>();
-    exerciseList2.add(_wallSit);
-    exerciseList2.add( _bicycleCrunches);
-    exerciseList2.add(_toeTouches);
-    exerciseList2.add( _pushUps);
-    exerciseList2.add( _russianTwists);
-    exerciseList2.add( _jumpingJacks);
-    OutEdgeCache cache1 = new OutEdgeCache<WorkoutConnection, Workout>();
-    OutEdgeCache cache2 = new OutEdgeCache<WorkoutConnection, Workout>();
-    _workout1 = new Workout("new workout 1", "skajdhfalsd", 10, exerciseList1, cache1);
-    _workout2 = new Workout("new workout 2", "asdfkjhasdlf", 1, exerciseList2, cache2);
-    assertEquals("skajdhfalsd", _workout1.getID());
-    assertEquals("asdfkjhasdlf", _workout2.getID());
-    assertEquals(7, _workout1.getDim());
-    assertEquals(7, _workout2.getDim());
-    assertEquals(620, _workout2.getMetric(0), 0.1);
-    assertEquals(71.2, _workout2.getMetric(1), 0.1);
-    assertEquals(0.20, _workout2.getMetric(2), 0.01);
-    assertEquals(0.20, _workout2.getMetric(3), 0.01);
-    assertEquals(0.20, _workout2.getMetric(4), 0.01);
-    assertEquals(0.27, _workout2.getMetric(5), 0.01);
-    assertEquals(0.09, _workout2.getMetric(6), 0.01);
-    assertEquals(3700, _workout1.getMetric(0), 0.1);
-    assertEquals(620, _workout2.getMetric("time"), 0.1);
-    assertEquals(71.2, _workout2.getMetric("difficulty"), 0.1);
-    assertEquals(0.20, _workout2.getMetric("cardio"), 0.01);
-    assertEquals(0.20, _workout2.getMetric("abs"), 0.01);
-    assertEquals(0.20, _workout2.getMetric("legs"), 0.01);
-    assertEquals(0.27, _workout2.getMetric("arms"), 0.01);
-    assertEquals(0.09, _workout2.getMetric("glutes"), 0.01);
-    assertEquals(3700, _workout1.getMetric(0), 0.1);
-    assertEquals(80, _workout1.getMetric(1), 0.1);
-    assertEquals(0.27, _workout1.getMetric(2), 0.01);
-    assertEquals(0, _workout1.getMetric(3), 0.01);
-    assertEquals(0.27, _workout1.getMetric(4), 0.01);
-    assertEquals(0.45, _workout1.getMetric(5), 0.01);
-    assertEquals(0, _workout1.getMetric(6), 0.01);
-    assertEquals(7, _workout1.getAllMetrics().size());
-    assertEquals(0.5, _workout1.getParameterToUpdate(), 0.0001);
-    assertEquals(0.5, _workout2.getParameterToUpdate(), 0.0001);
-    _workout1.setParameterToUpdate(0.99);
-    _workout2.setParameterToUpdate(0.01);
-    assertEquals(0.99, _workout1.getParameterToUpdate(), 0.0001);
-    assertEquals(0.01, _workout2.getParameterToUpdate(), 0.0001);
-    assertEquals(441, _workout1.calcDistance(_workout2), 1);
     tearDown();
   }
 
