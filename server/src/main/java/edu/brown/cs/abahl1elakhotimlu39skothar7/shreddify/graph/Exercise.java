@@ -35,11 +35,9 @@ public class Exercise {
   public double getExerciseDifficulty() {
     return difficulty;
   }
-
   public Set<String> getExerciseMuscle() {
     return muscle;
   }
-
   public Set<String> getExerciseEquipment() {
     return equipment;
   }

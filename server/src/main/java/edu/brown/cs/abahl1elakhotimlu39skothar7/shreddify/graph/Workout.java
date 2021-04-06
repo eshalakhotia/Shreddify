@@ -7,12 +7,12 @@ import java.util.*;
 /**
  * Edge that connects different Workout objects.
  */
-public class Workout implements KDNode, Vertex<WorkoutConnection, Workout> {
+public class Workout implements KDNode<Workout>, Vertex<WorkoutConnection, Workout> {
   private String workoutID;
   private String name;
   // all metrics of a workout that we want to look at
   // (String array necassary to support comparing dimensions on KDTree)
-  private String[] metricNames = new String[]{"time", "difficulty", "cardio", "abs", "legs", "arms", "glutes", "HIIT"};
+  private String[] metricNames = new String[]{"time", "difficulty", "cardio", "abs", "legs", "arms", "glutes"};
   // Getting a specific metric calls from HashMap for constant time access
   private HashMap<String, Double> metrics;
   // we somehow need to figure out a way to turn the target areas and their percentages
@@ -27,7 +27,7 @@ public class Workout implements KDNode, Vertex<WorkoutConnection, Workout> {
   private Double difficulty;
   private HashSet<String> equipment;
   // delete outgoingEdges soon
-  private double preference = 0.5;
+  private double preference = 50;
   private OutEdgeCache cache;
 
   public Workout(String name, String id, int numCycles, List<Exercise> exercises, OutEdgeCache cache) {
@@ -37,7 +37,7 @@ public class Workout implements KDNode, Vertex<WorkoutConnection, Workout> {
     this.metrics = new HashMap<String, Double>();
     this.equipment = new HashSet<String>();
     this.cache = cache;
-    int oneCycleTime = 0;
+    double oneCycleTime = 0;
     double totalDifficulty = 0;
     for (int i = 0; i < metricNames.length; i++) {
       metrics.put(metricNames[i], Double.valueOf(0));
@@ -52,10 +52,11 @@ public class Workout implements KDNode, Vertex<WorkoutConnection, Workout> {
       Iterator<String> iterate = curExerciseMuscles.iterator();
       while (iterate.hasNext()) {
         String curMuscle = iterate.next();
-        metrics.put(curMuscle, metrics.get(curMuscle)
+        metrics.put(curMuscle, (metrics.get(curMuscle)
                 + ((curExercise.getExerciseTime())
-                / (oneCycleTime * curExerciseMuscles.size())));
+                / (oneCycleTime * curExerciseMuscles.size()))));
       }
+
       totalDifficulty +=
               ((curExercise.getExerciseTime()) / oneCycleTime)
                       * (curExercise.getExerciseDifficulty());
@@ -64,6 +65,9 @@ public class Workout implements KDNode, Vertex<WorkoutConnection, Workout> {
     for (int i = 0; i < exercises.size(); i++) {
       Exercise curExercise = exercises.get(i);
       equipment.addAll(curExercise.getExerciseEquipment());
+    }
+    for (int i = 2; i < getDim(); i++) {
+      metrics.put(metricNames[i], getMetric(i) * 100);
     }
   }
 
@@ -102,10 +106,16 @@ public class Workout implements KDNode, Vertex<WorkoutConnection, Workout> {
 
   @Override
   //calculates aggregate "closeness"/similarity with provided workout node using the Metrics
-  public double calcDistance(KDNode other) {
+  public double calcDistance(Workout other) {
     double differenceSum = 0;
     for (int i = 0; i < metricNames.length; i++) {
-      double difference = Math.abs(metrics.get(metricNames[i]) - other.getAllMetrics().get(metricNames[i]));
+      double difference;
+      if (i == 0) {
+        difference = Math.abs((metrics.get(metricNames[i]) / 60)
+                - (other.getAllMetrics().get(metricNames[i])) / 60);
+      } else {
+        difference = Math.abs(metrics.get(metricNames[i]) - other.getAllMetrics().get(metricNames[i]));
+      }
       differenceSum += difference;
     }
     return (differenceSum / (metricNames.length));
@@ -140,8 +150,6 @@ public class Workout implements KDNode, Vertex<WorkoutConnection, Workout> {
     }
   }
 
-
-
   @Override
   /**
    * Returns the ID or name of this Node.
@@ -149,6 +157,11 @@ public class Workout implements KDNode, Vertex<WorkoutConnection, Workout> {
    */
   public String getID() {
     return workoutID;
+  }
+
+  @Override
+  public String getName() {
+    return name;
   }
 
 }
