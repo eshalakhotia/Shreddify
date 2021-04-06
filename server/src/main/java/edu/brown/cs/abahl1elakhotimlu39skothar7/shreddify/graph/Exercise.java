@@ -1,9 +1,5 @@
 package edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.graph;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 public class Exercise {
@@ -14,7 +10,6 @@ public class Exercise {
   private double difficulty;
   private Set<String> muscle;
   private Set<String> equipment;
-  private List<String[]> usersList = new ArrayList<>();
   
   public Exercise(String id, String eName, double diff, int eTime, int eReps, Set<String> eMuscle, Set<String> equip) {
     iD = id;
@@ -24,6 +19,9 @@ public class Exercise {
     muscle = eMuscle;
     difficulty = diff;
     equipment = equip;
+  }
+  public String getExerciseId() {
+    return iD;
   }
   public String getExerciseName() {
     return name;
