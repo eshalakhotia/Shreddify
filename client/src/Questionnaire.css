@@ -220,14 +220,14 @@ input:checked + .slider:before {
     background-color: limegreen;
 }
 
-#left{
+.questionnaire #left{
     width: 70%;
 }
-#right {
+.questionnaire #right {
     width: 30%;
     display: inline-block;
 }
-#wrapper {
+.questionnaire #wrapper {
     margin: 0 auto;
     display:flex;
 }

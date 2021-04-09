@@ -1,6 +1,7 @@
 package edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.kdtree;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public interface KDNode<N extends KDNode> {
 
@@ -12,7 +13,7 @@ public interface KDNode<N extends KDNode> {
   double getMetric(int dimLevel);
 
   //gets overall metric of node's attributes (...hashmap? ab->20%, arms->30%, difficulty->8...)
-  HashMap<String, Double> getAllMetrics();
+  Map<String, Double> getAllMetrics();
 
   // boolean getFlexibility();
 

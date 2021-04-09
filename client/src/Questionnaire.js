@@ -87,6 +87,7 @@ class Questionnaire {
         //console.log("toggle: " + document.getElementById("toggle").checked);
         //checked true = Not flexible, checked false = flexible
         this.input.flexibility = !document.getElementById("toggle").checked;
+        console.log("flexibility: " + this.input.flexibility)
     }
 
     //(!!IGNORE, DOING IN RECOMMENDATIONS CURRENTLY) sends request to Backend when Go button is pressed

@@ -2,6 +2,8 @@ import React from 'react';
 import Sidebar from './Sidebar';
 import Questionnaire from "./Questionnaire";
 import Backend from "./Backend";
+import WorkoutDiv from "./Workout"
+import './Recommendations.css'
 
 class Recommendations extends React.Component {
 
@@ -9,25 +11,19 @@ class Recommendations extends React.Component {
         document.getElementById("questionnaire").style.display = "none";
         super(props);
         this.questionnaire = new Questionnaire();
-
-        //info passed in from Questionnaire
-
-        //console.log("info passed from questionnaire: " + props.location.state.input.time)
-        //this.error = props.location.state.error
-        //this.success = props.location.state.success
-        //this.results = props.location.state.results
         this.state = {
             input : {
                 energy: props.location.state.input.energy,
                 time: props.location.state.input.time,
                 targets: props.location.state.input.targets,
-                flexibility: props.location.state.input.flexibility
+                flexibility: props.location.state.input.flexibility.toString()
             },
             output : {
                 error: '',
                 success: '',
                 recs: []
-            }
+            },
+            workouts: ''
         }
 
         this.getRecommendations();
@@ -62,9 +58,45 @@ class Recommendations extends React.Component {
             console.log("success? " + this.state.output.success)
             console.log("error? " + this.state.output.error)
             console.log("results" + this.state.output.results)
+
+            /*for each workout result, render
+            for(const res of this.state.output.results) {
+            }*/
+
+            //const recs = this.state.output.results
+            /*const workouts = this.state.output.results.map((result) => {
+                return{
+                    name: result.name,
+                }
+            })
+
+            this.renderWorkouts(workouts)*/
         }
     }
 
+    renderWorkouts() {
+        if (this.state.output.results != null) {
+            const workouts = this.state.output.results.map((result) => {
+                console.log("result name: " + result.name)
+                return{
+                    name: result.name, time: result.workoutTime, difficulty: result.workoutDifficulty,
+                    targets: result.targetAreas, equipment: result.equipment
+                }
+            })
+            let workoutDivs = []
+            for (const workout of workouts) {
+                const workoutDiv = new WorkoutDiv();
+                /*workoutDivs.push(<Workout className="Workout" name={workout.name} time={workout.time}
+                                          difficulty={workout.difficulty} targets={workout.targets}/>)*/
+                workoutDivs.push(workoutDiv.renderWorkout({
+                    className: "Workout", name: workout.name, time:workout.time,
+                    difficulty: workout.difficulty, targets:workout.targets, equipment: workout.equipment
+                }))
+                //document.getElementById("results").appendChild(workoutDiv)
+            }
+            return workoutDivs
+        }
+    }
 
     componentDidMount() {
         document.getElementById("questionnaire").style.display = "none";
@@ -87,17 +119,18 @@ class Recommendations extends React.Component {
                 <div id="main">
                     <h1>Our Picks For You</h1>
                     <div id="inputs" className="inputs">
-                        <h2>You searched for workouts with the following attributes:</h2>
-                        <h3>Energy: {this.state.input.energy}</h3>
-                        <h3>Time: {this.state.input.time}</h3>
-                        <h3>Flexible: {this.state.input.flexibility}</h3>
-                        <h3>Target Areas: {this.state.input.targets}</h3>
+                        <h3>You searched for workouts with the following attributes:</h3>
+                        <h4>Energy: {this.state.input.energy}</h4>
+                        <h4>Time: {this.state.input.time}</h4>
+                        <h4>Flexible: {this.state.input.flexibility}</h4>
+                        <h4>Target Areas: {this.state.input.targets}</h4>
                     </div>
                     <hr/>
                     <div id="results" className="results">
                         <div className="error">
                             <h3>{errorMessage}</h3>
                         </div>
+                        {this.renderWorkouts()}
                     </div>
                 </div>
                 {this.questionnaire.renderQuestionnaire()};

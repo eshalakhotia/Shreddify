@@ -1,0 +1,56 @@
+.Workout {
+    padding: 50px;
+    border-radius: 6px;
+    margin: 20px;
+    line-height: 1.1em;
+    background-color: #f0f0f0;
+    color: black;
+    width: 800px;
+}
+
+.Workout:hover {
+    background-color: lightgray;
+}
+
+.Workout h2 {
+    text-align: left;
+    margin-top: 0px;
+    margin-bottom: 20px;
+}
+
+.Workout h3 {
+    text-align: left;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.Tag {
+    width: max-content;
+    padding: 6px;
+    margin: 10px;
+    border-radius: 5px;
+    display: inline-block;
+}
+#targetTag {
+    background-color: hotpink;
+    color: white;
+}
+
+#equipTag {
+    background-color: #83d62f;
+    color: white;
+}
+
+.Workout #left{
+    width: 40%;
+}
+.Workout #middle {
+    width: 30%;
+}
+.Workout #right {
+    width: 30%;
+}
+.Workout #wrapper {
+    margin: 0 auto;
+    display:flex;
+}

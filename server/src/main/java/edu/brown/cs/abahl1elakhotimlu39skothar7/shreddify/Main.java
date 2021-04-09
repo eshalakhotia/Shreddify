@@ -6,17 +6,14 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 
 import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.graph.DatabaseConn;
+import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.graph.Exercise;
+import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.graph.OutEdgeCache;
 import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.graph.Workout;
 import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.kdtree.KDTree;
 import joptsimple.OptionParser;
@@ -250,6 +247,7 @@ public final class Main {
   private static class RecommendWorkoutsHandler implements Route {
     @Override
     public Object handle(Request request, Response response) throws Exception {
+
       JSONObject data = new JSONObject(request.body());
       boolean success = true;
       String error = "";
@@ -259,16 +257,16 @@ public final class Main {
       double energy = data.getDouble("energy");
       int time = data.getInt("time");
       boolean flexibility = data.getBoolean("flexibility");
+
       JSONArray unusableTargetAreas = data.getJSONArray("targets");
       List<String> targetAreas = new ArrayList<String>();
       for (int i = 0; i < unusableTargetAreas.length(); i++) {
         targetAreas.add(unusableTargetAreas.getString(i));
       }
-
       //not implemented in frontend yet
-      double difficulty = data.getDouble("difficulty");
+      //double difficulty = data.getDouble("difficulty");
 
-
+      /*
       KDTree toSearch;
       List<Workout> workouts = new ArrayList<Workout>();
       Set<String> keys = allWorkouts.keySet();
@@ -294,8 +292,31 @@ public final class Main {
       // Workout idealWorkout = new Workout()
       Workout idealWorkout = null;
       bestRecommendations = toSearch.kNearestNeighbors(idealWorkout, 5);
-      // In the React files, use the success boolean to check whether to display the results
-      // or the error that prevented results from being obtained
+      */
+
+      ///TEMPORARY, TEST FOR FRONTEND
+      LinkedList<Exercise> exercises = new LinkedList<>();
+      Set<String> muscles = new HashSet<String>();
+      muscles.add("abs");
+      muscles.add("arms");
+      Set<String> equip = new HashSet<>();
+      equip.add("dumbbells");
+      equip.add("yoga mat");
+      equip.add("ankle weights");
+      exercises.add(new Exercise("e1", "Crunches", 3, 10, 30, muscles, equip));
+      Workout w1 = new Workout("Beginner Ab Workout", "1", 1, exercises, new OutEdgeCache());
+      bestRecommendations.add(w1);
+
+
+      LinkedList<Exercise> exercises2 = new LinkedList<>();
+      Set<String> muscles2 = new HashSet<String>();
+      muscles2.add("glutes");
+      muscles2.add("legs");
+      exercises2.add(new Exercise("e1", "Squats", 4, 5, 30, muscles2, new HashSet<>()));
+      Workout w2 = new Workout("Squat Shred", "1", 1, exercises2, new OutEdgeCache());
+      bestRecommendations.add(w2);
+      ///TEST
+
       Map<String, Object> variables = ImmutableMap.of(
               "success", success,
               "results", bestRecommendations,
