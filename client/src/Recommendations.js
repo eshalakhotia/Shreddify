@@ -40,7 +40,8 @@ class Recommendations extends React.Component {
             this.setState(() => {
                 return {
                     output: {
-                        error: 'Sorry, something went wrong with getting your recommendations :('
+                        error: 'Sorry, something went wrong with getting your recommendations :( ' +
+                            'Please make sure the backend gui is running.'
                     }
                 }
             })
