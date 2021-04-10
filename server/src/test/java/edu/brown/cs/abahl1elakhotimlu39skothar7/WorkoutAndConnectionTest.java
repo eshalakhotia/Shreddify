@@ -120,9 +120,9 @@ public class WorkoutAndConnectionTest {
   @Test
   public void testGetDimAndGetAllMetrics() {
     setUp();
-    assertEquals(7, _workout1.getDim());
-    assertEquals(7, _workout2.getDim());
-    assertEquals(7, _workout1.getAllMetrics().size());
+    assertEquals(9, _workout1.getDim());
+    assertEquals(9, _workout2.getDim());
+    assertEquals(9, _workout1.getAllMetrics().size());
     tearDown();
   }
 
@@ -219,12 +219,12 @@ public class WorkoutAndConnectionTest {
     assertEquals(w1w3.getWeight(), w3w1.getWeight(), 0.01);
     assertEquals(w1w3.getWeight(), w1w3.heuristic(w1w3.getStart(), w1w3.getEnd()), 0.01);
     assertEquals(w1w3.getWeight(), _workout1.calcDistance(_workout3), 0.01);
-    assertEquals(12, w1w3.getWeight(), 1);
+    assertEquals(9, w1w3.getWeight(), 1);
     assertEquals(w2w1.getWeight(), w1w2.getWeight(), 0.01);
     assertEquals(w2w1.getWeight(), w2w1.heuristic(w2w1.getStart(), w2w1.getEnd()), 0.01);
     assertEquals(w2w1.getWeight(), _workout2.calcDistance(_workout1), 0.01);
-    assertEquals(17, w2w1.getWeight(), 1);
-    assertEquals(8, w2w3.getWeight(), 1);
+    assertEquals(13, w2w1.getWeight(), 1);
+    assertEquals(6, w2w3.getWeight(), 1);
   }
 
 

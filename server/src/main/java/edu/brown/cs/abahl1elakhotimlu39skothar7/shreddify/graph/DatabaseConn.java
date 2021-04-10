@@ -21,20 +21,19 @@ public class DatabaseConn {
   
   public DatabaseConn() throws SQLException, ClassNotFoundException {
     conn = null;
-    this.loadDatabase("databaseShreddify.sqlite3");
+    this.loadDatabase("data/databaseShreddify.sqlite3");
   }
   public void loadDatabase(String filename) throws SQLException, ClassNotFoundException {
     try {
-      conn.close();
-    } catch (Exception ignored) {
+      Class.forName("org.sqlite.JDBC");
+      String urlToDB = "jdbc:sqlite:" + filename;
+      conn = DriverManager.getConnection(urlToDB);
+      exercises = getAllExercises();
+      workouts = getAllWorkouts(exercises);
+      users = getAllUsers(workouts);
+    } catch(Exception e) {
+      e.printStackTrace();
     }
-    Class.forName("org.sqlite.JDBC");
-    String urlToDB = "jdbc:sqlite:" + filename;
-    conn = DriverManager.getConnection(urlToDB);
-    exercises = getAllExercises();
-    workouts = getAllWorkouts(exercises);
-    users = getAllUsers(workouts);
-
   }
 
   public Map<String, Exercise> getExercises() {
@@ -48,9 +47,12 @@ public class DatabaseConn {
   public Map<String, User> getUsers() {
     return new HashMap<String, User>(users);
   }
+
   public Connection getConn() {
     return conn;
   }
+
+  /*
   public List<String> getAllExerciseAttributes() throws SQLException {
     usersList = new ArrayList<>();
     PreparedStatement idInfo = conn.prepareStatement(
@@ -71,6 +73,7 @@ public class DatabaseConn {
     }
     return usersList;
   }
+  */
 
   public Map<String, Exercise> getAllExercises() throws SQLException {
     Map<String, Exercise> exercises = new HashMap<String, Exercise>();
@@ -78,8 +81,8 @@ public class DatabaseConn {
             "SELECT * FROM exercises;");
     ResultSet resulting = exerciseInfo.executeQuery();
     while (resulting.next()) {
-      String newExerciseID = resulting.getString(1);
-      String newExerciseName = resulting.getString(2);
+      String newExerciseName = resulting.getString(1);
+      String newExerciseID = resulting.getString(2);
       double newExerciseDifficulty = resulting.getDouble(3);
       int newExerciseTime = resulting.getInt(4);
       int newExerciseReps = resulting.getInt(5);
@@ -87,14 +90,19 @@ public class DatabaseConn {
       Set<String> targetAreas = new HashSet<String>();
       for (int i = 6; i < 13; i++) {
         if (resulting.getDouble(i) != 0) {
-          targetAreas.add(targetAreasColumns[i - 6]);
+          targetAreas.add(targetAreasColumns[i - 6].toLowerCase(Locale.ROOT));
         }
       }
       // equipment field is a comma delimited string which we split and put into a HashSet
-      String[] equipmentList = resulting.getString(13).split(",");
-      Set<String> equip = new HashSet<String>(Arrays.asList(equipmentList));
-      Exercise newExercise = new Exercise(newExerciseID, newExerciseName, newExerciseDifficulty, newExerciseTime, newExerciseReps, targetAreas, equip);
-      exercises.put(newExerciseID, newExercise);
+      Set<String> equip;
+      if (resulting.getString(13) == null) {
+        equip = new HashSet<>();
+      } else {
+        String[] equipmentList = resulting.getString(13).split(",");
+        equip = new HashSet<String>(Arrays.asList(equipmentList));
+        Exercise newExercise = new Exercise(newExerciseID, newExerciseName, newExerciseDifficulty, newExerciseTime, newExerciseReps, targetAreas, equip);
+        exercises.put(newExerciseID, newExercise);
+      }
     }
     return exercises;
   }
@@ -110,9 +118,12 @@ public class DatabaseConn {
       int newWorkoutCycles = resulting.getInt(3);
       String newWorkoutExerciseIDList = resulting.getString(4);
       String[] newWorkoutExerciseIDArray = newWorkoutExerciseIDList.split(",");
-      List<Exercise> newWorkoutExercises = new LinkedList<Exercise>();
+      List<Exercise> newWorkoutExercises = new ArrayList<Exercise>();
       for (int i = 0; i < newWorkoutExerciseIDArray.length; i++) {
-        newWorkoutExercises.add(allExercises.get(newWorkoutExerciseIDArray[i]));
+        Exercise newExercise = allExercises.get(newWorkoutExerciseIDArray[i]);
+        if (newExercise != null) {
+          newWorkoutExercises.add(newExercise);
+        }
       }
       Workout newWorkout = new Workout(newWorkoutID, newWorkoutName, newWorkoutCycles, newWorkoutExercises, cache);
       workouts.put(newWorkoutID, newWorkout);

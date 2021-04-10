@@ -174,12 +174,12 @@ public class GraphTest {
     setUp();
     _smallGraph.updateParameter("jkbmnvsa", 99);
     assertEquals(99, _nodes.get("jkbmnvsa").getParameterToUpdate(), 1);
-    assertEquals(82, _nodes.get("skajdhfalsd").getParameterToUpdate(), 1);
+    assertEquals(86, _nodes.get("skajdhfalsd").getParameterToUpdate(), 1);
     assertEquals(50, _nodes.get("34253p9o").getParameterToUpdate(), 1);
     _smallGraph.updateParameter("34253p9o", 1);
     assertEquals(1, _nodes.get("34253p9o").getParameterToUpdate(), 1);
     assertEquals(99, _nodes.get("jkbmnvsa").getParameterToUpdate(), 1);
-    assertEquals(81, _nodes.get("skajdhfalsd").getParameterToUpdate(), 1);
+    assertEquals(66, _nodes.get("skajdhfalsd").getParameterToUpdate(), 1);
     tearDown();
   }
 

@@ -91,6 +91,9 @@ public class ExerciseTest {
     targetAreas5.add("arms");
     Set<String> equipment2 = new HashSet<>();
     equipment2.add("5 lb dumbbell");
+    assertEquals("pushUps20", _pushUps.getExerciseId());
+    assertEquals("wallSit60", _wallSit.getExerciseId());
+    assertEquals("russianTwists40", _russianTwists.getExerciseId());
     assertEquals("40 bicycle crunches", _bicycleCrunches.getExerciseName());
     assertEquals("20 push ups", _pushUps.getExerciseName());
     assertEquals("60 sec wall sit", _wallSit.getExerciseName());

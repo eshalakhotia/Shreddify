@@ -18,7 +18,7 @@ public class Workout implements KDNode<Workout>, Vertex<WorkoutConnection, Worko
 
   // all metrics of a workout that we want to look at
   // (String array necessary to support comparing dimensions on KDTree)
-  private String[] metricNames = new String[]{"time", "difficulty", "cardio", "abs", "legs", "arms", "glutes"};
+  private String[] metricNames = new String[]{"time", "difficulty", "cardio", "abs", "legs", "arms", "glutes", "back", "chest"};
   private Map<String, Double> metrics;
   // we somehow need to figure out a way to turn the target areas and their percentages
   // into a single number to be compared in the KDTree traversal
