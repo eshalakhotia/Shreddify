@@ -160,8 +160,8 @@ public class Workout implements KDNode<Workout>, Vertex<WorkoutConnection, Worko
         Workout curWorkout = workouts.get(iterate.next());
         if (!curWorkout.getID().equals(this.getID())) {
           for (int i = 0; i < curWorkout.getAllMetrics().size(); i++) {
-            if ((curWorkout.getMetric(i) / this.getMetric(i)) > 0.95
-                    && (curWorkout.getMetric(i) / this.getMetric(i)) < 1.05) {
+            if ((Math.abs(curWorkout.getMetric(i) / this.getMetric(i)) > 0.95)
+                    && (Math.abs(curWorkout.getMetric(i) / this.getMetric(i)) < 1.05)) {
               WorkoutConnection newConnection = new WorkoutConnection(this, curWorkout);
               edges.add(newConnection);
               break;
@@ -191,4 +191,9 @@ public class Workout implements KDNode<Workout>, Vertex<WorkoutConnection, Worko
   public int getTime() {
     return workoutTime;
   }
+
+  public Workout cloneWorkout() {
+    return new Workout(this.getName(), this.getID(), numCycles, exercises, cache);
+  }
+
 }

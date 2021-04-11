@@ -2,10 +2,14 @@ package edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify;
 
 import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.graph.Graph;
 import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.graph.Workout;
+import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.graph.WorkoutConnection;
+
 import java.time.LocalDateTime;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 public class User {
   private String username;
@@ -14,7 +18,7 @@ public class User {
   private int totalNumWorkouts;
   private LocalDateTime lastWorkout;
   private int streak;
-  private Graph connectedPreferences;
+  private Graph<WorkoutConnection, Workout> connectedPreferences;
 
   public User(
           String username,
@@ -27,7 +31,14 @@ public class User {
     this.totalNumWorkouts = 0;
     this.streak = 0;
     this.lastWorkout = null;
-    this.connectedPreferences = new Graph(allWorkouts);
+    Map<String, Workout> allCloneWorkouts = new HashMap<String, Workout>();
+    Set<String> keys = allWorkouts.keySet();
+    Iterator<String> iterate = keys.iterator();
+    while (iterate.hasNext()) {
+      Workout cloneWorkout = allWorkouts.get(iterate.next()).cloneWorkout();
+      allCloneWorkouts.put(cloneWorkout.getID(), cloneWorkout);
+    }
+    this.connectedPreferences = new Graph<WorkoutConnection, Workout>(allCloneWorkouts);
   }
 
   public User(
@@ -44,7 +55,14 @@ public class User {
     this.totalNumWorkouts = totalNumWorkouts;
     this.streak = streak;
     this.lastWorkout = lastWorkout;
-    this.connectedPreferences = new Graph(allWorkouts);
+    Map<String, Workout> allCloneWorkouts = new HashMap<String, Workout>();
+    Set<String> keys = allWorkouts.keySet();
+    Iterator<String> iterate = keys.iterator();
+    while (iterate.hasNext()) {
+      Workout cloneWorkout = allWorkouts.get(iterate.next()).cloneWorkout();
+      allCloneWorkouts.put(cloneWorkout.getID(), cloneWorkout);
+    }
+    this.connectedPreferences = new Graph<WorkoutConnection, Workout>(allCloneWorkouts);;
   }
 
   public boolean checkPassword(String enteredPassword) {
@@ -67,6 +85,10 @@ public class User {
     return this.streak;
   }
 
+  public Graph getConnectedPreferences() {
+    return this.connectedPreferences;
+  }
+
   public void updateStreak() {
     this.streak++;
   }
@@ -77,9 +99,13 @@ public class User {
 
   public void startNewWorkout() {
     LocalDateTime now = LocalDateTime.now();
-    LocalDateTime nextDay = lastWorkout.plusDays(1);
-    if (now.getDayOfYear() == nextDay.getDayOfYear()) {
+    if (lastWorkout == null) {
       updateStreak();
+    } else {
+      LocalDateTime nextDay = lastWorkout.plusDays(1);
+      if (now.getDayOfYear() == nextDay.getDayOfYear()) {
+        updateStreak();
+      }
     }
     totalNumWorkouts++;
     lastWorkout = now;

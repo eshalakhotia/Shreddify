@@ -22,7 +22,7 @@ public class Graph<E extends Edge<E, V>, V extends Vertex<E, V>> {
    * @param allNodes the nodes that the graph object is intended to contain
    */
   public Graph(Map<String, V> allNodes) {
-    this.allNodes = allNodes;
+    this.allNodes = new HashMap<String, V>(allNodes);
   }
 
   /**
