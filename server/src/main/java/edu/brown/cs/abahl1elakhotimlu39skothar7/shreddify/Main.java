@@ -243,6 +243,22 @@ public final class Main {
       return new Gson().toJson(variables);
     }
   }
+//  private static class SignUpHandler implements Route {
+//    @Override
+//    public Object handle(Request request, Response response) throws Exception {
+//      JSONObject sign = new JSONObject(request.body());
+//      String error = "";
+//      String username = sign.getString("username");
+//      String pwd = sign.getString("password");
+//      // In the React files, use the success boolean to check whether to display the results
+//      // or the error that prevented results from being obtained
+//      Map<String, Object> variables = ImmutableMap.of(
+//        "success", null,
+//        "results", null,
+//        "error", error);
+//      return new Gson().toJson(variables);
+//    }
+//  }
 
   private static class RecommendWorkoutsHandler implements Route {
     @Override

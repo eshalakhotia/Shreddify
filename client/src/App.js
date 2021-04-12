@@ -67,6 +67,24 @@ class App extends React.Component {
             this.setState({error: info.error})
         }
     }
+    async onsign() {
+        //gets boolean success, User, error message
+        const info = await Backend.login(this.state.username, this.state.password)
+        if (info === null) {
+            console.log("response is null, something wrong with backend handler")
+        } else {
+            console.log("success: " + info.success)
+            console.log("error: " + info.error)
+            console.log("User: " + info.results)
+        }
+        //if successful
+        if (info.success) {
+            console.log("going to home")
+            this.setState({authenticated: true})
+        } else {
+            this.setState({error: info.error})
+        }
+    }
 
     //redirects to Homepage if authenticated
     renderRedirect() {
@@ -99,12 +117,10 @@ class App extends React.Component {
                     <div id="login">
                         <button id="loginButton" onClick={this.onLogin.bind(this)}>Log In</button>
                     </div>
-
-
                     <div id="signup">
-                        <Link to="/Home">
-                            <button id="signupButton">Sign Up</button>
-                        </Link>
+                        {/*<Link to="/Home">*/}
+                            <button id="signupButton" onClick={this.onsign.bind(this)}> SignUp </button>
+                        {/*</Link>*/}
                     </div>
 
                 </div>
