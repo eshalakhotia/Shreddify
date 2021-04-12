@@ -119,7 +119,7 @@ class App extends React.Component {
                     </div>
                     <div id="signup">
                         {/*<Link to="/Home">*/}
-                            <button id="signupButton" onClick={this.onsign.bind(this)}> SignUp </button>
+                            <button id="signupButton" onClick={this.onsign.bind(this)}> Sign Up </button>
                         {/*</Link>*/}
                     </div>
 

@@ -195,5 +195,10 @@ public class Workout implements KDNode<Workout>, Vertex<WorkoutConnection, Worko
   public Workout cloneWorkout() {
     return new Workout(this.getName(), this.getID(), numCycles, exercises, cache);
   }
-
+  public int getCycles() {
+    return numCycles;
+  }
+  public List<Exercise> getExercises() {
+    return exercises;
+  }
 }

@@ -36,13 +36,14 @@ import freemarker.template.Configuration;
 public final class Main {
   private static final int DEFAULT_PORT = 4567;
   private static final Gson GSON = new Gson();
+//  private static final DatabaseConn database = new DatabaseConn();
 
   /**
    * The initial method called when execution begins.
    *
    * @param args An array of command line arguments
    */
-  public static void main(String[] args) {
+  public static void main(String[] args) throws SQLException, ClassNotFoundException {
     new Main(args).run();
   }
 
@@ -52,7 +53,7 @@ public final class Main {
   private static User curUser;
   private static Map<String, Workout> allWorkouts;
 
-  private Main(String[] args) {
+  private Main(String[] args) throws SQLException, ClassNotFoundException {
     this.args = args;
     try {
       mainDatabase = new DatabaseConn();
@@ -103,6 +104,7 @@ public final class Main {
     //maps routes
     Spark.post("/login", new LoginHandler());
     Spark.post("/recs", new RecommendWorkoutsHandler());
+    Spark.post("/explore", new ExploreHandler());
 
 
     Spark.options("/*", (request, response) -> {
@@ -191,6 +193,30 @@ public final class Main {
               "success", userpwdMatch,
               "results", curUser,
               "error", error);
+      return new Gson().toJson(variables);
+    }
+  }
+  private static class ExploreHandler implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      boolean success = true;
+      DatabaseConn database = new DatabaseConn();
+      JSONObject data = new JSONObject(request.body());
+      String error = "";
+      Map<String, Workout> workoutsMap = database.getWorkouts();
+      List<String[]> newList = new ArrayList<>();
+      for (Workout work : workoutsMap.values()) {
+        String[] attributes = new String[4];
+        attributes[0] = work.getName();
+        attributes[1] = work.getID();
+        attributes[2] = String.valueOf(work.getCycles());
+        attributes[3] = String.valueOf(work.getExercises());
+        newList.add(attributes);
+      }
+      Map<String, Object> variables = ImmutableMap.of(
+        "success", success,
+        "results", newList,
+        "error", error);
       return new Gson().toJson(variables);
     }
   }
