@@ -18,4 +18,90 @@
 .workout-screen h3 {
     text-align: left;
     margin-left: 20px;
+    margin-top: 0px;
+}
+
+.workout-screen #timer, #timerLabel {
+    display: inline;
+    margin: 0px;
+    font-size: 80px;
+}
+
+#timerBack {
+    background-color: whitesmoke;
+    width: max-content;
+    height: max-content;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 20px;
+}
+
+#startTimer, #pauseTimer, #resetTimer, #nextButton, #prevButton, #finishButton {
+    height:max-content;
+    width:max-content;
+    margin: 5px;
+    padding: 6px 10px;
+    font-size: 25px;
+    border: none;
+
+    color: white;
+    display: inline;
+    border-radius: 10px;
+}
+
+#nextButton, #prevButton, #finishButton {
+    font-size: 30px;
+}
+
+#startTimer, #nextButton, #finishButton {
+    background-color: #75d950;
+}
+
+#pauseTimer, #prevButton {
+    background-color: #ff8854;
+}
+
+#resetTimer {
+    background-color: #fa7566;
+}
+
+#startTimer:hover, #nextButton:hover, #finishButton:hover {
+    background-color: limegreen;
+}
+
+#pauseTimer:hover, #prevButton:hover {
+    background-color: #ff6b2b;
+}
+
+#resetTimer:hover {
+    background-color: #eb5757;
+}
+
+#nextButton, #finishButton {
+    display: block;
+    margin-left: 350px;
+}
+
+.workout-screen #right, .workout-screen #left{
+    width: 50%;
+    height: 100%;
+    display: inline-block;
+}
+
+.workout-screen #left-top {
+    height: 550px;
+    margin-top: 0px;
+}
+
+.workout-screen #right-top {
+    height: 550px;
+    margin-left: 200px;
+}
+.workout-screen #right-bottom, #left-bottom {
+    height: 20px;
+}
+
+.workout-screen #wrapper {
+    margin: 0 auto;
+    display:flex;
 }
