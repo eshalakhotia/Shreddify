@@ -35,7 +35,7 @@
     float: inline-block;
     font-size: 15px;
     height:30px;
-    width:130px;
+    width:120px;
     background-color: #89e33b;
     margin-left: 740px;
     margin-top: 2px;
@@ -43,11 +43,13 @@
     border-radius: 25px;
 }
 
-.close:hover,
 .close:focus {
     color: #ff6b2b;
     text-decoration: none;
     cursor: pointer;
+}
+.close:hover {
+    background-color: limegreen;
 }
 
 #energy {
@@ -212,12 +214,12 @@ input:checked + .slider:before {
 }
 
 #go {
-    height:50px;
-    width:150px;
+    height:30px;
+    width:120px;
     border: none;
     background-color: #89e33b;
     color: black;
-    margin-left: 120px;
+    margin-left: 145px;
     margin-top: 150px;
     display: inline;
     border-radius: 25px;
