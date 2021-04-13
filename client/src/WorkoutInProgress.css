@@ -1,0 +1,21 @@
+
+.workout-screen {
+    margin: 100px;
+    margin-left: 150px;
+}
+
+.workout-screen h1 {
+    font-size: 100px;
+    margin: 0;
+}
+
+.workout-screen h2 {
+    font-size: 50px;
+    text-align: left;
+    margin-left: 5px;
+}
+
+.workout-screen h3 {
+    text-align: left;
+    margin-left: 20px;
+}
