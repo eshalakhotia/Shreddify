@@ -3,13 +3,11 @@ package edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify;
 import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.graph.Graph;
 import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.graph.Workout;
 import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.graph.WorkoutConnection;
+import org.checkerframework.checker.units.qual.A;
 
 import java.time.LocalDateTime;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class User {
   private String username;
@@ -17,6 +15,7 @@ public class User {
   private double overallFitnessLevel;
   private int totalNumWorkouts;
   private LocalDateTime lastWorkout;
+  private List<String> pastWorkoutIDs;
   private int streak;
   private Graph<WorkoutConnection, Workout> connectedPreferences;
 
@@ -30,6 +29,7 @@ public class User {
     this.overallFitnessLevel = overallFitnessLevel;
     this.totalNumWorkouts = 0;
     this.streak = 0;
+    this.pastWorkoutIDs = new ArrayList<>();
     this.lastWorkout = null;
     Map<String, Workout> allCloneWorkouts = new HashMap<String, Workout>();
     Set<String> keys = allWorkouts.keySet();
@@ -47,6 +47,7 @@ public class User {
           double overallFitnessLevel,
           int totalNumWorkouts,
           int streak,
+          List<String> pastWorkoutIDs,
           LocalDateTime lastWorkout,
           Map<String, Workout> allWorkouts) {
     this.username = username;
@@ -54,6 +55,7 @@ public class User {
     this.overallFitnessLevel = overallFitnessLevel;
     this.totalNumWorkouts = totalNumWorkouts;
     this.streak = streak;
+    this.pastWorkoutIDs = pastWorkoutIDs;
     this.lastWorkout = lastWorkout;
     Map<String, Workout> allCloneWorkouts = new HashMap<String, Workout>();
     Set<String> keys = allWorkouts.keySet();
@@ -97,7 +99,7 @@ public class User {
     this.streak = 0;
   }
 
-  public void startNewWorkout() {
+  public void startNewWorkout(Workout workout) {
     LocalDateTime now = LocalDateTime.now();
     if (lastWorkout == null) {
       updateStreak();
@@ -108,6 +110,7 @@ public class User {
       }
     }
     totalNumWorkouts++;
+    pastWorkoutIDs.add(workout.getID());
     lastWorkout = now;
   }
 

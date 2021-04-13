@@ -159,9 +159,15 @@ public class DatabaseConn {
       } else {
         newUserLastWorkout = null;
       }
-      int newUserStreak = resulting.getInt(5);
+      String pastWorkoutIDsString = resulting.getString(5);
+      String[] pastWorkoutIDsArray = pastWorkoutIDsString.split(",");
+      List<String> newUserPastWorkoutIDs = new ArrayList<>();
+      for (int i = 0; i < pastWorkoutIDsArray.length; i++) {
+        newUserPastWorkoutIDs.add(pastWorkoutIDsArray[i]);
+      }
+      int newUserStreak = resulting.getInt(6);
       // allWorkouts must be adjusted
-      User newUser = new User(newUserName, newUserPassword, newUserOFL, newUserNumWorkouts, newUserStreak, newUserLastWorkout, allWorkouts);
+      User newUser = new User(newUserName, newUserPassword, newUserOFL, newUserNumWorkouts, newUserStreak, newUserPastWorkoutIDs, newUserLastWorkout, allWorkouts);
       users.put(newUserName, newUser);
     }
     return users;

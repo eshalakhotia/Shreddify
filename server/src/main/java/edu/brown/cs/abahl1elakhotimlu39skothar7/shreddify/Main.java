@@ -306,9 +306,22 @@ public final class Main {
         targetAreas.add(unusableTargetAreas.getString(i));
       }
       //not implemented in frontend yet
-      //double difficulty = data.getDouble("difficulty");
-
       /*
+      double difficulty = curUser.getOFL();
+      final double defaultChangeRange = 10;
+      double changeRange;
+      final double maxOFL = 100;
+      final double minOFL = 0;
+      double distToMax = maxOFL - difficulty;
+      if (defaultChangeRange > distToMax) {
+        changeRange = distToMax;
+      } else if (defaultChangeRange < difficulty){
+        changeRange = difficulty;
+      } else {
+        changeRange = defaultChangeRange;
+      }
+      difficulty += ((energy - 50) / 50) * changeRange;
+
       KDTree toSearch;
       List<Workout> workouts = new ArrayList<Workout>();
       Set<String> keys = allWorkouts.keySet();
@@ -331,11 +344,20 @@ public final class Main {
         toSearch = new KDTree(new ArrayList<>(), 0);
       }
       // finish when Workout constructor done
-      // Workout idealWorkout = new Workout()
-      Workout idealWorkout = null;
+      String[] metricNames = new String[]{"time", "difficulty", "cardio", "abs", "legs", "arms", "glutes", "back", "chest"};
+      double[] metrics = new double[9];
+      metrics[0] = time;
+      metrics[1] = difficulty;
+      for (int i = 2; i < metricNames.length; i++) {
+        if (targetAreas.contains(metricNames[i])) {
+          metrics[i] = 1 / targetAreas.size();
+        } else {
+          metrics[i] = 0;
+        }
+      }
+      Workout idealWorkout = new Workout(metrics);
       bestRecommendations = toSearch.kNearestNeighbors(idealWorkout, 5);
       */
-
       ///TEMPORARY, TEST FOR FRONTEND
       LinkedList<Exercise> exercises = new LinkedList<>();
       Set<String> muscles = new HashSet<String>();
