@@ -136,7 +136,7 @@ class Questionnaire {
         return (
             <div id="questionnaire" className="questionnaire-background">
                 <div className="questionnaire">
-                    <span className="close" onClick={this.closeQuestionnaire}>&times;</span>
+                    <span className="close" onClick={this.closeQuestionnaire}> Go Back Home &times;</span>
                     <h1>Find Workouts</h1>
                     <h3>Help us recommend the perfect workouts for you!</h3>
                     <p id="energyp">Low Medium High</p>
@@ -177,7 +177,7 @@ class Questionnaire {
                                     input: this.input
                                 }
                             }}>
-                                <button id='go'>Go!</button>
+                                <button id='go'>Find Workouts!</button>
                             </Link>
                         </div>
                     </div>
