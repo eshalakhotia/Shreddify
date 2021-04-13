@@ -177,7 +177,7 @@ class Questionnaire {
                                     input: this.input
                                 }
                             }}>
-                                <button id='go'>Go!</button>
+                                <button id='go'>Find Workouts!</button>
                             </Link>
                         </div>
                     </div>

@@ -11,8 +11,7 @@
     overflow: auto;
     /*background-color: rgb(0,0,0);*/
     /*background-color: rgba(0,0,0,0.4);*/
-    background-color: #83d62f;
-    background-image: url("https://media.giphy.com/media/fnJWA6rIGgYmlksSEN/giphy.gif");
+    background-color: #ff6b2b;
 }
 
 /* actual modal */
@@ -208,13 +207,13 @@ input:checked + .slider:before {
 }
 
 #go {
-    height:60px;
-    width:60px;
+    height:50px;
+    width:150px;
     border: none;
     background-color: #89e33b;
     color: black;
-    margin-left: 170px;
-    margin-top: 80px;
+    margin-left: 120px;
+    margin-top: 150px;
     display: inline;
     border-radius: 25px;
 }
