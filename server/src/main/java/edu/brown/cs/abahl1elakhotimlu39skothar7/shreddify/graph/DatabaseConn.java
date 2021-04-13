@@ -86,6 +86,9 @@ public class DatabaseConn {
       double newExerciseDifficulty = resulting.getDouble(3);
       int newExerciseTime = resulting.getInt(4);
       int newExerciseReps = resulting.getInt(5);
+      if (newExerciseReps == 0) {
+        newExerciseReps = 1;
+      }
       String[] targetAreasColumns = new String[]{"Cardio", "Abs", "Legs", "Arms", "Glutes", "Back", "Chest"};
       Set<String> targetAreas = new HashSet<String>();
       for (int i = 6; i < 13; i++) {
