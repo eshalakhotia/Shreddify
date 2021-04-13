@@ -367,7 +367,7 @@ public final class Main {
       Set<String> equip = new HashSet<>();
       equip.add("dumbbells");equip.add("yoga mat");equip.add("ankle weights");
       exercises.add(new Exercise("e1", "Crunches", 3, 45, 30, muscles, equip));
-      exercises.add(new Exercise("e2", "Russian Roulettes", 3, 60, 30, muscles2, new HashSet<>()));
+      exercises.add(new Exercise("e2", "Russian Twists", 3, 60, 30, muscles2, new HashSet<>()));
       Workout w1 = new Workout("Beginner Ab Workout", "1", 1, exercises, new OutEdgeCache());
       bestRecommendations.add(w1);
 

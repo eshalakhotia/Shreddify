@@ -9,14 +9,14 @@
     width: 100%;
     height: 100%;
     overflow: auto;
-    /*background-color: rgb(0,0,0);*/
-    /*background-color: rgba(0,0,0,0.4);*/
-    background-color: #ff6b2b;
+    background-color: rgba(255, 107, 43, 0.2); /*transparent orange*/
+    /*background-color: #ff6b2b;*/
 }
 
 /* actual modal */
 .questionnaire {
-    background-color: #FFE4B5;
+    /*background-color: #FFE4B5;*/
+    background-color: white;
     height: 80%;
     margin: auto;
     padding: 20px;
@@ -213,18 +213,18 @@ input:checked + .slider:before {
     color: white;*/
 }
 
-#go {
+.questionnaire #go {
     height:30px;
     width:120px;
     border: none;
-    background-color: #89e33b;
+    background-color: #75d950;
     color: black;
     margin-left: 145px;
     margin-top: 150px;
     display: inline;
     border-radius: 25px;
 }
-#go:hover {
+.questionnaire #go:hover {
     background-color: limegreen;
 }
 

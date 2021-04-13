@@ -7,15 +7,17 @@ public class Exercise {
   private String name;
   private int time;
   private int reps;
+  private String mType;
   private double difficulty;
   private Set<String> muscle;
   private Set<String> equipment;
   
-  public Exercise(String id, String eName, double diff, int eTime, int eReps, Set<String> eMuscle, Set<String> equip) {
+  public Exercise(String id, String eName, double diff, int eTime, int eReps, String measurementType, Set<String> eMuscle, Set<String> equip) {
     iD = id;
     name = eName;
     time = eTime;
     reps = eReps;
+    mType = measurementType;
     muscle = eMuscle;
     difficulty = diff;
     equipment = equip;
@@ -31,6 +33,9 @@ public class Exercise {
   }
   public int getExerciseReps() {
     return reps;
+  }
+  public String getmType() {
+    return mType;
   }
   public double getExerciseDifficulty() {
     return difficulty;

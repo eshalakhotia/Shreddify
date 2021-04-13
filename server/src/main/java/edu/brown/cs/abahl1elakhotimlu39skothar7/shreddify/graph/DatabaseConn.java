@@ -84,26 +84,27 @@ public class DatabaseConn {
       String newExerciseName = resulting.getString(1);
       String newExerciseID = resulting.getString(2);
       double newExerciseDifficulty = resulting.getDouble(3);
-      int newExerciseTime = resulting.getInt(4);
-      int newExerciseReps = resulting.getInt(5);
+      int newExerciseReps = resulting.getInt(4);
+      int newExerciseTime = resulting.getInt(5);
+      String measurementType = resulting.getString(6);
       if (newExerciseReps == 0) {
         newExerciseReps = 1;
       }
       String[] targetAreasColumns = new String[]{"Cardio", "Abs", "Legs", "Arms", "Glutes", "Back", "Chest"};
       Set<String> targetAreas = new HashSet<String>();
-      for (int i = 6; i < 13; i++) {
+      for (int i = 7; i < 14; i++) {
         if (resulting.getDouble(i) != 0) {
           targetAreas.add(targetAreasColumns[i - 6].toLowerCase(Locale.ROOT));
         }
       }
       // equipment field is a comma delimited string which we split and put into a HashSet
       Set<String> equip;
-      if (resulting.getString(13) == null) {
+      if (resulting.getString(14) == null) {
         equip = new HashSet<>();
       } else {
-        String[] equipmentList = resulting.getString(13).split(",");
+        String[] equipmentList = resulting.getString(14).split(",");
         equip = new HashSet<String>(Arrays.asList(equipmentList));
-        Exercise newExercise = new Exercise(newExerciseID, newExerciseName, newExerciseDifficulty, newExerciseTime, newExerciseReps, targetAreas, equip);
+        Exercise newExercise = new Exercise(newExerciseID, newExerciseName, newExerciseDifficulty, newExerciseTime, newExerciseReps, measurementType, targetAreas, equip);
         exercises.put(newExerciseID, newExercise);
       }
     }
@@ -164,7 +165,7 @@ public class DatabaseConn {
       }
     }
     PreparedStatement prep = conn.prepareStatement("INSERT INTO "
-            + "users (UserName, UserPassword, OverallFitnessLevel, TotalNumWorkouts, LastWorkout, pastWorkoutIDs, Streak)"
+            + "users (UserName, UserPassword, OverallFitnessLevel, TotalNumWorkouts, LastWorkout, PastWorkoutIDs, Streak)"
             + " VALUES (?, ?, ?, ?, ?, ?, ?);");
     prep.setString(1, user.getUsername());
     prep.setInt(2, user.getPassword());

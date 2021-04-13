@@ -47,12 +47,12 @@ public class ExerciseTest {
     targetAreas5.add("arms");
     Set<String> equipment2 = new HashSet<>();
     equipment2.add("5 lb dumbbell");
-    _bicycleCrunches = new Exercise("bicycleCrunches40", "40 bicycle crunches", 60, 60, 40, targetAreas1, new HashSet<>());
-    _jumpingJacks = new Exercise("jumpingJacks100", "100 jumping jacks", 88, 300, 100, targetAreas2, new HashSet<>());
-    _wallSit = new Exercise("wallSit60", "60 sec wall sit", 85, 60, 1, targetAreas3, equipment1);
-    _toeTouches = new Exercise("toeTouches60", "60 sec toe touches", 32, 60, 1, targetAreas4, new HashSet<>());
-    _pushUps = new Exercise("pushUps20", "20 push ups", 46, 70, 20, targetAreas5, new HashSet<>());
-    _russianTwists = new Exercise("russianTwists40", "40 push ups", 56, 70, 40, targetAreas1, equipment2);
+    _bicycleCrunches = new Exercise("bicycleCrunches40", "40 bicycle crunches", 60, 60, 40, "reps", targetAreas1, new HashSet<>());
+    _jumpingJacks = new Exercise("jumpingJacks100", "100 jumping jacks", 88, 300, 100,"reps", targetAreas2, new HashSet<>());
+    _wallSit = new Exercise("wallSit60", "60 sec wall sit", 85, 60, 1,"time", targetAreas3, equipment1);
+    _toeTouches = new Exercise("toeTouches60", "60 sec toe touches", 32, 60, 1,"time", targetAreas4, new HashSet<>());
+    _pushUps = new Exercise("pushUps20", "20 push ups", 46, 70, 20,"reps", targetAreas5, new HashSet<>());
+    _russianTwists = new Exercise("russianTwists40", "40 push ups", 56, 70, 40,"reps", targetAreas1, equipment2);
   }
 
   /**
