@@ -2,28 +2,25 @@ import React from 'react';
 import Sidebar from './Sidebar';
 import Questionnaire from "./Questionnaire";
 import Backend from "./Backend";
-import WorkoutDiv from "./Workout"
+import WorkoutDiv from "./WorkoutDiv"
 import './Recommendations.css'
+import WorkoutPreview from "./WorkoutPreview";
 
 class Recommendations extends React.Component {
 
     constructor(props) {
-        document.getElementById("questionnaire").style.display = "none";
         super(props);
         this.questionnaire = new Questionnaire();
+        //this.workoutPreview = new WorkoutPreview({name: '', time: ''});
         this.state = {
             input : {
-                energy: props.location.state.input.energy,
-                time: props.location.state.input.time,
-                targets: props.location.state.input.targets,
-                flexibility: props.location.state.input.flexibility.toString()
+                energy: props.location.state.input.energy, time: props.location.state.input.time,
+                targets: props.location.state.input.targets, flexibility: props.location.state.input.flexibility.toString()
             },
             output : {
-                error: '',
-                success: '',
-                recs: []
+                error: '', success: '', recs: []
             },
-            workouts: ''
+            workoutPreview : new WorkoutPreview({name: '', time: ''})
         }
 
         this.getRecommendations();
@@ -50,50 +47,59 @@ class Recommendations extends React.Component {
             this.setState(() => {
                 return {
                     output: {
-                        error: recs.error,
-                        success: recs.success,
-                        results: recs.results
+                        error: recs.error, success: recs.success, results: recs.results
                     }
                 }
             })
-            console.log("success? " + this.state.output.success)
-            console.log("error? " + this.state.output.error)
-            console.log("results" + this.state.output.results)
-
-            /*for each workout result, render
-            for(const res of this.state.output.results) {
-            }*/
-
-            //const recs = this.state.output.results
-            /*const workouts = this.state.output.results.map((result) => {
-                return{
-                    name: result.name,
-                }
-            })
-
-            this.renderWorkouts(workouts)*/
+            //console.log("success? " + this.state.output.success)
+            //console.log("error? " + this.state.output.error)
+            //console.log("results" + this.state.output.results)
         }
     }
 
+
+    openWorkoutPreview(info) {
+        //console.log("opening workout preview")
+        //console.log("preview object: " + info.toString())
+        this.setState(() => {
+            return {
+                workoutPreview: info
+            }
+        })
+        document.getElementById("workoutPreview").style.display = "block";
+    }
+
+    //renders list of recommended WorkoutDivs
     renderWorkouts() {
         if (this.state.output.results != null) {
             const workouts = this.state.output.results.map((result) => {
-                console.log("result name: " + result.name)
+                //console.log("result name: " + result.name)
+
+                const exercises = result.exercises.map((ex) => {
+                    return [ex.name, ex.time]
+                })
+
                 return{
                     name: result.name, time: result.workoutTime, difficulty: result.workoutDifficulty,
-                    targets: result.targetAreas, equipment: result.equipment
+                    targets: result.targetAreas, equipment: result.equipment, exercises: exercises
                 }
             })
+
             let workoutDivs = []
             for (const workout of workouts) {
-                const workoutDiv = new WorkoutDiv();
-                /*workoutDivs.push(<Workout className="Workout" name={workout.name} time={workout.time}
-                                          difficulty={workout.difficulty} targets={workout.targets}/>)*/
+                const workoutPreview = new WorkoutPreview(
+                    {name: workout.name, time:workout.time, difficulty: workout.difficulty,
+                        targets:workout.targets, equipment: workout.equipment, exercises: workout.exercises})
+
+                const workoutDiv = new WorkoutDiv( {open: this.openWorkoutPreview.bind(this),
+                    preview: workoutPreview});
+
                 workoutDivs.push(workoutDiv.renderWorkout({
                     className: "Workout", name: workout.name, time:workout.time,
-                    difficulty: workout.difficulty, targets:workout.targets, equipment: workout.equipment
+                    difficulty: workout.difficulty, targets:workout.targets, equipment: workout.equipment,
+                    openWorkout: this.openWorkoutPreview
                 }))
-                //document.getElementById("results").appendChild(workoutDiv)
+
             }
             return workoutDivs
         }
@@ -101,6 +107,7 @@ class Recommendations extends React.Component {
 
     componentDidMount() {
         document.getElementById("questionnaire").style.display = "none";
+        document.getElementById("workoutPreview").style.display = "none";
     }
 
     //opens Questionnaire if needed
@@ -110,7 +117,7 @@ class Recommendations extends React.Component {
 
     //renders Recommendations page after Questionnaire submitted
     render() {
-        console.log("rendering Recommendations")
+        //console.log("rendering Recommendations")
         const errorMessage = this.state.output.error === '' ? '' :
             `${this.state.output.error}`
         return (
@@ -134,6 +141,7 @@ class Recommendations extends React.Component {
                         {this.renderWorkouts()}
                     </div>
                 </div>
+                {this.state.workoutPreview.renderPreview()}
                 {this.questionnaire.renderQuestionnaire()};
             </div>
         )

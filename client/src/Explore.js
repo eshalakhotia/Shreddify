@@ -2,7 +2,7 @@ import React from 'react';
 import Sidebar from './Sidebar';
 import Questionnaire from "./Questionnaire";
 import Backend from "./Backend";
-import WorkoutDiv from "./Workout"
+import WorkoutDiv from "./WorkoutDiv"
 import './Explore.css'
 
 class Explore extends React.Component {

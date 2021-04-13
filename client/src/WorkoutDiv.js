@@ -2,7 +2,20 @@ import './Workout.css'
 import {Link} from "react-router-dom";
 import React from "react";
 
+//Workout thumbnail showing title, difficulty, muscle groups, equipment, etc.
 class WorkoutDiv {
+
+    constructor(props) {
+        this.openPreview = props.open;  //function that opens WorkoutPreview
+        this.preview = props.preview; //WorkoutPreview object
+    }
+
+    //updates workout preview modal with this WorkoutDiv's info
+    /*updatePreview() {
+        this.preview.updateInfo({name: this.name, time: this.time, difficulty: this.difficulty,
+        targets: this.targets, equipment: this.equipment})
+    }*/
+
     renderTargetTags() {
         let tagDivs = []
         this.targetTags.forEach((t) => {
@@ -21,22 +34,22 @@ class WorkoutDiv {
     Renders a workout thumbnail with info
      */
     renderWorkout(props) {
-        const name = props.name
-        console.log("workoutName = " +  name)
-        const time = props.time
+        this.name = props.name
+        //console.log("workoutName = " +  this.name)
+        this.time = props.time
         //console.log("workoutTime = " + time)
-        const difficulty = props.difficulty
+        this.difficulty = props.difficulty
         //console.log("workoutDiff = " + difficulty)
-        const targets = props.targets
-        console.log("targets: " + targets)
-        const equipment = props.equipment
-        console.log("equipment: " + equipment)
+        this.targets = props.targets
+        //console.log("targets: " + this.targets)
+        this.equipment = props.equipment
+        //console.log("equipment: " + this.equipment)
 
         this.targetTags = []
         //const tagDiv = document.getElementById('tags')
         //if (tagDiv != null) {
             //if (!tagDiv.firstChild) {
-            targets.forEach((target) => {
+            this.targets.forEach((target) => {
                     //console.log(target)
                     //const tag = document.createElement('div')
                     //tag.className = "Tag"
@@ -49,21 +62,25 @@ class WorkoutDiv {
         //}
 
         this.equipTags = []
-        equipment.forEach((equip) => {
+        this.equipment.forEach((equip) => {
             this.equipTags.push(equip)
         })
 
+        const openWorkout = e => {
+            props.openWorkout()
+        }
 
         return (
-            <Link to={{
+            /*<Link to={{
                 pathname: "/Workout",
-            }}>
-                <div className="Workout">
+            }}>*/
+                <div className="Workout" onClick={() => {this.openPreview(this.preview)}
+                }>
                     <div id="wrapper">
                         <div id="left">
-                            <h3>{name}</h3>
-                            <h3>Total Time: {time} minutes</h3>
-                            <h3>Difficulty: {difficulty} / 10</h3>
+                            <h3>{this.name}</h3>
+                            <h3>Total Time: {this.time} minutes</h3>
+                            <h3>Difficulty: {this.difficulty} / 10</h3>
                         </div>
                         <div id="middle">
                             <h3>Exercises</h3>
@@ -78,7 +95,7 @@ class WorkoutDiv {
                         </div>
                     </div>
                 </div>
-            </Link>
+            /*</Link>*/
         )
     }
 }

@@ -34,7 +34,7 @@ class Questionnaire {
     }
 
     //renders a target area option on the form
-    addTargets(area) {
+    addTarget(area) {
         const option = document.createElement('div');
         option.className ='targetButton'
         option.id = area
@@ -161,12 +161,12 @@ class Questionnaire {
                             <div id="options" className="options">
                             </div>
 
-                            {this.addTargets("abs")}
-                            {this.addTargets("legs")}
-                            {this.addTargets("back")}
-                            {this.addTargets("arms")}
-                            {this.addTargets("glutes")}
-                            {this.addTargets("cardio")}
+                            {this.addTarget("abs")}
+                            {this.addTarget("legs")}
+                            {this.addTarget("back")}
+                            {this.addTarget("arms")}
+                            {this.addTarget("glutes")}
+                            {this.addTarget("cardio")}
                         </div>
 
 
