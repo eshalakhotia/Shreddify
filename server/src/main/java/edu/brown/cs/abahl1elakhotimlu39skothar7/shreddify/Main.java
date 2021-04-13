@@ -258,7 +258,7 @@ public final class Main {
         User newUser = new User(username, pwd, fitnessLevel, allWorkouts);
         users.put(newUser.getUsername(), newUser);
         curUser = newUser;
-        // add database command to add new user to user database here
+        mainDatabase.addUser(newUser);
       }
       // In the React files, use the success boolean to check whether to display the results
       // or the error that prevented results from being obtained

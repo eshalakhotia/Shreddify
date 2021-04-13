@@ -75,6 +75,10 @@ public class User {
     return this.username;
   }
 
+  public int getPassword() {
+    return this.password;
+  }
+
   public double getOFL() {
     return this.overallFitnessLevel;
   }
@@ -82,6 +86,8 @@ public class User {
   public int getTotalNumWorkouts() {
     return this.totalNumWorkouts;
   }
+
+  public List<String> getPastWorkoutIDs() { return new ArrayList<>(this.pastWorkoutIDs); }
 
   public int getStreak() {
     return this.streak;

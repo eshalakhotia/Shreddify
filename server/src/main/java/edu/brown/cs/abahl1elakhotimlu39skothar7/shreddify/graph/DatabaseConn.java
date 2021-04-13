@@ -134,6 +134,49 @@ public class DatabaseConn {
     return workouts;
   }
 
+  public void deleteUser(String username) throws SQLException {
+    PreparedStatement prep = conn.prepareStatement("DELETE FROM users WHERE users.UserName = ?");
+    prep.setString(1, username);
+    prep.executeUpdate();
+    prep.close();
+  }
+
+  public void addUser(User user) throws SQLException {
+    StringBuilder lastWorkoutString = new StringBuilder();
+    LocalDateTime lastWorkout = user.getLastWorkout();
+    lastWorkoutString.append(String.valueOf(lastWorkout.getYear()));
+    lastWorkoutString.append(",");
+    lastWorkoutString.append(String.valueOf(lastWorkout.getMonth()));
+    lastWorkoutString.append(",");
+    lastWorkoutString.append(String.valueOf(lastWorkout.getDayOfMonth()));
+    lastWorkoutString.append(",");
+    lastWorkoutString.append(String.valueOf(lastWorkout.getHour()));
+    lastWorkoutString.append(",");
+    lastWorkoutString.append(String.valueOf(lastWorkout.getSecond()));
+    lastWorkoutString.append(",");
+    lastWorkoutString.append(String.valueOf(lastWorkout.getNano()));
+    StringBuilder pastWorkoutIDsString = new StringBuilder();
+    List<String> pastWorkoutIDs = user.getPastWorkoutIDs();
+    for (int i = 0; i < pastWorkoutIDs.size(); i++) {
+      pastWorkoutIDsString.append(pastWorkoutIDs.get(i));
+      if (i != pastWorkoutIDs.size() - 1) {
+        pastWorkoutIDsString.append(",");
+      }
+    }
+    PreparedStatement prep = conn.prepareStatement("INSERT INTO "
+            + "users (UserName, UserPassword, OverallFitnessLevel, TotalNumWorkouts, LastWorkout, pastWorkoutIDs, Streak)"
+            + " VALUES (?, ?, ?, ?, ?, ?, ?);");
+    prep.setString(1, user.getUsername());
+    prep.setInt(2, user.getPassword());
+    prep.setDouble(3, user.getOFL());
+    prep.setDouble(4, user.getTotalNumWorkouts());
+    prep.setString(5, lastWorkoutString.toString());
+    prep.setString(6, pastWorkoutIDsString.toString());
+    prep.setInt(7, user.getStreak());
+    prep.executeUpdate();
+    prep.close();
+  }
+
   public Map<String, User> getAllUsers(Map<String, Workout> allWorkouts) throws SQLException {
     Map<String, User> users = new HashMap<String, User>();
     PreparedStatement userInfo = conn.prepareStatement(
@@ -159,13 +202,13 @@ public class DatabaseConn {
       } else {
         newUserLastWorkout = null;
       }
-      String pastWorkoutIDsString = resulting.getString(5);
+      String pastWorkoutIDsString = resulting.getString(6);
       String[] pastWorkoutIDsArray = pastWorkoutIDsString.split(",");
       List<String> newUserPastWorkoutIDs = new ArrayList<>();
       for (int i = 0; i < pastWorkoutIDsArray.length; i++) {
         newUserPastWorkoutIDs.add(pastWorkoutIDsArray[i]);
       }
-      int newUserStreak = resulting.getInt(6);
+      int newUserStreak = resulting.getInt(7);
       // allWorkouts must be adjusted
       User newUser = new User(newUserName, newUserPassword, newUserOFL, newUserNumWorkouts, newUserStreak, newUserPastWorkoutIDs, newUserLastWorkout, allWorkouts);
       users.put(newUserName, newUser);
