@@ -23,6 +23,12 @@ public class UserTest {
 
   private User _user1;
   private User _user2;
+  private Workout workout1;
+  private Workout workout2;
+  private Workout workout3;
+  private Workout workout4;
+  private Workout workout5;
+  private Workout workout6;
 
   @Before
   public void setUp() {
@@ -82,12 +88,12 @@ public class UserTest {
     exerciseList6.add(russianTwists);
     exerciseList6.add(jumpingJacks);
     OutEdgeCache cache = new OutEdgeCache<WorkoutConnection, Workout>();
-    Workout workout1 = new Workout("new workout 1", "skajdhfalsd", 10, exerciseList1, cache);
-    Workout workout2 = new Workout("new workout 2", "asdfkjhasdlf", 1, exerciseList2, cache);
-    Workout workout3 = new Workout("new workout 3", "iequowrhjfk", 4, exerciseList3, cache);
-    Workout workout4 = new Workout("new workout 4", "asdjfhqwe", 15, exerciseList4, cache);
-    Workout workout5 = new Workout("new workout 5", "34253p9o", 6, exerciseList5, cache);
-    Workout workout6 = new Workout("new workout 6", "jkbmnvsa", 1, exerciseList6, cache);
+    workout1 = new Workout("new workout 1", "skajdhfalsd", 10, exerciseList1, cache);
+    workout2 = new Workout("new workout 2", "asdfkjhasdlf", 1, exerciseList2, cache);
+    workout3 = new Workout("new workout 3", "iequowrhjfk", 4, exerciseList3, cache);
+    workout4 = new Workout("new workout 4", "asdjfhqwe", 15, exerciseList4, cache);
+    workout5 = new Workout("new workout 5", "34253p9o", 6, exerciseList5, cache);
+    workout6 = new Workout("new workout 6", "jkbmnvsa", 1, exerciseList6, cache);
     Map<String, Workout> allWorkouts = new HashMap<String, Workout>();
     allWorkouts.put(workout1.getID(), workout1);
     allWorkouts.put(workout2.getID(), workout2);
@@ -95,12 +101,17 @@ public class UserTest {
     allWorkouts.put(workout4.getID(), workout4);
     allWorkouts.put(workout5.getID(), workout5);
     allWorkouts.put(workout6.getID(), workout6);
+    List<String> user1PastWorkouts = new ArrayList<>();
+    for (int i = 0; i < 27; i++) {
+      user1PastWorkouts.add("jkbmnvsa");
+    }
     _user1 = new User(
             "firstlast",
             234541,
             99,
             27,
             14,
+            user1PastWorkouts,
             LocalDateTime.of(
                     2021,
                     Month.APRIL,
@@ -136,12 +147,17 @@ public class UserTest {
             LocalDateTime.of(2021, Month.APRIL, 11, 19, 30, 40),
             _user1.getLastWorkout());
     assertEquals(6, _user1.getConnectedPreferences().getAllNodes().size());
+    assertEquals(234541, _user1.getPassword());
+    assertEquals(27, _user1.getPastWorkoutIDs().size());
     assertEquals("random", _user2.getUsername());
     assertEquals(56, _user2.getOFL(), 0.01);
     assertEquals(0, _user2.getTotalNumWorkouts());
     assertEquals(0, _user2.getStreak());
     assertEquals(null, _user2.getLastWorkout());
     assertEquals(6, _user2.getConnectedPreferences().getAllNodes().size());
+    String tempPassword = "password";
+    assertEquals(tempPassword.hashCode(), _user2.getPassword());
+    assertEquals(0, _user2.getPastWorkoutIDs().size());
     tearDown();
   }
 
@@ -192,12 +208,12 @@ public class UserTest {
     assertEquals(
             LocalDateTime.of(2021, Month.APRIL, 11, 19, 30, 40),
             _user1.getLastWorkout());
-    _user1.startNewWorkout();
+    _user1.startNewWorkout(workout4);
     assertEquals(28, _user1.getTotalNumWorkouts());
     assertFalse(_user1.getLastWorkout().equals(
             LocalDateTime.of(2021, Month.APRIL, 11, 19, 30, 40)));
     assertEquals(null, _user2.getLastWorkout());
-    _user2.startNewWorkout();
+    _user2.startNewWorkout(workout1);
     assertEquals(1, _user2.getTotalNumWorkouts());
     assertFalse(_user2.getLastWorkout().equals(null));
     tearDown();

@@ -93,6 +93,13 @@ public class Workout implements KDNode<Workout>, Vertex<WorkoutConnection, Worko
     }
   }
 
+  public Workout(double[] metrics) {
+    this.metrics = new HashMap<>();
+    for (int i = 0; i < metricNames.length; i++) {
+      this.metrics.put(metricNames[i], metrics[i]);
+    }
+  }
+
   //gets number of dimensions
   @Override
   public int getDim() {
