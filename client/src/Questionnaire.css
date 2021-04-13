@@ -32,15 +32,20 @@
 
 /* The Close Button */
 .close {
-    color: #aaaaaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
+    float: inline-block;
+    font-size: 15px;
+    height:30px;
+    width:130px;
+    background-color: #89e33b;
+    margin-left: 740px;
+    margin-top: 2px;
+    display: inline;
+    border-radius: 25px;
 }
 
 .close:hover,
 .close:focus {
-    color: #000;
+    color: #ff6b2b;
     text-decoration: none;
     cursor: pointer;
 }
