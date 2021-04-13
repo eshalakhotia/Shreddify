@@ -75,8 +75,12 @@ class Recommendations extends React.Component {
             const workouts = this.state.output.results.map((result) => {
                 //console.log("result name: " + result.name)
 
-                const exercises = result.exercises.map((ex) => {
-                    return [ex.name, ex.time]
+                //const exercises = result.exercises.map((ex) => {
+               //     return [ex.name, ex.time]
+               // })
+                const exercises = []
+                result.exercises.forEach((ex) => {
+                    exercises.push([ex.name, ex.time])
                 })
 
                 return{

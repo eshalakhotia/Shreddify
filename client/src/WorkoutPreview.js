@@ -59,7 +59,10 @@ class WorkoutPreview{
                     <h2>Exercises</h2>
                     {this.exercises}
                     <Link to={{
-                        pathname: "/Workout",
+                        pathname: "/Workout", //goes to workout in progress component
+                        state: {
+                            exercises: this.exercises
+                        }
                     }}>
                         <button id='start'>Start!</button>
                     </Link>

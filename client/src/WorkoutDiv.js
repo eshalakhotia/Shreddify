@@ -36,7 +36,10 @@ class WorkoutDiv {
     renderWorkout(props) {
         this.name = props.name
         //console.log("workoutName = " +  this.name)
-        this.time = props.time
+
+        this.time = Math.ceil(props.time / 60) //round to nearest whole minute
+
+        //convert from seconds to minutes
         //console.log("workoutTime = " + time)
         this.difficulty = props.difficulty
         //console.log("workoutDiff = " + difficulty)

@@ -91,7 +91,7 @@ class Questionnaire {
     }
 
     //(!!IGNORE, DOING IN RECOMMENDATIONS CURRENTLY) sends request to Backend when Go button is pressed
-    async onSubmit() {
+    /*async onSubmit() {
         console.log("energy: " + this.input.energy)
         console.log("time: " + this.input.time)
         console.log("flexibility: " + this.input.flexibility)
@@ -116,10 +116,10 @@ class Questionnaire {
 
         //closes Questionnaire
         this.closeQuestionnaire()
-    }
+    }*/
 
     //redirects to Recommendations once necessary, passes recs info
-    renderRedirect() {
+    /*renderRedirect() {
         if (this.submitted) {
             return <Redirect
                 to={{
@@ -128,7 +128,7 @@ class Questionnaire {
                         error: this.output.error}
                 }}/>
         }
-    }
+    }*/
 
 
     //renders questionnaire

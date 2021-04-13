@@ -339,22 +339,22 @@ public final class Main {
       ///TEMPORARY, TEST FOR FRONTEND
       LinkedList<Exercise> exercises = new LinkedList<>();
       Set<String> muscles = new HashSet<String>();
-      muscles.add("abs");
-      muscles.add("arms");
+      muscles.add("abs");muscles.add("back");
+      Set<String> muscles2 = new HashSet<String>();
+      muscles2.add("abs");muscles2.add("arms");
       Set<String> equip = new HashSet<>();
-      equip.add("dumbbells");
-      equip.add("yoga mat");
-      equip.add("ankle weights");
-      exercises.add(new Exercise("e1", "Crunches", 3, 10, 30, muscles, equip));
+      equip.add("dumbbells");equip.add("yoga mat");equip.add("ankle weights");
+      exercises.add(new Exercise("e1", "Crunches", 3, 45, 30, muscles, equip));
+      exercises.add(new Exercise("e2", "Russian Roulettes", 3, 60, 30, muscles2, new HashSet<>()));
       Workout w1 = new Workout("Beginner Ab Workout", "1", 1, exercises, new OutEdgeCache());
       bestRecommendations.add(w1);
 
 
       LinkedList<Exercise> exercises2 = new LinkedList<>();
-      Set<String> muscles2 = new HashSet<String>();
-      muscles2.add("glutes");
-      muscles2.add("legs");
-      exercises2.add(new Exercise("e1", "Squats", 4, 5, 30, muscles2, new HashSet<>()));
+      Set<String> muscles3 = new HashSet<String>();
+      muscles3.add("glutes");
+      muscles3.add("legs");
+      exercises2.add(new Exercise("e1", "Squats", 4, 5, 30, muscles3, new HashSet<>()));
       Workout w2 = new Workout("Squat Shred", "1", 1, exercises2, new OutEdgeCache());
       bestRecommendations.add(w2);
       ///TEST
