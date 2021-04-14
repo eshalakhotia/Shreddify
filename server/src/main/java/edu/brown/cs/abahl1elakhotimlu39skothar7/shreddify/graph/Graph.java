@@ -218,7 +218,6 @@ public class Graph<E extends Edge<E, V>, V extends Vertex<E, V>> {
       double adjustedWeight;
       E edgeToConnectedVertex = outEdges.get(i);
       double rawWeight = edgeToConnectedVertex.getWeight();
-      System.out.println(rawWeight);
       if (rawWeight >= cappedMaxDist) {
         adjustedWeight = cappedMaxDist;
       } else {

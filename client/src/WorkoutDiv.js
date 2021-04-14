@@ -41,7 +41,7 @@ class WorkoutDiv {
 
         //convert from seconds to minutes
         //console.log("workoutTime = " + time)
-        this.difficulty = props.difficulty
+        this.difficulty = Math.ceil(props.difficulty)
         //console.log("workoutDiff = " + difficulty)
         this.targets = props.targets
         //console.log("targets: " + this.targets)
@@ -83,7 +83,7 @@ class WorkoutDiv {
                         <div id="left">
                             <h3>{this.name}</h3>
                             <h3>Total Time: {this.time} minutes</h3>
-                            <h3>Difficulty: {this.difficulty} / 10</h3>
+                            <h3>Difficulty: {this.difficulty} / 100</h3>
                         </div>
                         <div id="middle">
                             <h3>Exercises</h3>

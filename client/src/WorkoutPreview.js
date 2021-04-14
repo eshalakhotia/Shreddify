@@ -50,8 +50,8 @@ class WorkoutPreview{
                 <div className="workout-preview">
                     <span className="close" onClick={this.closePreview}>&times;</span>
                     <h1>{this.name}</h1>
-                    <h2>Time: {this.time} minutes</h2>
-                    <h2>Difficulty: {this.diff}/10</h2>
+                    <h2>Time: {Math.ceil(this.time / 60)} minutes</h2>
+                    <h2>Difficulty: {this.diff}/100</h2>
                     <h2>Target Areas</h2>
                     {this.targets}
                     <h2>Equipment</h2>

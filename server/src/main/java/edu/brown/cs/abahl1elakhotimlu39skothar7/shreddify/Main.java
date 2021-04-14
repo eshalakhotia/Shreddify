@@ -147,31 +147,18 @@ public final class Main {
   private static class LoginHandler implements Route {
     @Override
     public Object handle(Request request, Response response) throws Exception {
-
       JSONObject data = new JSONObject(request.body());
       String error = "";
       boolean userpwdMatch;
       // gets username, password from frontend
       String user = data.getString("username");
       String pwd = data.getString("password");
-
-      //System.out.println("username input: " + user);
-      //System.out.println("password input: " + pwd);
-
-      //TEMPORARY!! for testing purposes
-      users = new HashMap<>();
-      users.put("asdf", new User("asdf", "qwer", 5.0, new HashMap<>()));
-      users.put("test", new User("test", "test", 2.0, new HashMap<>()));
-
       User userWithUsername = users.get(user);
       if (userWithUsername == null) {
         error = "ERROR: user with given username was not found";
         userpwdMatch = false;
-        //System.out.println(error);
       } else {
-        //System.out.println("user found!");
         userpwdMatch = userWithUsername.checkPassword(pwd);
-        //System.out.println("password match? " + userpwdMatch);
         if (userpwdMatch) {
           curUser = userWithUsername;
           if (curUser.getLastWorkout() != null) {
@@ -183,12 +170,8 @@ public final class Main {
           }
         } else {
           error = "ERROR: incorrect password for this user";
-          //System.out.println(error);
         }
       }
-      //System.out.println("returning results");
-      // In the React files, use the success boolean to check whether to display the results
-      // or the error that prevented results from being obtained
       Map<String, Object> variables = ImmutableMap.of(
               "success", userpwdMatch,
               "results", curUser,
@@ -196,6 +179,7 @@ public final class Main {
       return new Gson().toJson(variables);
     }
   }
+
   private static class ExploreHandler implements Route {
     @Override
     public Object handle(Request request, Response response) throws Exception {
@@ -305,13 +289,10 @@ public final class Main {
       for (int i = 0; i < unusableTargetAreas.length(); i++) {
         targetAreas.add(unusableTargetAreas.getString(i));
       }
-      //not implemented in frontend yet
-      /*
       double difficulty = curUser.getOFL();
       final double defaultChangeRange = 10;
       double changeRange;
       final double maxOFL = 100;
-      final double minOFL = 0;
       double distToMax = maxOFL - difficulty;
       if (defaultChangeRange > distToMax) {
         changeRange = distToMax;
@@ -357,29 +338,7 @@ public final class Main {
       }
       Workout idealWorkout = new Workout(metrics);
       bestRecommendations = toSearch.kNearestNeighbors(idealWorkout, 5);
-      */
-      ///TEMPORARY, TEST FOR FRONTEND
-      LinkedList<Exercise> exercises = new LinkedList<>();
-      Set<String> muscles = new HashSet<String>();
-      muscles.add("abs");muscles.add("back");
-      Set<String> muscles2 = new HashSet<String>();
-      muscles2.add("abs");muscles2.add("arms");
-      Set<String> equip = new HashSet<>();
-      equip.add("dumbbells");equip.add("yoga mat");equip.add("ankle weights");
-      exercises.add(new Exercise("e1", "Crunches", 3, 45, 30, muscles, equip));
-      exercises.add(new Exercise("e2", "Russian Twists", 3, 60, 30, muscles2, new HashSet<>()));
-      Workout w1 = new Workout("Beginner Ab Workout", "1", 1, exercises, new OutEdgeCache());
-      bestRecommendations.add(w1);
 
-
-      LinkedList<Exercise> exercises2 = new LinkedList<>();
-      Set<String> muscles3 = new HashSet<String>();
-      muscles3.add("glutes");
-      muscles3.add("legs");
-      exercises2.add(new Exercise("e1", "Squats", 4, 5, 30, muscles3, new HashSet<>()));
-      Workout w2 = new Workout("Squat Shred", "1", 1, exercises2, new OutEdgeCache());
-      bestRecommendations.add(w2);
-      ///TEST
 
       Map<String, Object> variables = ImmutableMap.of(
               "success", success,

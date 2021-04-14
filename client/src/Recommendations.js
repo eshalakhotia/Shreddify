@@ -28,7 +28,7 @@ class Recommendations extends React.Component {
 
     //gets recommendations from backend and updates output state
     async getRecommendations() {
-        const recs = await Backend.getRecs(this.state.input.energy, this.state.input.time,
+        const recs = await Backend.getRecs(this.state.input.energy, this.state.input.time * 60,
             this.state.input.flexibility, this.state.input.targets)
 
         if (recs === null) {
@@ -132,7 +132,7 @@ class Recommendations extends React.Component {
                     <h1>Our Picks For You</h1>
                     <div id="inputs" className="inputs">
                         <h3>You searched for workouts with the following attributes:</h3>
-                        <h4>Energy: {this.state.input.energy}</h4>
+                        <h4>Energy: {this.state.input.energy}/100</h4>
                         <h4>Time: {this.state.input.time}</h4>
                         <h4>Flexible: {this.state.input.flexibility}</h4>
                         <h4>Target Areas: {this.state.input.targets}</h4>

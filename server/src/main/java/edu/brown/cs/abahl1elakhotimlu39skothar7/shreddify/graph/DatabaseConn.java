@@ -94,7 +94,7 @@ public class DatabaseConn {
       Set<String> targetAreas = new HashSet<String>();
       for (int i = 7; i < 14; i++) {
         if (resulting.getDouble(i) != 0) {
-          targetAreas.add(targetAreasColumns[i - 6].toLowerCase(Locale.ROOT));
+          targetAreas.add(targetAreasColumns[i - 7].toLowerCase(Locale.ROOT));
         }
       }
       // equipment field is a comma delimited string which we split and put into a HashSet
