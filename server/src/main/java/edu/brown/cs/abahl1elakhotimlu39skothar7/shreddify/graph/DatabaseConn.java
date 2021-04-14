@@ -157,7 +157,11 @@ public class DatabaseConn {
     lastWorkoutString.append(",");
     lastWorkoutString.append(String.valueOf(lastWorkout.getNano()));
     StringBuilder pastWorkoutIDsString = new StringBuilder();
-    List<String> pastWorkoutIDs = user.getPastWorkoutIDs();
+    List<Workout> pastWorkouts = user.getPastWorkouts();
+    List<String> pastWorkoutIDs = new ArrayList<>();
+    for (int i = 0; i < pastWorkouts.size(); i ++) {
+      pastWorkoutIDs.add(pastWorkouts.get(i).getID());
+    }
     for (int i = 0; i < pastWorkoutIDs.size(); i++) {
       pastWorkoutIDsString.append(pastWorkoutIDs.get(i));
       if (i != pastWorkoutIDs.size() - 1) {

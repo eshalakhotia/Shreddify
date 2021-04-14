@@ -148,7 +148,7 @@ public class UserTest {
             _user1.getLastWorkout());
     assertEquals(6, _user1.getConnectedPreferences().getAllNodes().size());
     assertEquals(234541, _user1.getPassword());
-    assertEquals(27, _user1.getPastWorkoutIDs().size());
+    assertEquals(27, _user1.getPastWorkouts().size());
     assertEquals("random", _user2.getUsername());
     assertEquals(56, _user2.getOFL(), 0.01);
     assertEquals(0, _user2.getTotalNumWorkouts());
@@ -157,7 +157,7 @@ public class UserTest {
     assertEquals(6, _user2.getConnectedPreferences().getAllNodes().size());
     String tempPassword = "password";
     assertEquals(tempPassword.hashCode(), _user2.getPassword());
-    assertEquals(0, _user2.getPastWorkoutIDs().size());
+    assertEquals(0, _user2.getPastWorkouts().size());
     tearDown();
   }
 
