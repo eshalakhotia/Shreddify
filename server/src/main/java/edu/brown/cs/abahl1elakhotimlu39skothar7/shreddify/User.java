@@ -15,7 +15,7 @@ public class User {
   private double overallFitnessLevel;
   private int totalNumWorkouts;
   private LocalDateTime lastWorkout;
-  private List<String> pastWorkoutIDs;
+  private List<Workout> pastWorkouts;
   private int streak;
   private Graph<WorkoutConnection, Workout> connectedPreferences;
 
@@ -29,7 +29,7 @@ public class User {
     this.overallFitnessLevel = overallFitnessLevel;
     this.totalNumWorkouts = 0;
     this.streak = 0;
-    this.pastWorkoutIDs = new ArrayList<>();
+    this.pastWorkouts = new ArrayList<>();
     this.lastWorkout = null;
     Map<String, Workout> allCloneWorkouts = new HashMap<String, Workout>();
     Set<String> keys = allWorkouts.keySet();
@@ -55,7 +55,10 @@ public class User {
     this.overallFitnessLevel = overallFitnessLevel;
     this.totalNumWorkouts = totalNumWorkouts;
     this.streak = streak;
-    this.pastWorkoutIDs = pastWorkoutIDs;
+    this.pastWorkouts = new ArrayList<>();
+    for (int i = 0; i < pastWorkoutIDs.size(); i++) {
+      this.pastWorkouts.add(allWorkouts.get(pastWorkoutIDs.get(i)));
+    }
     this.lastWorkout = lastWorkout;
     Map<String, Workout> allCloneWorkouts = new HashMap<String, Workout>();
     Set<String> keys = allWorkouts.keySet();
@@ -87,7 +90,7 @@ public class User {
     return this.totalNumWorkouts;
   }
 
-  public List<String> getPastWorkoutIDs() { return new ArrayList<>(this.pastWorkoutIDs); }
+  public List<Workout> getPastWorkouts() { return new ArrayList<>(this.pastWorkouts); }
 
   public int getStreak() {
     return this.streak;
@@ -116,7 +119,7 @@ public class User {
       }
     }
     totalNumWorkouts++;
-    pastWorkoutIDs.add(workout.getID());
+    pastWorkouts.add(workout);
     lastWorkout = now;
   }
 
