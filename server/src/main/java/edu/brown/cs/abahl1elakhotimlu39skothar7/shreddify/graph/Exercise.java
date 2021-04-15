@@ -11,8 +11,9 @@ public class Exercise {
   private double difficulty;
   private Set<String> muscle;
   private Set<String> equipment;
+  private String description;
   
-  public Exercise(String id, String eName, double diff, int eTime, int eReps, String measurementType, Set<String> eMuscle, Set<String> equip) {
+  public Exercise(String id, String eName, double diff, int eTime, int eReps, String measurementType, Set<String> eMuscle, Set<String> equip, String desc) {
     iD = id;
     name = eName;
     time = eTime;
@@ -21,6 +22,7 @@ public class Exercise {
     muscle = eMuscle;
     difficulty = diff;
     equipment = equip;
+    description = desc;
   }
   public String getExerciseId() {
     return iD;
@@ -45,5 +47,9 @@ public class Exercise {
   }
   public Set<String> getExerciseEquipment() {
     return equipment;
+  }
+
+  public String getDescription() {
+    return description;
   }
 }

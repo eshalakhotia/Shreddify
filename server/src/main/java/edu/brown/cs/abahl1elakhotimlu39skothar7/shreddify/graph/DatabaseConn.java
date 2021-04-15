@@ -104,7 +104,8 @@ public class DatabaseConn {
       } else {
         String[] equipmentList = resulting.getString(14).split(",");
         equip = new HashSet<String>(Arrays.asList(equipmentList));
-        Exercise newExercise = new Exercise(newExerciseID, newExerciseName, newExerciseDifficulty, newExerciseTime, newExerciseReps, measurementType, targetAreas, equip);
+        String description = resulting.getString(15);
+        Exercise newExercise = new Exercise(newExerciseID, newExerciseName, newExerciseDifficulty, newExerciseTime, newExerciseReps, measurementType, targetAreas, equip, description);
         exercises.put(newExerciseID, newExercise);
       }
     }
