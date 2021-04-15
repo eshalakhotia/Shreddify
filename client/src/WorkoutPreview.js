@@ -7,19 +7,13 @@ class WorkoutPreview{
     constructor(props) {
         this.name = props.name
         this.time = props.time
-        this.diff = props.difficulty
+        this.diff = Math.round(props.difficulty)
         this.targets = props.targets
         this.equip = props.equipment
         this.exercises = props.exercises
+        this.cycles = props.cycles
         this.renderTargets = this.renderTargets.bind(this)
     }
-
-    /*updateInfo(info) {
-        //console.log("updating preview info")
-        //console.log("new name should be: " + info.name)
-        //console.log("preview name: " + this.name)
-        //this.renderPreview()
-    }*/
 
     //renders target areas
     renderTargets() {
@@ -61,7 +55,8 @@ class WorkoutPreview{
                     <Link to={{
                         pathname: "/Workout", //goes to workout in progress component
                         state: {
-                            exercises: this.exercises
+                            exercises: this.exercises,
+                            cycles: this.cycles
                         }
                     }}>
                         <button id='start'>Start!</button>

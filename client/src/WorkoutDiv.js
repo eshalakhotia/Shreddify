@@ -44,7 +44,7 @@ class WorkoutDiv {
 
         //convert from seconds to minutes
         //console.log("workoutTime = " + time)
-        this.difficulty = Math.ceil(props.difficulty)
+        this.difficulty = Math.round(props.difficulty)
         //console.log("workoutDiff = " + difficulty)
         this.targets = props.targets
         //console.log("targets: " + this.targets)

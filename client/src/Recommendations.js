@@ -51,16 +51,11 @@ class Recommendations extends React.Component {
                     }
                 }
             })
-            //console.log("success? " + this.state.output.success)
-            //console.log("error? " + this.state.output.error)
-            //console.log("results" + this.state.output.results)
         }
     }
 
-
+    //display preview component 'info' associated with clicked WorkoutDiv
     openWorkoutPreview(info) {
-        //console.log("opening workout preview")
-        //console.log("preview object: " + info.toString())
         this.setState(() => {
             return {
                 workoutPreview: info
@@ -73,11 +68,6 @@ class Recommendations extends React.Component {
     renderWorkouts() {
         if (this.state.output.results != null) {
             const workouts = this.state.output.results.map((result) => {
-                //console.log("result name: " + result.name)
-
-                //const exercises = result.exercises.map((ex) => {
-               //     return [ex.name, ex.time]
-               // })
                 const exercises = []
                 result.exercises.forEach((ex) => {
                     exercises.push([ex.name, ex.time])
@@ -85,7 +75,8 @@ class Recommendations extends React.Component {
 
                 return{
                     name: result.name, time: result.workoutTime, difficulty: result.workoutDifficulty,
-                    targets: result.targetAreas, equipment: result.equipment, exercises: exercises
+                    targets: result.targetAreas, equipment: result.equipment, exercises: exercises,
+                    cycles: result.numCycles
                 }
             })
 
@@ -93,8 +84,10 @@ class Recommendations extends React.Component {
             for (const workout of workouts) {
                 const workoutPreview = new WorkoutPreview(
                     {name: workout.name, time:workout.time, difficulty: workout.difficulty,
-                        targets:workout.targets, equipment: workout.equipment, exercises: workout.exercises})
+                        targets:workout.targets, equipment: workout.equipment, exercises: workout.exercises,
+                    cycles: workout.cycles})
 
+                //create workout thumbnail with associated Preview component
                 const workoutDiv = new WorkoutDiv( {open: this.openWorkoutPreview.bind(this),
                     preview: workoutPreview});
 

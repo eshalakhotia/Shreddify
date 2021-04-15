@@ -7,20 +7,15 @@ class WorkoutInProgress extends React.Component {
         //console.log(props.location)
         if (props.location.state !== null) {
             this.exercises = props.location.state.exercises
+            this.cycles = props.location.state.cycles
         }
         //this.exercises = props.location.state.exercises //list of exercises
         this.state = {
             currExerciseNum: 0,
             currExercise: this.exercises[0],
-            activeTimer: false
+            activeTimer: false,
+            currCycle: 1
         }
-
-       // console.log("curr exercise num = " + this.state.currExerciseNum)
-        //console.log("curr exercise name = " + this.exercises[0].name)
-        //this.currExerciseNum = 0;
-        //this.currExercise = this.exercises[this.currExerciseNum]
-        console.log("first exercise: " + this.state.currExercise[0])
-        //this.activeTimer = false
     }
 
     componentDidMount() {
@@ -42,7 +37,7 @@ class WorkoutInProgress extends React.Component {
         let seconds = this.state.currExercise[1]
         let mins = 0
         if (seconds >= 60) {
-            mins = seconds / 60
+            mins = Math.round(Math.floor(seconds / 60))
         }
         seconds = seconds % 60
         if (seconds < 10) {
@@ -55,7 +50,7 @@ class WorkoutInProgress extends React.Component {
                 <div id="wrapper">
                     <div id="left">
                         <div id="left-top">
-                            <h3>Currently on Exercise #{this.state.currExerciseNum + 1}</h3>
+                            <h3>Exercise #{this.state.currExerciseNum + 1} of Cycle #{this.state.currCycle}</h3>
                             <h1>{this.state.currExercise[0]}</h1> {/*exercise name*/}
                             <h2>{this.state.currExercise[1]} seconds</h2>   {/*exercise time*/}
                         </div>
@@ -151,17 +146,49 @@ class WorkoutInProgress extends React.Component {
         document.getElementById('pauseTimer').style.display = "none"
         document.getElementById('resetTimer').style.display = "none"
         document.getElementById('prevButton').style.display = "block"
-        if (this.state.currExerciseNum + 1 === this.exercises.length - 1) {//going to last exercise
+
+        //if the next exercise will be the last AND it is the last cycle
+        if (this.state.currExerciseNum + 1 === this.exercises.length - 1 && this.state.currCycle === this.cycles) {
             document.getElementById('nextButton').style.display = "none"
             document.getElementById('finishButton').style.display = "inline"
         }
-        this.setState((state) => {
-            return {
-                currExerciseNum: state.currExerciseNum + 1,
-                currExercise: this.exercises[state.currExerciseNum + 1],
-                activeTimer: false
-            }
-        })
+
+        console.log("cycle of exercise that was just finished: " + this.state.currCycle)
+        console.log("index of exercise that was just finished: " + this.state.currExerciseNum)
+
+        //if the current exercise is the last AND there are more cycles to do
+        if (this.state.currExerciseNum === this.exercises.length - 1 && this.state.currCycle < this.cycles) {
+
+            console.log("going to next cycle")
+            //console.log("going back to exercise: " + this.exercises[0])
+            //console.log("exercise time: " + this.exercises[0][1])
+            console.log("going back to exercise: " + this.exercises[0][0])
+
+
+            //start at first exercise, increment curr cycle
+            this.setState((state) => {
+                return {
+                    currExerciseNum: 0,
+                    currExercise: this.exercises[0],
+                    activeTimer: false,
+                    currCycle: state.currCycle + 1
+                }
+            })
+        }
+        //if the current exercise is not the last
+        else {
+            //increment exercise number, cycle remains
+            this.setState((state) => {
+                return {
+                    currExerciseNum: state.currExerciseNum + 1,
+                    currExercise: this.exercises[state.currExerciseNum + 1],
+                    activeTimer: false,
+                }
+            })
+        }
+
+
+
     }
 
     prevExercise() {
@@ -169,18 +196,38 @@ class WorkoutInProgress extends React.Component {
         document.getElementById('startTimer').style.display = "inline"
         document.getElementById('pauseTimer').style.display = "none"
         document.getElementById('resetTimer').style.display = "none"
-        if (this.state.currExerciseNum === 1) { //going back to first exercise
+
+        //going back to first exercise of first cycle
+        if (this.state.currExerciseNum === 1 && this.state.currCycle === 1) {
             document.getElementById('prevButton').style.display = "none"
         }
         document.getElementById('nextButton').style.display = "inline"
         document.getElementById('finishButton').style.display = "none"
-        this.setState((state) => {
-            return {
-                currExerciseNum: state.currExerciseNum - 1,
-                currExercise: this.exercises[state.currExerciseNum - 1],
-                activeTimer: false
-            }
-        })
+
+        //if currently on first exercise but there are still previous cycles
+        if (this.state.currExerciseNum === 0 && this.state.currCycle > 1) {
+            //go back to last exercise of previous cycle
+
+            this.setState((state) => {
+                return {
+                    currExerciseNum: this.exercises.length - 1,
+                    currExercise: this.exercises[this.exercises.length - 1],
+                    activeTimer: false,
+                    currCycle: state.currCycle - 1
+                }
+            })
+        }
+        else {
+            //go back to previous exercise, cycle remains
+            this.setState((state) => {
+                return {
+                    currExerciseNum: state.currExerciseNum - 1,
+                    currExercise: this.exercises[state.currExerciseNum - 1],
+                    activeTimer: false
+                }
+            })
+        }
+
     }
 
     render () {

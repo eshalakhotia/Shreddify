@@ -15,6 +15,7 @@ public class Workout implements KDNode<Workout>, Vertex<WorkoutConnection, Worko
   private double workoutDifficulty;
   private Set<String> targetAreas;
   private Set<String> equipment;
+  private int numCycles;
 
   // all metrics of a workout that we want to look at
   // (String array necessary to support comparing dimensions on KDTree)
@@ -26,7 +27,7 @@ public class Workout implements KDNode<Workout>, Vertex<WorkoutConnection, Worko
   // the individual names of targetAreas
   private Map<String, Double> targetAreasComponents;
   private List<Exercise> exercises;
-  private int numCycles;
+
 
   // delete outgoingEdges soon
   private double preference = 50;
