@@ -10,11 +10,13 @@ class Home extends React.Component {
 
     constructor(props) {
         super(props);
+        this.username = props.location.state.username
+        console.log("this.username= " + this.username)
         this.questionnaire = new Questionnaire();
     }
 
-    async componentDidMount() {
-
+    componentDidMount() {
+        document.getElementById("main").style.marginLeft = "300px";
     }
 
     //opens Questionnaire modal when needed
@@ -31,9 +33,14 @@ class Home extends React.Component {
                 <Sidebar className="Sidebar" findWorkouts={this.openQuestionnaire}/*closeNav={this.closeNav} openNav={this.openNav}*//>
 
                 <div id="main">
-                    <h1>Welcome Back, [User]!</h1>
-                    <h2>My Workouts</h2>
-                    <h2>My Achievements</h2>
+                    <h1>Welcome Back, {this.username}!</h1>
+                    <div id="past-workouts">
+                        <h2>My Workouts</h2>
+                        <span>You have no past workouts. Go to Find Workouts on the left to get some recommendations!</span>
+                    </div>
+                    <div id="achievements">
+                        <h2>My Achievements</h2>
+                    </div>
                 </div>
                 {this.questionnaire.renderQuestionnaire()};
             </div>

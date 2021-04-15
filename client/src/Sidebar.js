@@ -50,8 +50,6 @@ function Sidebar(props) {
             <div className="links">
                 <a href="#" onClick={findWorkouts}>Find Workouts</a>
                 <a href="#">Explore</a>
-                <a href="#">Create New</a>
-                <a href="#">User Info</a>
             </div>
 
         </div>

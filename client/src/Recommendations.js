@@ -112,6 +112,7 @@ class Recommendations extends React.Component {
     componentDidMount() {
         document.getElementById("questionnaire").style.display = "none";
         document.getElementById("workoutPreview").style.display = "none";
+        document.getElementById("main").style.marginLeft = "300px";
     }
 
     //opens Questionnaire if needed
@@ -131,14 +132,14 @@ class Recommendations extends React.Component {
                 <div id="main">
                     <h1>Our Picks For You</h1>
                     <div id="inputs" className="inputs">
-                        <h3>You searched for workouts with the following attributes:</h3>
+                        {/*<h3>You searched for workouts with the following attributes:</h3>
                         <h4>Energy: {this.state.input.energy}/100</h4>
                         <h4>Time: {this.state.input.time}</h4>
                         <h4>Flexible: {this.state.input.flexibility}</h4>
-                        <h4>Target Areas: {this.state.input.targets}</h4>
+                        <h4>Target Areas: {this.state.input.targets}</h4>*/}
                     </div>
-                    <hr/>
                     <div id="results" className="results">
+                        <h3>Click on any workout to get started!</h3>
                         <div className="error">
                             <h3>{errorMessage}</h3>
                         </div>

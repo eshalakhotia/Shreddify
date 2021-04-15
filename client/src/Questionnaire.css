@@ -9,7 +9,7 @@
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(255, 107, 43, 0.2); /*transparent orange*/
+
     /*background-color: #ff6b2b;*/
 }
 
@@ -20,37 +20,19 @@
     height: 80%;
     margin: auto;
     padding: 20px;
-    border: 1px solid #888;
+    padding-top: 30px;
     width: 60%;
     border-radius: 10px;
+    -moz-box-shadow: 0 0 15px #ba5834;
+    -webkit-box-shadow: 0 0 15px #ba5834;
 }
 
 .questionnaire h1, h3 {
-    margin-top: 20px;
+    margin-top: 0px;
     text-align: center;
 }
 
-/* The Close Button */
-.close {
-    float: inline-block;
-    font-size: 15px;
-    height:30px;
-    width:120px;
-    background-color: #89e33b;
-    margin-left: 740px;
-    margin-top: 2px;
-    display: inline;
-    border-radius: 25px;
-}
 
-.close:focus {
-    color: #ff6b2b;
-    text-decoration: none;
-    cursor: pointer;
-}
-.close:hover {
-    background-color: limegreen;
-}
 
 #energy {
     display: inline;
@@ -107,7 +89,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #89e33b;
+    background-color: #57e695;
     -webkit-transition: .4s;
     transition: .4s;
 }
@@ -199,8 +181,8 @@ input:checked + .slider:before {
 .targetButton {
     border-radius: 5px;
     background-color: white;
-    border: 1px solid hotpink;
-    color: hotpink;
+    border: 1px solid #ff6969;
+    color: #ff6969;
     display: inline-block;
 
     margin-right: 20px;
@@ -214,19 +196,43 @@ input:checked + .slider:before {
 }
 
 .questionnaire #go {
-    height:30px;
-    width:120px;
     border: none;
-    background-color: #75d950;
+    background-color: #57e695;
     color: black;
-    margin-left: 145px;
-    margin-top: 150px;
+    margin-left: 50px;
+    margin-top: 80px;
     display: inline;
-    border-radius: 25px;
+    height:max-content;
+    width:max-content;
+    padding: 6px 10px;
+    font-size: 25px;
+    border-radius: 10px;
 }
+
+
 .questionnaire #go:hover {
-    background-color: limegreen;
+    background-color: #0ddb71;
 }
+
+/* The Close Button */
+.close {
+    font-size: 20px;
+    margin-left: 740px;
+    display: inline;
+    border-radius: 10px;
+    background-color: #ffbea6;
+    text-align: center;
+    vertical-align: center;
+    height:max-content;
+    width:max-content;
+    padding: 6px 10px;
+}
+
+.close:hover {
+    background-color: #ff8254;
+    cursor: pointer;
+}
+
 
 .questionnaire #left{
     width: 70%;
@@ -238,4 +244,9 @@ input:checked + .slider:before {
 .questionnaire #wrapper {
     margin: 0 auto;
     display:flex;
+}
+
+.questionnaire h2 {
+    text-align: left;
+    font-size: 20px;
 }

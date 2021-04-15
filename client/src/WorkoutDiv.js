@@ -28,6 +28,9 @@ class WorkoutDiv {
         this.equipTags.forEach((t) => {
             tagDivs.push(<div id="equipTag" className="Tag">{t}</div>)
         })
+        if (this.equipTags.length === 0) {
+            tagDivs.push(<h4>No equipment necessary!</h4>)
+        }
         return tagDivs
     }
     /*
@@ -49,25 +52,16 @@ class WorkoutDiv {
         //console.log("equipment: " + this.equipment)
 
         this.targetTags = []
-        //const tagDiv = document.getElementById('tags')
-        //if (tagDiv != null) {
-            //if (!tagDiv.firstChild) {
             this.targets.forEach((target) => {
-                    //console.log(target)
-                    //const tag = document.createElement('div')
-                    //tag.className = "Tag"
-                    //tag.innerHTML = target
                     this.targetTags.push(target)
-                    //tagDiv.appendChild(tag)
                 }
             )
-            //}
-        //}
 
         this.equipTags = []
         this.equipment.forEach((equip) => {
             this.equipTags.push(equip)
         })
+        this.equipTags.shift()
 
         const openWorkout = e => {
             props.openWorkout()
@@ -82,11 +76,10 @@ class WorkoutDiv {
                     <div id="wrapper">
                         <div id="left">
                             <h3>{this.name}</h3>
-                            <h3>Total Time: {this.time} minutes</h3>
-                            <h3>Difficulty: {this.difficulty} / 100</h3>
+                            <h4>Total Time: {this.time} minutes</h4>
+                            <h4>Difficulty: {this.difficulty} / 100</h4>
                         </div>
                         <div id="middle">
-                            <h3>Exercises</h3>
                             <div id="tags">
                                 <h3>Target Areas</h3>
                                 {this.renderTargetTags()}

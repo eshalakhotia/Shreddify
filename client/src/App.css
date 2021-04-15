@@ -42,14 +42,21 @@
   color: white;
 }
 #loginButton {
-  background-color: #ff8854;
+  /*background-color: #ff8854;*/
+  background-image: linear-gradient(to right, #ff8c4a, #ff6e6e)
 }
 #signupButton {
-  background-color: #89e33b;
+  background-image: linear-gradient(to right, #778ffc, #1eaee8)
 }
 #loginButton:hover {
-  background-color: #ff6b2b;
+  background-image: linear-gradient(to right, #ff7f2b, #ff6363);
+  -moz-box-shadow: 0 0 2px grey;
+  -webkit-box-shadow: 0 0 2px grey;
+  box-shadow: 0 0 2px grey;
 }
 #signupButton:hover {
-  background-color: limegreen;
+  background-image: linear-gradient(to right, #6d87fc, #0da2de);
+  -moz-box-shadow: 0 0 2px grey;
+  -webkit-box-shadow: 0 0 2px grey;
+  box-shadow: 0 0 2px grey;
 }
