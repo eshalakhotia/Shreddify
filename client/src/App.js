@@ -19,6 +19,7 @@ class App extends React.Component {
         this.state = {
             username: '',
             password: '',
+            user: '',
             authenticated: false,
             error: ''
         }
@@ -63,10 +64,7 @@ class App extends React.Component {
             console.log("User: " + info.results)
             //if successful
             if (info.success) {
-                const user = info.results
-
-
-                this.setState({authenticated: true})
+                this.setState({authenticated: true, user: info.results})
             } else {
                 this.setState({error: info.error})
             }
@@ -99,7 +97,7 @@ class App extends React.Component {
         if (this.state.authenticated) {
             return <Redirect to={{
                 pathname: "/Home",
-                state: {username: this.state.username}  }}/>
+                state: {username: this.state.username, user: this.state.user}  }}/>
         }
     }
 

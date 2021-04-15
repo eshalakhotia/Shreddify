@@ -56,6 +56,16 @@ public class User {
     this.totalNumWorkouts = totalNumWorkouts;
     this.streak = streak;
     this.pastWorkouts = new ArrayList<>();
+
+    System.out.println("");
+    System.out.println("NEW USER LOADED: " + this.username);
+    System.out.println("# past workouts: " + pastWorkoutIDs.size());
+    System.out.println("everyday ID workout: " + allWorkouts.get("Everyday").getName());
+    for (int i = 0; i < pastWorkoutIDs.size(); i++) {
+      System.out.print("id: " + pastWorkoutIDs.get(i) + ", ");
+      //System.out.println("corresponding workout: " + allWorkouts.get(pastWorkoutIDs.get(i)).getName());
+    }
+
     for (int i = 0; i < pastWorkoutIDs.size(); i++) {
       this.pastWorkouts.add(allWorkouts.get(pastWorkoutIDs.get(i)));
     }
@@ -99,6 +109,7 @@ public class User {
   public Graph getConnectedPreferences() {
     return this.connectedPreferences;
   }
+
 
   public void updateStreak() {
     this.streak++;

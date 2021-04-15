@@ -118,8 +118,8 @@ public class DatabaseConn {
             "SELECT * FROM workouts;");
     ResultSet resulting = workoutInfo.executeQuery();
     while (resulting.next()) {
-      String newWorkoutID = resulting.getString(1);
-      String newWorkoutName = resulting.getString(2);
+      String newWorkoutID = resulting.getString(2);
+      String newWorkoutName = resulting.getString(1);
       int newWorkoutCycles = resulting.getInt(3);
       String newWorkoutExerciseIDList = resulting.getString(4);
       String[] newWorkoutExerciseIDArray = newWorkoutExerciseIDList.split(",");
@@ -130,7 +130,7 @@ public class DatabaseConn {
           newWorkoutExercises.add(newExercise);
         }
       }
-      Workout newWorkout = new Workout(newWorkoutID, newWorkoutName, newWorkoutCycles, newWorkoutExercises, cache);
+      Workout newWorkout = new Workout(newWorkoutName, newWorkoutID, newWorkoutCycles, newWorkoutExercises, cache);
       workouts.put(newWorkoutID, newWorkout);
     }
     return workouts;

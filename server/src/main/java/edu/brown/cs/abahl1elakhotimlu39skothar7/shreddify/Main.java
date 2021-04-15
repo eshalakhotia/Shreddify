@@ -177,7 +177,6 @@ public final class Main {
           curUser = userWithUsername;
           //System.out.println("getting last workout");
           if (curUser.getLastWorkout() != null) {
-            System.out.println("dealing with last workout");
             LocalDateTime now = LocalDateTime.now();
             LocalDateTime dayAfter = curUser.getLastWorkout().plusDays(1);
             if (dayAfter.getDayOfYear() != now.getDayOfYear()) {
@@ -190,6 +189,13 @@ public final class Main {
           error = "ERROR: incorrect password for this user";
         }
       }
+
+      System.out.println("curUser name: " + curUser.getUsername());
+      System.out.println("# of past workouts " + curUser.getPastWorkouts().size());
+      for (int i = 0; i < curUser.getPastWorkouts().size(); i++) {
+        System.out.println("workout name: " + curUser.getPastWorkouts().get(i));
+      }
+
       Map<String, Object> variables = ImmutableMap.of(
               "success", userpwdMatch,
               "results", curUser,
