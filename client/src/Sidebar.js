@@ -63,6 +63,11 @@ function Sidebar(props) {
                 <div className="bar3"/>
             </a>
             <div className="links">
+                <Link to={{
+                    pathname: "/Home",
+                }}>
+                    <a href="#">Home</a>
+                </Link>
                 <a href="#" onClick={findWorkouts}>Find Workouts</a>
                 <Link to={{
                     pathname: "/Explore",
