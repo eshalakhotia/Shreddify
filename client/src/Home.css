@@ -16,6 +16,11 @@
     margin-bottom: 20px;
 }
 
+
+.Home #title-h3 {
+    margin-top: 20px;
+}
+
 #past-workouts, #achievements {
     padding: 30px;
     background-color: #5672f0;

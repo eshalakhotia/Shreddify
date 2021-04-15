@@ -47,7 +47,12 @@ async function login(username, password) {
     });
 }
 
+async function explore() {
+    return makePOST(backendURL + '/explore', {});
+}
+
 export default{
     getRecs: getRecs,
-    login: login
+    login: login,
+    explore: explore
 }

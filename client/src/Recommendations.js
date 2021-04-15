@@ -11,7 +11,6 @@ class Recommendations extends React.Component {
     constructor(props) {
         super(props);
         this.questionnaire = new Questionnaire();
-        //this.workoutPreview = new WorkoutPreview({name: '', time: ''});
         this.state = {
             input : {
                 energy: props.location.state.input.energy, time: props.location.state.input.time,
@@ -82,6 +81,13 @@ class Recommendations extends React.Component {
 
             let workoutDivs = []
             for (const workout of workouts) {
+
+
+                console.log("rendering new workout Div and Preview")
+                console.log("name: " + workout.name)
+                console.log("target: " + workout.targets)
+
+
                 const workoutPreview = new WorkoutPreview(
                     {name: workout.name, time:workout.time, difficulty: workout.difficulty,
                         targets:workout.targets, equipment: workout.equipment, exercises: workout.exercises,
@@ -111,6 +117,10 @@ class Recommendations extends React.Component {
     //opens Questionnaire if needed
     openQuestionnaire() {
         document.getElementById("questionnaire").style.display = "block";
+        const options = document.getElementById("options")
+        while (options.firstChild) {
+            options.removeChild(options.firstChild)
+        }
     }
 
     //renders Recommendations page after Questionnaire submitted

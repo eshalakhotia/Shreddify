@@ -18,7 +18,8 @@ class Home extends React.Component {
         this.pastWorkouts = this.user.pastWorkouts
         this.questionnaire = new Questionnaire();
         this.state = {
-            workoutPreview : new WorkoutPreview({name: '', time: ''})
+            workoutPreview : new WorkoutPreview({name: '', time: ''}),
+            toExplore : false
         }
     }
 
@@ -29,6 +30,10 @@ class Home extends React.Component {
     //opens Questionnaire modal when needed
     openQuestionnaire() {
         document.getElementById("questionnaire").style.display = "block";
+        const options = document.getElementById("options")
+        while (options.firstChild) {
+            options.removeChild(options.firstChild)
+        }
     }
 
 
@@ -44,8 +49,6 @@ class Home extends React.Component {
 
     renderWorkouts() {
         if (this.pastWorkouts != null) {
-            console.log("rendering workouts: " + this.pastWorkouts.length)
-            console.log("rendering workouts: " + this.pastWorkouts)
             const workouts = this.pastWorkouts.map((result) => {
 
                 const exercises = []
@@ -87,11 +90,26 @@ class Home extends React.Component {
         }
     }
 
+    toExplore() {
+        this.setState(() => {return {
+            toExplore : true
+        }
+        })
+    }
+
+    renderRedirectToExplore() {
+        if (this.state.toExplore) {
+            return <Redirect to={{
+                pathname: "/Recommendations",
+                state: {username: this.username, user: this.user}  }}/>
+        }
+    }
+
     //renders Homepage/profile
     render() {
         return (
             <div id="Home" className="Home">
-                <Sidebar className="Sidebar" findWorkouts={this.openQuestionnaire}/*closeNav={this.closeNav} openNav={this.openNav}*//>
+                <Sidebar className="Sidebar" findWorkouts={this.openQuestionnaire}/>
                 <div id="main">
                     <div id="logout">
                         <Link to={{
@@ -104,6 +122,7 @@ class Home extends React.Component {
                         </Link>
                     </div>
                     <h1>Welcome Back, {this.username}!</h1>
+                    <h3 id="title-h3">Try one of your past workouts, or find some new recommendations on the left. It's time to get SHREDDED!</h3>
                     <div id="past-workouts">
                         <h2>Your Workouts</h2>
                         {this.renderWorkouts()}
@@ -112,6 +131,7 @@ class Home extends React.Component {
                         <h2>Your Achievements</h2>
                     </div>
                 </div>
+
                 {this.state.workoutPreview.renderPreview()}
                 {this.questionnaire.renderQuestionnaire()};
             </div>
