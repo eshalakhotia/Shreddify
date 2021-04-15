@@ -2,6 +2,8 @@ import './App.css';
 import Backend from "./Backend";
 import React from 'react';
 import { Redirect } from 'react-router-dom';
+import SignUp from './SignUp';
+import './SignUp.css'
 import {
     BrowserRouter as Router,
     Route,
@@ -88,6 +90,9 @@ class App extends React.Component {
             this.setState({error: info.error})
         }
     }
+    openSignUpSheet() {
+        document.getElementById("SignUp").style.display = "block";
+    }
 
     //redirects to Homepage if authenticated
     renderRedirect() {
@@ -122,14 +127,15 @@ class App extends React.Component {
                     <div id="login">
                         <button id="loginButton" onClick={this.onLogin.bind(this)}>Log In</button>
                     </div>
-                    <div id="signup">
-                        {/*<Link to="/Home">*/}
-                            <button id="signupButton" onClick={this.onsign.bind(this)}> Sign Up </button>
-                        {/*</Link>*/}
-                    </div>
-
+                {/*    <div id="signup">*/}
+                {/*        /!*<Link to="/Home">*!/*/}
+                {/*            <button id="signupButton" onClick={this.openSignUpSheet}> Sign Up </button>*/}
+                {/*        /!*</Link>*!/*/}
+                {/*    </div>*/}
+                {/*    {this.questionnaire.renderSignUp()};*/}
                 </div>
             </div>
+
         )
     }
 }
