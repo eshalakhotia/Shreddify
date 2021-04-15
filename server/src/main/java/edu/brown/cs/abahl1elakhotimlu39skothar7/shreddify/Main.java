@@ -153,15 +153,31 @@ public final class Main {
       // gets username, password from frontend
       String user = data.getString("username");
       String pwd = data.getString("password");
+
+      //System.out.println("username: " + user);
+      //System.out.println("password: " + pwd);
+
       User userWithUsername = users.get(user);
       if (userWithUsername == null) {
+
+        //System.out.println("ERROR: user with given username was not found");
+
         error = "ERROR: user with given username was not found";
         userpwdMatch = false;
       } else {
+
+
+        //System.out.println("user w given username found");
+
         userpwdMatch = userWithUsername.checkPassword(pwd);
         if (userpwdMatch) {
+
+          //System.out.println("password match");
+
           curUser = userWithUsername;
+          //System.out.println("getting last workout");
           if (curUser.getLastWorkout() != null) {
+            System.out.println("dealing with last workout");
             LocalDateTime now = LocalDateTime.now();
             LocalDateTime dayAfter = curUser.getLastWorkout().plusDays(1);
             if (dayAfter.getDayOfYear() != now.getDayOfYear()) {
@@ -169,6 +185,8 @@ public final class Main {
             }
           }
         } else {
+          //System.out.println("password wrong");
+          //System.out.println("curUser: " + curUser);
           error = "ERROR: incorrect password for this user";
         }
       }

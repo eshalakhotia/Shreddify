@@ -54,7 +54,7 @@ class Questionnaire {
         const el = document.getElementById(option);
         if (el.style.backgroundColor === "white") {
             //select
-            el.style.backgroundColor = "hotpink";
+            el.style.backgroundColor = "#ff6969";
             el.style.color = "white";
 
             //add to targets list
@@ -62,7 +62,7 @@ class Questionnaire {
         } else {
             //deselect
             el.style.backgroundColor = "white";
-            el.style.color = "hotpink";
+            el.style.color = "#ff6969";
 
             //remove from targets list
             const index = this.input.targets.indexOf(option)
@@ -136,7 +136,7 @@ class Questionnaire {
         return (
             <div id="questionnaire" className="questionnaire-background">
                 <div className="questionnaire">
-                    <span className="close" onClick={this.closeQuestionnaire}> Go Back Home &times;</span>
+                    <span className="close" onClick={this.closeQuestionnaire}>Close&nbsp;&times;</span>
                     <h1>Find Workouts</h1>
                     <h3>Help us recommend the perfect workouts for you!</h3>
                     <p id="energyp">Low Medium High</p>
@@ -177,7 +177,7 @@ class Questionnaire {
                                     input: this.input
                                 }
                             }}>
-                                <button id='go'>Find Workouts!</button>
+                                <button id='go'><span>Find Workouts!</span></button>
                             </Link>
                         </div>
                     </div>

@@ -1,23 +1,55 @@
 
-#main {
+.Home #main {
     transition: margin-left .5s;
-    margin-left: 300px;
-    padding-left: 50px;
-    margin-top: 100px;
+    padding-top: 100px;
+    text-align: center;
+    background-color: whitesmoke;
+    height: 700px;
 }
-#main h1 {
-    margin-top: 0;
-    margin-left:300px;
+.Home #main h1 {
+    margin: 0px;
+    font-size: 60px;
 }
 
-#main h2 {
-    margin-left: 50px;
-    margin-top: 100px;
+.Home #main h2 {
+    margin: 0px;
+}
+
+#past-workouts, #achievements {
+    padding: 30px;
+    background-color: #5672f0;
+    color: white;
+    margin: 60px;
+    border-radius: 10px;
+    -moz-box-shadow: 0 0 10px grey;
+    -webkit-box-shadow: 0 0 10px grey;
+    box-shadow: 0 0 10px grey;
 }
 
 span {
-    font-size:30px;
-    cursor:pointer
+    font-size:20px;
+    cursor: default;
+}
+#logOutButton {
+    font-size: 20px;
+    margin-left: 1000px;
+    margin-top: -80px;
+    display: inline;
+    border-radius: 10px;
+    background-color: #ffbea6;
+    text-align: center;
+    vertical-align: center;
+    height:max-content;
+    width:max-content;
+    padding: 6px 10px;
+}
+#logOutButton:hover {
+    background-image: linear-gradient(to right, #6d87fc, #0da2de);
+    -moz-box-shadow: 0 0 2px grey;
+    -webkit-box-shadow: 0 0 2px grey;
+    box-shadow: 0 0 2px grey;
+    font-size: 20px;
+    padding: 6px 10px;
 }
 
 

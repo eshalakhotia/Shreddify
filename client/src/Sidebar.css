@@ -6,10 +6,10 @@
     z-index: 1; /* Stay on top */
     top: 0;
     left: 0;
-    background-color: #ff6b2b;
     overflow-x: hidden; /* disable horizontal scroll */
     padding-top: 100px;
     transition: 0.5s; /*slide in*/
+    background-image: linear-gradient(to bottom right,  #ff7036, #ff6d59);
 }
 
 /* The navigation menu links */
@@ -61,4 +61,8 @@
 /* Hovering over open button */
 .openbtn:hover .bar1,.openbtn:hover .bar2,.openbtn:hover .bar3 {
     background-color: white;
+}
+
+.sidenav #h4 {
+    margin: 0px;
 }

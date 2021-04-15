@@ -1,15 +1,20 @@
 .Workout {
     padding: 50px;
     border-radius: 6px;
-    margin: 20px;
     line-height: 1.1em;
-    background-color: #f0f0f0;
+    background-color: whitesmoke;
     color: black;
     width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
 }
 
 .Workout:hover {
-    background-color: lightgray;
+    background-color: white;
+    -moz-box-shadow: 0 0 10px #243e8a;
+    -webkit-box-shadow: 0 0 10px #243e8a;
+    box-shadow: 0 0 10px #243e8a;
 }
 
 .Workout h2 {
@@ -24,31 +29,38 @@
     margin-bottom: 20px;
 }
 
+.Workout h4 {
+    margin-bottom: 0px;
+}
+
 .Tag {
     width: max-content;
     padding: 6px;
-    margin: 10px;
+    margin: 2px;
     border-radius: 5px;
     display: inline-block;
 }
 #targetTag {
-    background-color: hotpink;
+    background-color: #ff6969;
     color: white;
 }
 
 #equipTag {
-    background-color: #83d62f;
+    background-color: #32cf76;
     color: white;
 }
 
 .Workout #left{
-    width: 40%;
+    width: 44%;
+    text-align: left;
 }
 .Workout #middle {
-    width: 30%;
+    width: 28%;
+    text-align: left;
 }
 .Workout #right {
-    width: 30%;
+    width: 28%;
+    text-align: left;
 }
 .Workout #wrapper {
     margin: 0 auto;
