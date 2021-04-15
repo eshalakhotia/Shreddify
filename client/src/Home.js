@@ -2,6 +2,7 @@ import React from 'react';
 import './Home.css';
 import Sidebar from './Sidebar';
 import Questionnaire from "./Questionnaire";
+import { Redirect } from 'react-router-dom';
 
 /**
  * Home screen/profile
@@ -31,8 +32,13 @@ class Home extends React.Component {
         return (
             <div id="Home" className="Home">
                 <Sidebar className="Sidebar" findWorkouts={this.openQuestionnaire}/*closeNav={this.closeNav} openNav={this.openNav}*//>
-
                 <div id="main">
+                    <div id="logout">
+                        {/*<Link to="/Home">*/}
+                        <button id="logOutButton" onClick={<Redirect to="/" />
+                        }> Log Out </button>
+                        {/*</Link>*/}
+                    </div>
                     <h1>Welcome Back, {this.username}!</h1>
                     <div id="past-workouts">
                         <h2>My Workouts</h2>

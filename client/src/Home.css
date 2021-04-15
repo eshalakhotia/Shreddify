@@ -26,10 +26,30 @@
     box-shadow: 0 0 10px grey;
 }
 
-
 span {
     font-size:20px;
     cursor: default;
+}
+#logOutButton {
+    font-size: 20px;
+    margin-left: 1000px;
+    margin-top: -80px;
+    display: inline;
+    border-radius: 10px;
+    background-color: #ffbea6;
+    text-align: center;
+    vertical-align: center;
+    height:max-content;
+    width:max-content;
+    padding: 6px 10px;
+}
+#logOutButton:hover {
+    background-image: linear-gradient(to right, #6d87fc, #0da2de);
+    -moz-box-shadow: 0 0 2px grey;
+    -webkit-box-shadow: 0 0 2px grey;
+    box-shadow: 0 0 2px grey;
+    font-size: 20px;
+    padding: 6px 10px;
 }
 
 
