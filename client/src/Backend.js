@@ -38,6 +38,14 @@ function getRecs(energy, time, flexibility, targets) {
     });
 }
 
+async function signUp(username, password, level) {
+    return makePOST(backendURL + '/signup', {
+        username: username,
+        password: password,
+        level: level,
+    });
+}
+
 //returns info about login (success, error, specified user)
 async function login(username, password) {
     console.log("in Backend post request")
@@ -49,5 +57,6 @@ async function login(username, password) {
 
 export default{
     getRecs: getRecs,
-    login: login
+    login: login,
+    signUp: signUp
 }

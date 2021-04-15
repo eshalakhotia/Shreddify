@@ -39,7 +39,7 @@ class Home extends React.Component {
                         }> Log Out </button>
                         {/*</Link>*/}
                     </div>
-                    <h1>Welcome Back, {this.username}!</h1>
+                    <h1>Welcome, {this.username}!</h1>
                     <div id="past-workouts">
                         <h2>My Workouts</h2>
                         <span>You have no past workouts. Go to Find Workouts on the left to get some recommendations!</span>

@@ -143,30 +143,38 @@ public class DatabaseConn {
   }
 
   public void addUser(User user) throws SQLException {
-    StringBuilder lastWorkoutString = new StringBuilder();
-    LocalDateTime lastWorkout = user.getLastWorkout();
-    lastWorkoutString.append(String.valueOf(lastWorkout.getYear()));
-    lastWorkoutString.append(",");
-    lastWorkoutString.append(String.valueOf(lastWorkout.getMonth()));
-    lastWorkoutString.append(",");
-    lastWorkoutString.append(String.valueOf(lastWorkout.getDayOfMonth()));
-    lastWorkoutString.append(",");
-    lastWorkoutString.append(String.valueOf(lastWorkout.getHour()));
-    lastWorkoutString.append(",");
-    lastWorkoutString.append(String.valueOf(lastWorkout.getSecond()));
-    lastWorkoutString.append(",");
-    lastWorkoutString.append(String.valueOf(lastWorkout.getNano()));
-    StringBuilder pastWorkoutIDsString = new StringBuilder();
-    List<Workout> pastWorkouts = user.getPastWorkouts();
-    List<String> pastWorkoutIDs = new ArrayList<>();
-    for (int i = 0; i < pastWorkouts.size(); i ++) {
-      pastWorkoutIDs.add(pastWorkouts.get(i).getID());
+    StringBuilder lastWorkoutStringBuilder = new StringBuilder();
+    String lastWorkoutString = "";
+    if (user.getLastWorkout() != null) {
+      LocalDateTime lastWorkout = user.getLastWorkout();
+      lastWorkoutStringBuilder.append(lastWorkout.getYear());
+      lastWorkoutStringBuilder.append(",");
+      lastWorkoutStringBuilder.append(lastWorkout.getMonth());
+      lastWorkoutStringBuilder.append(",");
+      lastWorkoutStringBuilder.append(lastWorkout.getDayOfMonth());
+      lastWorkoutStringBuilder.append(",");
+      lastWorkoutStringBuilder.append(lastWorkout.getHour());
+      lastWorkoutStringBuilder.append(",");
+      lastWorkoutStringBuilder.append(lastWorkout.getSecond());
+      lastWorkoutStringBuilder.append(",");
+      lastWorkoutStringBuilder.append(lastWorkout.getNano());
+      lastWorkoutString = lastWorkoutStringBuilder.toString();
     }
-    for (int i = 0; i < pastWorkoutIDs.size(); i++) {
-      pastWorkoutIDsString.append(pastWorkoutIDs.get(i));
-      if (i != pastWorkoutIDs.size() - 1) {
-        pastWorkoutIDsString.append(",");
+    StringBuilder pastWorkoutIDsStringBuilder = new StringBuilder();
+    String pastWorkoutIDsString = "";
+    if (!user.getPastWorkouts().isEmpty()) {
+      List<Workout> pastWorkouts = user.getPastWorkouts();
+      List<String> pastWorkoutIDs = new ArrayList<>();
+      for (int i = 0; i < pastWorkouts.size(); i++) {
+        pastWorkoutIDs.add(pastWorkouts.get(i).getID());
       }
+      for (int i = 0; i < pastWorkoutIDs.size(); i++) {
+        pastWorkoutIDsStringBuilder.append(pastWorkoutIDs.get(i));
+        if (i != pastWorkoutIDs.size() - 1) {
+          pastWorkoutIDsStringBuilder.append(",");
+        }
+      }
+      pastWorkoutIDsString = pastWorkoutIDsStringBuilder.toString();
     }
     PreparedStatement prep = conn.prepareStatement("INSERT INTO "
             + "users (UserName, UserPassword, OverallFitnessLevel, TotalNumWorkouts, LastWorkout, PastWorkoutIDs, Streak)"
@@ -175,8 +183,8 @@ public class DatabaseConn {
     prep.setInt(2, user.getPassword());
     prep.setDouble(3, user.getOFL());
     prep.setDouble(4, user.getTotalNumWorkouts());
-    prep.setString(5, lastWorkoutString.toString());
-    prep.setString(6, pastWorkoutIDsString.toString());
+    prep.setString(5, lastWorkoutString);
+    prep.setString(6, pastWorkoutIDsString);
     prep.setInt(7, user.getStreak());
     prep.executeUpdate();
     prep.close();

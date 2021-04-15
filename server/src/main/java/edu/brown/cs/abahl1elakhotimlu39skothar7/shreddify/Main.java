@@ -103,6 +103,7 @@ public final class Main {
 
     //maps routes
     Spark.post("/login", new LoginHandler());
+    Spark.post("/signup", new NewAccountHandler());
     Spark.post("/recs", new RecommendWorkoutsHandler());
     Spark.post("/explore", new ExploreHandler());
 
@@ -262,7 +263,7 @@ public final class Main {
       JSONObject data = new JSONObject(request.body());
       String error = "";
       boolean usernameOK = false;
-      boolean pwdOK = true;
+      boolean pwdOK = false;
       // gets username, password from frontend
       String username = data.getString("username");
       String pwd = data.getString("password");
@@ -281,8 +282,11 @@ public final class Main {
         error = "ERROR: This username is already taken!";
       }
       if (!pwd.equals(username)) {
+        System.out.println("6");
         if (pwd.length() > 7 && username.length() < 21) {
+          System.out.println("7");
           pwdOK = true;
+          System.out.println("8");
         } else {
           error = "ERROR: Your password needs to be between 8 and 20 characters long";
         }
@@ -360,12 +364,17 @@ public final class Main {
       Iterator<String> iterate = keys.iterator();
       if (flexibility) {
         while (iterate.hasNext()) {
+          Workout newWorkout = allWorkouts.get(iterate.next());
+          if (newWorkout.getMetric("time") > time / 2) {
+            workouts.add(newWorkout);
+          }
           workouts.add(allWorkouts.get(iterate.next()));
         }
       } else {
         while (iterate.hasNext()) {
           Workout newWorkout = allWorkouts.get(iterate.next());
-          if (newWorkout.getMetric("time") < time) {
+          if (newWorkout.getMetric("time") > time / 2
+          && newWorkout.getMetric("time") < time) {
             workouts.add(newWorkout);
           }
         }
