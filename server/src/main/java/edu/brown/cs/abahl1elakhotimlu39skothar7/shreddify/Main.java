@@ -180,27 +180,60 @@ public final class Main {
     }
   }
 
+
+
   private static class ExploreHandler implements Route {
     @Override
     public Object handle(Request request, Response response) throws Exception {
       boolean success = true;
-      DatabaseConn database = new DatabaseConn();
       JSONObject data = new JSONObject(request.body());
       String error = "";
-      Map<String, Workout> workoutsMap = database.getWorkouts();
-      List<String[]> newList = new ArrayList<>();
-      for (Workout work : workoutsMap.values()) {
-        String[] attributes = new String[4];
-        attributes[0] = work.getName();
-        attributes[1] = work.getID();
-        attributes[2] = String.valueOf(work.getCycles());
-        attributes[3] = String.valueOf(work.getExercises());
-        newList.add(attributes);
+      List<Workout> workouts = new ArrayList<>();
+      String[] keys = allWorkouts.keySet().toArray(new String[0]);
+      int[] indexesInList = new int[5];
+      for (int i = 0; i < 5; i++) {
+        boolean usable = false;
+        int index = -1;
+        while (!usable) {
+          Random rand = new Random();
+          index = rand.nextInt(keys.length);
+          boolean usableHelp = true;
+          for (int j = 0; j < i; j++) {
+            if (index == indexesInList[j]) {
+              usableHelp = false;
+            }
+          }
+          usable = usableHelp;
+        }
+        try {
+          workouts.add(allWorkouts.get(keys[index]));
+        } catch (Exception E) {
+          success = false;
+          error = "ERROR: Not enough workouts are in this database";
+        }
       }
       Map<String, Object> variables = ImmutableMap.of(
         "success", success,
-        "results", newList,
+        "results", workouts,
         "error", error);
+      return new Gson().toJson(variables);
+    }
+  }
+
+  private static class LogOutHandler implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      boolean success = true;
+      JSONObject data = new JSONObject(request.body());
+      String error = "";
+      String result = "";
+      mainDatabase.deleteUser(curUser.getUsername());
+      mainDatabase.addUser(curUser);
+      curUser = null;
+      Map<String, Object> variables = ImmutableMap.of(
+              "success", success,
+              "results", result,
+              "error", error);
       return new Gson().toJson(variables);
     }
   }
