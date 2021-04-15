@@ -13,6 +13,12 @@
 
 .Home #main h2 {
     margin: 0px;
+    margin-bottom: 20px;
+}
+
+
+.Home #title-h3 {
+    margin-top: 20px;
 }
 
 #past-workouts, #achievements {

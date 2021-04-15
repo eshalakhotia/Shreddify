@@ -5,6 +5,7 @@ import App from './App';
 import Home from './Home';
 import Recommendations from './Recommendations'
 import WorkoutInProgress from './WorkoutInProgress'
+import Explore from "./Explore";
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import {Redirect} from "react-router";
@@ -20,6 +21,7 @@ ReactDOM.render(
             <Route path="/Home" component={Home} />
             <Route path="/Recommendations" component={Recommendations} />
             <Route path="/Workout" component={WorkoutInProgress} />
+            <Route path="/Explore" component={Explore} />
         </Switch>
     </BrowserRouter>,
   document.getElementById('root')

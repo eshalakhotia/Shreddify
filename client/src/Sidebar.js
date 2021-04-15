@@ -1,4 +1,5 @@
 import './Sidebar.css';
+import {Link, Redirect} from "react-router-dom";
 
 
 /**
@@ -24,6 +25,16 @@ function closeNav() {
     document.getElementById("mySidenav").getElementsByClassName("links")[0].style.display = "none";
 }
 
+function explore() {
+
+}
+
+function renderRedirect() {
+    return <Redirect to={{
+            pathname: "/Recommendations",
+            }}/>
+
+}
 
 function Sidebar(props) {
 
@@ -39,6 +50,10 @@ function Sidebar(props) {
         props.findWorkouts()
     }
 
+    const toExplore = e => {
+        props.toExplore()
+    }
+
     return (
         <div id="mySidenav" className="sidenav">
             <a href="javascript:void(0)" className="closebtn" onClick={closeNav}>&times;</a>
@@ -48,10 +63,18 @@ function Sidebar(props) {
                 <div className="bar3"/>
             </a>
             <div className="links">
+                <Link to={{
+                    pathname: "/Home",
+                }}>
+                    <a href="#">Home</a>
+                </Link>
                 <a href="#" onClick={findWorkouts}>Find Workouts</a>
-                <a href="#">Explore</a>
+                <Link to={{
+                    pathname: "/Explore",
+                }}>
+                    <a href="#">Explore</a>
+                </Link>
             </div>
-
         </div>
 
     )

@@ -2,6 +2,8 @@ import './App.css';
 import Backend from "./Backend";
 import React from 'react';
 import { Redirect } from 'react-router-dom';
+import SignUp from './SignUp';
+import './SignUp.css'
 import {
     BrowserRouter as Router,
     Route,
@@ -18,6 +20,7 @@ class App extends React.Component {
             username: '',
             password: '',
             level: 50,
+            user: '',
             authenticated: false,
             error: ''
         }
@@ -62,10 +65,7 @@ class App extends React.Component {
             console.log("User: " + info.results)
             //if successful
             if (info.success) {
-                const user = info.results
-
-
-                this.setState({authenticated: true})
+                this.setState({authenticated: true, user: info.results})
             } else {
                 this.setState({error: info.error})
             }
@@ -90,6 +90,9 @@ class App extends React.Component {
             this.setState({error: info.error})
         }
     }
+    openSignUpSheet() {
+        document.getElementById("SignUp").style.display = "block";
+    }
 
     onSign() {
         document.getElementById("level").style.display = "block";
@@ -107,7 +110,7 @@ class App extends React.Component {
         if (this.state.authenticated) {
             return <Redirect to={{
                 pathname: "/Home",
-                state: {username: this.state.username}  }}/>
+                state: {username: this.state.username, user: this.state.user}  }}/>
         }
     }
 
@@ -151,9 +154,9 @@ class App extends React.Component {
                         <button id="createaccbutton" onClick={this.onCreate.bind(this)}> Create Account </button>
                         {/*</Link>*/}
                     </div>
-
                 </div>
             </div>
+
         )
     }
 }
