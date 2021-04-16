@@ -374,7 +374,6 @@ public final class Main {
           if (newWorkout.getMetric("time") > time / 2) {
             workouts.add(newWorkout);
           }
-          workouts.add(newWorkout);
         }
       } else {
         while (iterate.hasNext()) {
