@@ -11,6 +11,9 @@ class Recommendations extends React.Component {
     constructor(props) {
         super(props);
         this.questionnaire = new Questionnaire();
+
+        console.log("in recommendation constructor")
+
         this.state = {
             input : {
                 energy: props.location.state.input.energy, time: props.location.state.input.time,
@@ -24,6 +27,8 @@ class Recommendations extends React.Component {
 
         this.getRecommendations();
     }
+
+
 
     //gets recommendations from backend and updates output state
     async getRecommendations() {
@@ -82,12 +87,6 @@ class Recommendations extends React.Component {
             let workoutDivs = []
             for (const workout of workouts) {
 
-
-                console.log("rendering new workout Div and Preview")
-                console.log("name: " + workout.name)
-                console.log("target: " + workout.targets)
-
-
                 const workoutPreview = new WorkoutPreview(
                     {name: workout.name, time:workout.time, difficulty: workout.difficulty,
                         targets:workout.targets, equipment: workout.equipment, exercises: workout.exercises,
@@ -109,6 +108,8 @@ class Recommendations extends React.Component {
     }
 
     componentDidMount() {
+        console.log("component mounted")
+
         document.getElementById("questionnaire").style.display = "none";
         document.getElementById("workoutPreview").style.display = "none";
         document.getElementById("main").style.marginLeft = "300px";
