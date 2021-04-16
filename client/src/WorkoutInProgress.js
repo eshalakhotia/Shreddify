@@ -1,5 +1,7 @@
 import React from "react";
 import './WorkoutInProgress.css'
+import Backend from "./Backend";
+import {Link} from "react-router-dom";
 
 class WorkoutInProgress extends React.Component {
     constructor(props) {
@@ -8,13 +10,16 @@ class WorkoutInProgress extends React.Component {
         if (props.location.state !== null) {
             this.exercises = props.location.state.exercises
             this.cycles = props.location.state.cycles
+            this.id = props.location.state.id
         }
         //this.exercises = props.location.state.exercises //list of exercises
         this.state = {
             currExerciseNum: 0,
             currExercise: this.exercises[0],
             activeTimer: false,
-            currCycle: 1
+            currCycle: 1,
+            user: '',
+            error: ''
         }
     }
 
@@ -74,8 +79,15 @@ class WorkoutInProgress extends React.Component {
                         <div id="right-bottom">
                             <button id='nextButton' onClick={this.nextExercise.bind(this)}>
                                 Next Exercise ></button>
-                            <button id='finishButton'>
-                                Finish Workout ></button>
+                            <div id="finish">
+                                <Link to={{
+                                    pathname: "/Home",
+                                    state: {username: this.state.user.username, user: this.state.user}
+                                }}>
+                                <button id='finishButton' onClick={this.finishWorkout.bind(this)}>
+                                    Finish Workout ></button>
+                                </Link>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -138,6 +150,20 @@ class WorkoutInProgress extends React.Component {
         if (sec < 10 && sec >= 0) {sec = "0" + sec} // add zero in front of numbers < 10
         if (sec < 0) {sec = "59"}
         return sec;
+    }
+
+    async finishWorkout() {
+        console.log(this.id);
+        const info = await Backend.endWorkout(this.id)
+        if (info === null) {
+            console.log("response is null, something wrong with backend handler")
+        } else {
+            if (info.success) {
+                this.setState({user: info.results})
+            } else {
+                this.setState({error: info.error})
+            }
+        }
     }
 
     nextExercise() {

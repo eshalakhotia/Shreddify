@@ -38,6 +38,14 @@ function getRecs(energy, time, flexibility, targets) {
     });
 }
 
+async function signUp(username, password, level) {
+    return makePOST(backendURL + '/signup', {
+        username: username,
+        password: password,
+        level: level,
+    });
+}
+
 //returns info about login (success, error, specified user)
 async function login(username, password) {
     console.log("in Backend post request")
@@ -51,8 +59,21 @@ async function explore() {
     return makePOST(backendURL + '/explore', {});
 }
 
+async function logOut() {
+    return makePOST(backendURL + '/logout', {});
+}
+
+async function endWorkout(workoutID) {
+    return makePOST(backendURL + '/finishworkout', {
+        workoutID: workoutID
+    });
+}
+
 export default{
     getRecs: getRecs,
     login: login,
-    explore: explore
+    signUp: signUp,
+    explore: explore,
+    logOut: logOut,
+    endWorkout: endWorkout
 }

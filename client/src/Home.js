@@ -5,6 +5,7 @@ import Questionnaire from "./Questionnaire";
 import {Link, Redirect} from "react-router-dom";
 import WorkoutPreview from "./WorkoutPreview";
 import WorkoutDiv from "./WorkoutDiv";
+import Backend from "./Backend";
 
 /**
  * Home screen/profile
@@ -97,6 +98,24 @@ class Home extends React.Component {
         })
     }
 
+    async toLogOut() {
+        const info = await Backend.logOut()
+        if (info === null) {
+            console.log("response is null, something wrong with backend handler")
+        } else {
+            console.log("success: " + info.success)
+            console.log("error: " + info.error)
+            console.log("User: " + info.results)
+        }
+        //if successful
+        if (info.success) {
+            console.log("going to home")
+            this.setState({authenticated: true})
+        } else {
+            this.setState({error: info.error})
+        }
+    }
+
     renderRedirectToExplore() {
         if (this.state.toExplore) {
             return <Redirect to={{
@@ -118,10 +137,10 @@ class Home extends React.Component {
                                 input: this.input
                             }
                         }}>
-                            <button id='logOutButton'><span>Log Out!</span></button>
+                            <button id='logOutButton' onClick={this.toLogOut.bind(this)}><span>Log Out!</span></button>
                         </Link>
                     </div>
-                    <h1>Welcome Back, {this.username}!</h1>
+                    <h1>Welcome, {this.username}!</h1>
                     <h3 id="title-h3">Try one of your past workouts, or find some new recommendations on the left. It's time to get SHREDDED!</h3>
                     <div id="past-workouts">
                         <h2>Your Workouts</h2>

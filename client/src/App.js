@@ -19,6 +19,7 @@ class App extends React.Component {
         this.state = {
             username: '',
             password: '',
+            level: 50,
             user: '',
             authenticated: false,
             error: ''
@@ -70,9 +71,10 @@ class App extends React.Component {
             }
         }
     }
-    async onsign() {
+
+    async onCreate() {
         //gets boolean success, User, error message
-        const info = await Backend.login(this.state.username, this.state.password)
+        const info = await Backend.signUp(this.state.username, this.state.password, this.state.level)
         if (info === null) {
             console.log("response is null, something wrong with backend handler")
         } else {
@@ -90,6 +92,17 @@ class App extends React.Component {
     }
     openSignUpSheet() {
         document.getElementById("SignUp").style.display = "block";
+    }
+
+    onSign() {
+        document.getElementById("level").style.display = "block";
+        document.getElementById("signup").style.display = "none";
+        document.getElementById("login").style.display = "none";
+        document.getElementById("createacc").style.display = "block";
+    }
+
+    changeLevel() {
+        this.state.level = document.getElementById("levelSlider").value
     }
 
     //redirects to Homepage if authenticated
@@ -117,6 +130,12 @@ class App extends React.Component {
                         <input type="password" id="password" name="password" placeholder="Password" onChange={(e) => this.onUserInput(e.target)} value={this.state.password}/>
                     </div>
 
+                    <div id="level">
+                        <h2 id="levelh">What's your general fitness level?</h2>
+                        <p id="levelp">Getting started · · Ready to ramp up · · Juiced & Shredded!</p>
+                        <input id="levelSlider" type="range" min="0" max="100" step="2" onInput={this.changeLevel.bind(this)}/>
+                    </div>
+
 
                     <div className="loginError">{errorMessage}</div>
 
@@ -125,12 +144,16 @@ class App extends React.Component {
                     <div id="login">
                         <button id="loginButton" onClick={this.onLogin.bind(this)}>Log In</button>
                     </div>
-                {/*    <div id="signup">*/}
-                {/*        /!*<Link to="/Home">*!/*/}
-                {/*            <button id="signupButton" onClick={this.openSignUpSheet}> Sign Up </button>*/}
-                {/*        /!*</Link>*!/*/}
-                {/*    </div>*/}
-                {/*    {this.questionnaire.renderSignUp()};*/}
+
+                    <div id="signup">
+                        <button id="signupButton" onClick={this.onSign.bind(this)}> Sign Up </button>
+                    </div>
+
+                    <div id="createacc">
+                        {/*<Link to="/Home">*/}
+                        <button id="createaccbutton" onClick={this.onCreate.bind(this)}> Create Account </button>
+                        {/*</Link>*/}
+                    </div>
                 </div>
             </div>
 

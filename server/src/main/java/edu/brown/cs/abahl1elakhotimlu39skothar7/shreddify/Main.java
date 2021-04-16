@@ -103,8 +103,11 @@ public final class Main {
 
     //maps routes
     Spark.post("/login", new LoginHandler());
+    Spark.post("/signup", new NewAccountHandler());
     Spark.post("/recs", new RecommendWorkoutsHandler());
     Spark.post("/explore", new ExploreHandler());
+    Spark.post("/logout", new LogOutHandler());
+    Spark.post("/finishworkout", new FinishWorkoutHandler());
 
 
     Spark.options("/*", (request, response) -> {
@@ -253,10 +256,30 @@ public final class Main {
       String result = "";
       mainDatabase.deleteUser(curUser.getUsername());
       mainDatabase.addUser(curUser);
+      System.out.println("added");
       curUser = null;
       Map<String, Object> variables = ImmutableMap.of(
               "success", success,
               "results", result,
+              "error", error);
+      return new Gson().toJson(variables);
+    }
+  }
+
+  private static class FinishWorkoutHandler implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      System.out.println("hi");
+      JSONObject data = new JSONObject(request.body());
+      String error = "";
+      boolean success = true;
+      String workoutID = data.getString("workoutID");
+      System.out.println(workoutID);
+      curUser.startNewWorkout(allWorkouts.get(workoutID));
+      System.out.println(curUser.getUsername());
+      Map<String, Object> variables = ImmutableMap.of(
+              "success", success,
+              "results", curUser,
               "error", error);
       return new Gson().toJson(variables);
     }
@@ -268,7 +291,7 @@ public final class Main {
       JSONObject data = new JSONObject(request.body());
       String error = "";
       boolean usernameOK = false;
-      boolean pwdOK = true;
+      boolean pwdOK = false;
       // gets username, password from frontend
       String username = data.getString("username");
       String pwd = data.getString("password");
@@ -287,8 +310,11 @@ public final class Main {
         error = "ERROR: This username is already taken!";
       }
       if (!pwd.equals(username)) {
+        System.out.println("6");
         if (pwd.length() > 7 && username.length() < 21) {
+          System.out.println("7");
           pwdOK = true;
+          System.out.println("8");
         } else {
           error = "ERROR: Your password needs to be between 8 and 20 characters long";
         }
@@ -366,12 +392,16 @@ public final class Main {
       Iterator<String> iterate = keys.iterator();
       if (flexibility) {
         while (iterate.hasNext()) {
-          workouts.add(allWorkouts.get(iterate.next()));
+          Workout newWorkout = allWorkouts.get(iterate.next());
+          if (newWorkout.getMetric("time") > time / 2) {
+            workouts.add(newWorkout);
+          }
         }
       } else {
         while (iterate.hasNext()) {
           Workout newWorkout = allWorkouts.get(iterate.next());
-          if (newWorkout.getMetric("time") < time) {
+          if (newWorkout.getMetric("time") > time / 2
+          && newWorkout.getMetric("time") < time) {
             workouts.add(newWorkout);
           }
         }
@@ -395,8 +425,6 @@ public final class Main {
       }
       Workout idealWorkout = new Workout(metrics);
       bestRecommendations = toSearch.kNearestNeighbors(idealWorkout, 5);
-
-
       Map<String, Object> variables = ImmutableMap.of(
               "success", success,
               "results", bestRecommendations,
