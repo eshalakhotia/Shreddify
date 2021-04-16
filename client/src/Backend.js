@@ -63,10 +63,17 @@ async function logOut() {
     return makePOST(backendURL + '/logout', {});
 }
 
+async function endWorkout(workoutID) {
+    return makePOST(backendURL + '/finishworkout', {
+        workoutID: workoutID
+    });
+}
+
 export default{
     getRecs: getRecs,
     login: login,
     signUp: signUp,
     explore: explore,
-    logOut: logOut
+    logOut: logOut,
+    endWorkout: endWorkout
 }

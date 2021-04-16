@@ -107,6 +107,7 @@ public final class Main {
     Spark.post("/recs", new RecommendWorkoutsHandler());
     Spark.post("/explore", new ExploreHandler());
     Spark.post("/logout", new LogOutHandler());
+    Spark.post("/finishworkout", new FinishWorkoutHandler());
 
 
     Spark.options("/*", (request, response) -> {
@@ -260,6 +261,25 @@ public final class Main {
       Map<String, Object> variables = ImmutableMap.of(
               "success", success,
               "results", result,
+              "error", error);
+      return new Gson().toJson(variables);
+    }
+  }
+
+  private static class FinishWorkoutHandler implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      System.out.println("hi");
+      JSONObject data = new JSONObject(request.body());
+      String error = "";
+      boolean success = true;
+      String workoutID = data.getString("workoutID");
+      System.out.println(workoutID);
+      curUser.startNewWorkout(allWorkouts.get(workoutID));
+      System.out.println(curUser.getUsername());
+      Map<String, Object> variables = ImmutableMap.of(
+              "success", success,
+              "results", curUser,
               "error", error);
       return new Gson().toJson(variables);
     }
