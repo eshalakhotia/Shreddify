@@ -34,6 +34,11 @@
     text-align: center;
 }
 
+.workout-preview h5 {
+    display:inline;
+}
+
+
 #start {
     border: none;
     background-color: #57e695;
@@ -62,14 +67,15 @@
 }
 
 .workout-preview #left {
-    width: 50%;
+    width: 60%;
     margin-right: 10px;
     border-radius: 20px;
-    padding: 10px
+    padding-left: 30px;
+    padding-right: 30px;
 }
 
 .workout-preview #right {
-    width: 50%;
+    width: 40%;
     background-image: linear-gradient(to bottom left, #37b3e6, #778ffc);
     color: white;
     margin-left: 10px;

@@ -179,7 +179,11 @@ public class KDTree<N extends KDNode> {
     });
     neighborsHelper(target, neighborsPQ, numNeighbors, Integer.MAX_VALUE, 0);
     for (int i = 0; i < numNeighbors; i++) {
-      neighbors.add(0, neighborsPQ.poll());
+
+      //TEMPORARY FIX -- null workouts are being added to nearest neighbors list
+      if (neighborsPQ.peek() != null) {
+        neighbors.add(0, neighborsPQ.poll());
+      }
     }
     return neighbors;
   }

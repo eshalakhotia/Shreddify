@@ -193,11 +193,11 @@ public final class Main {
         }
       }
 
-      System.out.println("curUser name: " + curUser.getUsername());
+      /*System.out.println("curUser name: " + curUser.getUsername());
       System.out.println("# of past workouts " + curUser.getPastWorkouts().size());
       for (int i = 0; i < curUser.getPastWorkouts().size(); i++) {
         System.out.println("workout name: " + curUser.getPastWorkouts().get(i));
-      }
+      }*/
 
       Map<String, Object> variables = ImmutableMap.of(
               "success", userpwdMatch,
@@ -367,11 +367,17 @@ public final class Main {
       int time = data.getInt("time");
       boolean flexibility = data.getBoolean("flexibility");
 
+      //collecting desired targets from response
       JSONArray unusableTargetAreas = data.getJSONArray("targets");
       List<String> targetAreas = new ArrayList<String>();
+      System.out.println(unusableTargetAreas.length() + " Target Areas Desired: ");
       for (int i = 0; i < unusableTargetAreas.length(); i++) {
         targetAreas.add(unusableTargetAreas.getString(i));
+        System.out.println(unusableTargetAreas.getString(i) + " ");
       }
+
+
+      //setting up desired difficulty based on user's overall fitness level
       double difficulty = curUser.getOFL();
       final double defaultChangeRange = 10;
       double changeRange;
@@ -407,24 +413,48 @@ public final class Main {
         }
       }
       if (workouts.size() > 0) {
+        System.out.println("Tree to search");
         toSearch = new KDTree(workouts, workouts.get(0).getAllMetrics().size());
       } else {
+        System.out.println("No workouts to build tree to search from");
         toSearch = new KDTree(new ArrayList<>(), 0);
       }
-      // finish when Workout constructor done
+
+      //setting up Ideal Workout to search KDtree with
       String[] metricNames = new String[]{"time", "difficulty", "cardio", "abs", "legs", "arms", "glutes", "back", "chest"};
       double[] metrics = new double[9];
       metrics[0] = time;
       metrics[1] = difficulty;
       for (int i = 2; i < metricNames.length; i++) {
+        //if metric is a desired target area
         if (targetAreas.contains(metricNames[i])) {
-          metrics[i] = 1 / targetAreas.size();
+          metrics[i] = 1.0 / targetAreas.size();
         } else {
           metrics[i] = 0;
         }
       }
+
+      System.out.println("Constructing ideal workout");
+      for (int i = 0; i < metricNames.length; i++) {
+        System.out.println("Metric: " + metricNames[i] + ", Value: " + metrics[i]);
+      }
+
+
       Workout idealWorkout = new Workout(metrics);
       bestRecommendations = toSearch.kNearestNeighbors(idealWorkout, 5);
+
+      System.out.println("Recommendations");
+      System.out.println(bestRecommendations);
+      for (Workout w : bestRecommendations) {
+        if (w != null) {
+          System.out.println(w.getName());
+        } else {
+          System.out.println("workout null");
+        }
+      }
+
+
+
       Map<String, Object> variables = ImmutableMap.of(
               "success", success,
               "results", bestRecommendations,

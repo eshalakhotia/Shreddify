@@ -12,6 +12,7 @@ class WorkoutPreview{
         this.equip = props.equipment
         this.exercises = props.exercises //each exercise is an array [name, time]
         this.cycles = props.cycles
+        this.metrics = props.metrics
         //this.renderTargets = this.renderTargets.bind(this)
     }
 
@@ -55,19 +56,34 @@ class WorkoutPreview{
 
                 if (ex[0] != 'Rest') {
                     if (currExNum == this.exercises.length) {
-                        exDivs.push(<h4 id="preview-exercises">{ex[0]}, and more...</h4>)
+                        exDivs.push(<h4 id="preview-exercises">{ex[0]}, ...</h4>)
                     } else {
                         exDivs.push(<h4 id="preview-exercises">{ex[0]}, </h4>)
                     }
                 } else {
                     //if exercise is Rest and it's the last one
                     if (currExNum == this.exercises.length) {
-                        exDivs.push(<h4 id="preview-exercises">and more...</h4>)
+                        exDivs.push(<h4 id="preview-exercises"> ...</h4>)
                     }
                 }
             })
         }
         return exDivs
+    }
+
+    renderMetrics() {
+        let metDivs = []
+        if (this.metrics !== undefined) {
+            metDivs.push(<h3/>)
+            metDivs.push(<h5>Cardio: {Math.round(this.metrics.get('cardio'))}&nbsp;</h5>);
+            metDivs.push(<h5>Abs: {Math.round(this.metrics.get('abs'))}&nbsp;</h5>);
+            metDivs.push(<h5>Legs: {Math.round(this.metrics.get('legs'))}&nbsp;</h5>);
+            metDivs.push(<h5>Arms: {Math.round(this.metrics.get('arms'))}&nbsp;</h5>);
+            metDivs.push(<h5>Glutes: {Math.round(this.metrics.get('glutes'))}&nbsp;</h5>);
+            metDivs.push(<h5>Back: {Math.round(this.metrics.get('back'))}&nbsp;</h5>);
+            metDivs.push(<h5>Chest: {Math.round(this.metrics.get('chest'))}&nbsp;</h5>);
+        }
+        return metDivs
     }
 
     //closes preview modal
@@ -91,6 +107,7 @@ class WorkoutPreview{
                             <h2>Difficulty: {this.diff}/100</h2>
                             <h2>Target Areas</h2>
                             {this.renderTargets()}
+                            {this.renderMetrics()}
                         </div>
                         <div id="right" >
                             <h2>Equipment</h2>
