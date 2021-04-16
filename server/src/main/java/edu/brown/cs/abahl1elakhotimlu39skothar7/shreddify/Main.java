@@ -106,6 +106,7 @@ public final class Main {
     Spark.post("/signup", new NewAccountHandler());
     Spark.post("/recs", new RecommendWorkoutsHandler());
     Spark.post("/explore", new ExploreHandler());
+    Spark.post("/logout", new LogOutHandler());
 
 
     Spark.options("/*", (request, response) -> {
@@ -254,6 +255,7 @@ public final class Main {
       String result = "";
       mainDatabase.deleteUser(curUser.getUsername());
       mainDatabase.addUser(curUser);
+      System.out.println("added");
       curUser = null;
       Map<String, Object> variables = ImmutableMap.of(
               "success", success,

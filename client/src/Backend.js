@@ -59,9 +59,14 @@ async function explore() {
     return makePOST(backendURL + '/explore', {});
 }
 
+async function logOut() {
+    return makePOST(backendURL + '/logout', {});
+}
+
 export default{
     getRecs: getRecs,
     login: login,
     signUp: signUp,
-    explore: explore
+    explore: explore,
+    logOut: logOut
 }
