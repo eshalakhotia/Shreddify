@@ -374,7 +374,7 @@ public final class Main {
           if (newWorkout.getMetric("time") > time / 2) {
             workouts.add(newWorkout);
           }
-          workouts.add(allWorkouts.get(iterate.next()));
+          workouts.add(newWorkout);
         }
       } else {
         while (iterate.hasNext()) {
@@ -404,8 +404,6 @@ public final class Main {
       }
       Workout idealWorkout = new Workout(metrics);
       bestRecommendations = toSearch.kNearestNeighbors(idealWorkout, 5);
-
-
       Map<String, Object> variables = ImmutableMap.of(
               "success", success,
               "results", bestRecommendations,
