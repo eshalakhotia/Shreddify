@@ -168,10 +168,7 @@ public final class Main {
         error = "ERROR: user with given username was not found";
         userpwdMatch = false;
       } else {
-
-
         //System.out.println("user w given username found");
-
         userpwdMatch = userWithUsername.checkPassword(pwd);
         if (userpwdMatch) {
 
@@ -193,11 +190,11 @@ public final class Main {
         }
       }
 
-      /*System.out.println("curUser name: " + curUser.getUsername());
+      System.out.println("curUser name: " + curUser.getUsername());
       System.out.println("# of past workouts " + curUser.getPastWorkouts().size());
       for (int i = 0; i < curUser.getPastWorkouts().size(); i++) {
-        System.out.println("workout name: " + curUser.getPastWorkouts().get(i));
-      }*/
+        System.out.println("workout name: " + curUser.getPastWorkouts().get(i).getName());
+      }
 
       Map<String, Object> variables = ImmutableMap.of(
               "success", userpwdMatch,
@@ -452,8 +449,6 @@ public final class Main {
           System.out.println("workout null");
         }
       }
-
-
 
       Map<String, Object> variables = ImmutableMap.of(
               "success", success,
