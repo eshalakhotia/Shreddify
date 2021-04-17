@@ -131,7 +131,7 @@ public class User {
       }
     }
     totalNumWorkouts++;
-    pastWorkouts.add(workout);
+    pastWorkouts.add(0, workout);
     lastWorkout = now;
   }
 

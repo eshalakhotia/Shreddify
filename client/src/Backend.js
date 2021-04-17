@@ -64,6 +64,7 @@ async function logOut() {
 }
 
 async function endWorkout(workoutID) {
+    console.log("making backend post request")
     return makePOST(backendURL + '/finishworkout', {
         workoutID: workoutID
     });
