@@ -202,7 +202,8 @@ public final class Main {
       Map<String, Object> variables = ImmutableMap.of(
               "success", userpwdMatch,
               "results", curUser,
-              "error", error);
+              "error", error,
+              "user", curUser);
       return new Gson().toJson(variables);
     }
   }
@@ -240,9 +241,10 @@ public final class Main {
         }
       }
       Map<String, Object> variables = ImmutableMap.of(
-        "success", success,
-        "results", workouts,
-        "error", error);
+              "success", success,
+              "results", workouts,
+              "error", error,
+              "user", curUser);
       return new Gson().toJson(variables);
     }
   }
@@ -261,7 +263,8 @@ public final class Main {
       Map<String, Object> variables = ImmutableMap.of(
               "success", success,
               "results", result,
-              "error", error);
+              "error", error,
+              "user", curUser);
       return new Gson().toJson(variables);
     }
   }
@@ -280,7 +283,8 @@ public final class Main {
       Map<String, Object> variables = ImmutableMap.of(
               "success", success,
               "results", curUser,
-              "error", error);
+              "error", error,
+              "user", curUser);
       return new Gson().toJson(variables);
     }
   }
@@ -332,7 +336,8 @@ public final class Main {
       Map<String, Object> variables = ImmutableMap.of(
               "success", (usernameOK && pwdOK),
               "results", curUser,
-              "error", error);
+              "error", error,
+              "user", curUser);
       return new Gson().toJson(variables);
     }
   }
@@ -458,7 +463,8 @@ public final class Main {
       Map<String, Object> variables = ImmutableMap.of(
               "success", success,
               "results", bestRecommendations,
-              "error", error);
+              "error", error,
+              "user", curUser);
       return new Gson().toJson(variables);
     }
   }
