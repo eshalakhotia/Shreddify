@@ -78,6 +78,14 @@ public class Workout implements KDNode<Workout>, Vertex<WorkoutConnection, Worko
               ((curExercise.getExerciseTime()) / oneCycleTime)
                       * (curExercise.getExerciseDifficulty());
     }
+    final double difficultyScale = 1.10;
+    for (int i = numCycles; i > 0; i--) {
+      double finalDifficulty = totalDifficulty * Math.pow(difficultyScale, i);
+      if (finalDifficulty < 100) {
+        totalDifficulty = finalDifficulty;
+        break;
+      }
+    }
 
     //update metrics with total difficulty
     metrics.put("difficulty", totalDifficulty);
