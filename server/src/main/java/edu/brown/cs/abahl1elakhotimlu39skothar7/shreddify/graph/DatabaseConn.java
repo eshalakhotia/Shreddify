@@ -223,6 +223,9 @@ public class DatabaseConn {
         newUserPastWorkoutIDs.add(pastWorkoutIDsArray[i]);
       }
       int newUserStreak = resulting.getInt(7);
+
+      System.out.println("New User Added");
+
       // allWorkouts must be adjusted
       User newUser = new User(newUserName, newUserPassword, newUserOFL, newUserNumWorkouts, newUserStreak, newUserPastWorkoutIDs, newUserLastWorkout, allWorkouts);
       users.put(newUserName, newUser);
