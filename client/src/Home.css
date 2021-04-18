@@ -11,7 +11,7 @@
     font-size: 60px;
 }
 
-.Home #main h2 {
+.Home #pastworkouts h2 {
     margin: 0px;
     margin-bottom: 20px;
 }
@@ -60,3 +60,17 @@ span {
     padding: 6px 10px;
 }
 
+.achievement {
+    width: max-content;
+    background-image: linear-gradient(to bottom left, #56dd90, #38c3fb);
+    height: max-content;
+    padding: 10px;
+    border-radius: 8px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 15px;
+}
+
+.achievement h2 {
+    margin: 0px;
+}

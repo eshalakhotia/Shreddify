@@ -65,6 +65,13 @@ class Home extends React.Component {
             })
 
             let workoutDivs = []
+            if (workouts.length === 0 ){
+                workoutDivs.push(<h3>You have no past workouts. Go to Explore or Find Workouts to get some recommendations!</h3>
+                )
+            } else {
+                workoutDivs.push(<h3>Click on any workout to get started!</h3>)
+            }
+
             for (const workout of workouts) {
                 const workoutPreview = new WorkoutPreview(
                     {name: workout.name, id: workout.id, time:workout.time, difficulty: workout.difficulty,
@@ -81,10 +88,6 @@ class Home extends React.Component {
                     openWorkout: this.openWorkoutPreview
                 }))
 
-            }
-            if (workouts.length === 0 ){
-                workoutDivs.push(<span>You have no past workouts. Go to Find Workouts on the left to get some recommendations!</span>
-                )
             }
 
             return workoutDivs
@@ -124,7 +127,38 @@ class Home extends React.Component {
     }
 
     renderAchievements() {
+        let achievementDivs = []
 
+        if (this.user.streak > 1) {
+            achievementDivs.push(
+                <div className="achievement">
+                    <h2>Worked out for {this.user.streak} days in a row!</h2>
+                </div>
+            )
+        } else if (this.user.streak == 1) {
+            achievementDivs.push(
+                <div className="achievement">
+                    <h2>Worked out for {this.user.streak} day in a row!</h2>
+                </div>
+            )
+        }
+
+        if (this.user.pastWorkouts.length == 1) {
+            achievementDivs.push(
+                <div className="achievement">
+                    <h2>Completed your first workout!</h2>
+                </div>
+            )
+        }
+
+        //account creation
+        achievementDivs.push(
+            <div className="achievement">
+                <h2>Created an account: on your way to get SHREDDED!</h2>
+            </div>
+        )
+
+        return achievementDivs
     }
 
     //renders Homepage/profile
@@ -147,7 +181,6 @@ class Home extends React.Component {
                     <h3 id="title-h3">Try one of your past workouts, or find some new recommendations on the left. It's time to get SHREDDED!</h3>
                     <div id="past-workouts">
                         <h2>Your Workouts</h2>
-                        <h3>Click on any workout to get started!</h3>
                         {this.renderWorkouts()}
                     </div>
                     <div id="achievements">
