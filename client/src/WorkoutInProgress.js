@@ -11,6 +11,8 @@ class WorkoutInProgress extends React.Component {
             this.exercises = props.location.state.exercises
             this.cycles = props.location.state.cycles
             this.id = props.location.state.id
+            this.name = props.location.state.name
+            console.log("workout name: " + this.name)
         }
         //this.exercises = props.location.state.exercises //list of exercises
         this.state = {
@@ -29,6 +31,7 @@ class WorkoutInProgress extends React.Component {
         document.getElementById('resetTimer').style.display = "none"
         document.getElementById('prevButton').style.display = "none"
         document.getElementById('finishButton').style.display = "none"
+        document.getElementById('finish-screen').style.display = "none"
 
         if (this.state.currExerciseNum === this.exercises.length - 1) { //first exercise is the last
             document.getElementById('finishButton').style.display = "inline"
@@ -80,13 +83,8 @@ class WorkoutInProgress extends React.Component {
                             <button id='nextButton' onClick={this.nextExercise.bind(this)}>
                                 Next Exercise ></button>
                             <div id="finish">
-                                <Link to={{
-                                    pathname: "/Home",
-                                    state: {username: this.state.user.username, user: this.state.user}
-                                }}>
                                 <button id='finishButton' onClick={this.finishWorkout.bind(this)}>
                                     Finish Workout ></button>
-                                </Link>
                             </div>
                         </div>
                     </div>
@@ -150,20 +148,6 @@ class WorkoutInProgress extends React.Component {
         if (sec < 10 && sec >= 0) {sec = "0" + sec} // add zero in front of numbers < 10
         if (sec < 0) {sec = "59"}
         return sec;
-    }
-
-    async finishWorkout() {
-        console.log(this.id);
-        const info = await Backend.endWorkout(this.id)
-        if (info === null) {
-            console.log("response is null, something wrong with backend handler")
-        } else {
-            if (info.success) {
-                this.setState({user: info.results})
-            } else {
-                this.setState({error: info.error})
-            }
-        }
     }
 
     nextExercise() {
@@ -256,10 +240,41 @@ class WorkoutInProgress extends React.Component {
 
     }
 
+    async finishWorkout() {
+        console.log("workout id: " + this.id);
+        const info = await Backend.endWorkout(this.id)
+        if (info === null) {
+            console.log("response is null, something wrong with backend handler")
+        } else {
+            if (info.success) {
+                console.log("success, username: " + info.results.username)
+                this.setState({user: info.results})
+            } else {
+                this.setState({error: info.error})
+            }
+            document.getElementById("finish-screen").style.display = "block";
+        }
+    }
+
     render () {
         return (
             <div>
                 {this.renderCurrentExercise()}
+                <div id="finish-screen" className="finish-background">
+                    <div className = "finish-modal">
+                        <h1>Congratulations!</h1>
+                        <h3>You just finished:</h3>
+                        <h2>{this.name}</h2>
+                        <Link to={{
+                                    pathname: "/Home",
+                                    state: {username: this.state.user.username, user: this.state.user}
+                                }}>
+                            <div id="home-button-back">
+                                <button id="home-button" >Go Back Home</button>
+                            </div>
+                        </Link>
+                    </div>
+                </div>
             </div>
         )
     }

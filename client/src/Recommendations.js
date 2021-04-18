@@ -88,7 +88,7 @@ class Recommendations extends React.Component {
                 console.log("metrics map" + metrics)
 
                 return{
-                    name: result.name, time: result.workoutTime, difficulty: result.workoutDifficulty,
+                    name: result.name, id: result.workoutID, time: result.workoutTime, difficulty: result.workoutDifficulty,
                     targets: result.targetAreas, equipment: result.equipment, exercises: exercises,
                     cycles: result.numCycles, metrics: metrics
                 }
@@ -98,7 +98,7 @@ class Recommendations extends React.Component {
             for (const workout of workouts) {
 
                 const workoutPreview = new WorkoutPreview(
-                    {name: workout.name, time:workout.time, difficulty: workout.difficulty,
+                    {name: workout.name, id: workout.id, time:workout.time, difficulty: workout.difficulty,
                         targets:workout.targets, equipment: workout.equipment, exercises: workout.exercises,
                     cycles: workout.cycles, metrics: workout.metrics})
 

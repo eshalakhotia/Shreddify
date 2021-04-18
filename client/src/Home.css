@@ -23,7 +23,7 @@
 
 #past-workouts, #achievements {
     padding: 30px;
-    background-color: #5672f0;
+    background-image: linear-gradient(to bottom right, #778ffc 50%, #37b3e6);
     color: white;
     margin: 60px;
     border-radius: 10px;

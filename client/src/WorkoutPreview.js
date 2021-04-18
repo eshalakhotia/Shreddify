@@ -13,6 +13,7 @@ class WorkoutPreview{
         this.exercises = props.exercises //each exercise is an array [name, time]
         this.cycles = props.cycles
         this.metrics = props.metrics
+        this.id = props.id
         //this.renderTargets = this.renderTargets.bind(this)
     }
 
@@ -120,7 +121,9 @@ class WorkoutPreview{
                         pathname: "/Workout", //goes to workout in progress component
                         state: {
                             exercises: this.exercises,
-                            cycles: this.cycles
+                            cycles: this.cycles,
+                            id: this.id,
+                            name: this.name
                         }
                     }}>
                         <button id='start'>Start!</button>
