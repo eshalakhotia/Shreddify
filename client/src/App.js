@@ -70,6 +70,10 @@ class App extends React.Component {
 
     async onCreate() {
         //gets boolean success, User, error message
+        console.log("creating new account: ")
+        console.log("username: " + this.state.username)
+        console.log("password: " + this.state.password)
+        console.log("level: " + this.state.level)
         const info = await Backend.signUp(this.state.username, this.state.password, this.state.level)
         if (info === null) {
             console.log("response is null, something wrong with backend handler")
@@ -81,7 +85,7 @@ class App extends React.Component {
         //if successful
         if (info.success) {
             console.log("going to home")
-            this.setState({authenticated: true})
+            this.setState({authenticated: true, user: info.results})
         } else {
             this.setState({error: info.error})
         }

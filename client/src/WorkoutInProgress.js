@@ -247,6 +247,7 @@ class WorkoutInProgress extends React.Component {
 
     async finishWorkout() {
         console.log("workout id: " + this.id);
+        console.log("clicked finish")
         const info = await Backend.endWorkout(this.id)
         if (info === null) {
             console.log("response is null, something wrong with backend handler")

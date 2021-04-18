@@ -322,12 +322,19 @@ public final class Main {
       } else {
         error = "ERROR: Your password cannot be the same as your username!";
       }
+
+      System.out.println("valid account username and password");
+
       if (usernameOK && pwdOK) {
         User newUser = new User(username, pwd, fitnessLevel, allWorkouts);
+        System.out.println("created new user");
         users.put(newUser.getUsername(), newUser);
         curUser = newUser;
         mainDatabase.addUser(newUser);
       }
+
+      System.out.println("Added user, returning to frontent");
+
       // In the React files, use the success boolean to check whether to display the results
       // or the error that prevented results from being obtained
       Map<String, Object> variables = ImmutableMap.of(
