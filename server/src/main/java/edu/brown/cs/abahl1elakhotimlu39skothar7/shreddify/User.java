@@ -133,6 +133,12 @@ public class User {
     totalNumWorkouts++;
     pastWorkouts.add(0, workout);
     lastWorkout = now;
+    if (workout.getMetric("difficulty") > overallFitnessLevel) {
+      overallFitnessLevel += (workout.getMetric("difficulty") / 100);
+    }
+    if (overallFitnessLevel > 100) {
+      overallFitnessLevel = 100;
+    }
   }
 
   public LocalDateTime getLastWorkout() {
