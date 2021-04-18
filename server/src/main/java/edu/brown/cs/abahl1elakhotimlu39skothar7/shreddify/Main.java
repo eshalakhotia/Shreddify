@@ -255,7 +255,6 @@ public final class Main {
       String result = "";
       mainDatabase.deleteUser(curUser.getUsername());
       mainDatabase.addUser(curUser);
-      System.out.println("added");
       curUser = null;
       Map<String, Object> variables = ImmutableMap.of(
               "success", success,

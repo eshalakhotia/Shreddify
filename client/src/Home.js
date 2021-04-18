@@ -106,13 +106,12 @@ class Home extends React.Component {
             console.log("success: " + info.success)
             console.log("error: " + info.error)
             console.log("User: " + info.results)
-        }
-        //if successful
-        if (info.success) {
-            console.log("going to home")
-            this.setState({authenticated: true})
-        } else {
-            this.setState({error: info.error})
+            if (info.success) {
+                console.log("going to home")
+                this.setState({authenticated: true})
+            } else {
+                this.setState({error: info.error})
+            }
         }
     }
 
