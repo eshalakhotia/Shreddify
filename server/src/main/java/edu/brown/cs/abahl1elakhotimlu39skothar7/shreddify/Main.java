@@ -177,6 +177,8 @@ public final class Main {
           if (curUser.getLastWorkout() != null) {
             LocalDateTime now = LocalDateTime.now();
             LocalDateTime dayAfter = curUser.getLastWorkout().plusDays(1);
+            System.out.println("last day: " + dayAfter.getDayOfYear());
+            System.out.println("today: " + now.getDayOfYear());
             if (dayAfter.getDayOfYear() != now.getDayOfYear()) {
               curUser.breakStreak();
             }
@@ -193,6 +195,8 @@ public final class Main {
       for (int i = 0; i < curUser.getPastWorkouts().size(); i++) {
         System.out.println("workout name: " + curUser.getPastWorkouts().get(i).getName());
       }
+
+      System.out.println("streak: " + curUser.getStreak());
 
       Map<String, Object> variables = ImmutableMap.of(
               "success", userpwdMatch,
