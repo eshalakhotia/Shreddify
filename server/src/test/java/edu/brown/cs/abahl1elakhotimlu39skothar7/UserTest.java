@@ -225,12 +225,14 @@ public class UserTest {
   @Test
   public void testUpdatePreferences() {
     setUp();
+    _user2.updatePreferences("34253p9o", 1);
+    assertEquals(50, ((Workout) _user2.getConnectedPreferences().getAllNodes().get("asdfkjhasdlf")).getParameterToUpdate(), 1);
+    assertEquals(26, ((Workout) _user2.getConnectedPreferences().getAllNodes().get("jkbmnvsa")).getParameterToUpdate(), 1);
+    assertEquals(1, ((Workout) _user2.getConnectedPreferences().getAllNodes().get("34253p9o")).getParameterToUpdate(), 1);
     _user1.updatePreferences("jkbmnvsa", 99);
     assertEquals(99, ((Workout) _user1.getConnectedPreferences().getAllNodes().get("jkbmnvsa")).getParameterToUpdate(), 1);
     assertEquals(86, ((Workout) _user1.getConnectedPreferences().getAllNodes().get("skajdhfalsd")).getParameterToUpdate(), 1);
-    _user2.updatePreferences("34253p9o", 1);
-    assertEquals(50, ((Workout) _user2.getConnectedPreferences().getAllNodes().get("jkbmnvsa")).getParameterToUpdate(), 1);
-    assertEquals(1, ((Workout) _user2.getConnectedPreferences().getAllNodes().get("34253p9o")).getParameterToUpdate(), 1);
+    assertEquals(73, ((Workout) _user1.getConnectedPreferences().getAllNodes().get("34253p9o")).getParameterToUpdate(), 1);
     tearDown();
   }
 

@@ -133,7 +133,7 @@ public class WorkoutAndConnectionTest {
   public void testWorkoutGetMetric() {
     setUp();
     assertEquals(620, _workout2.getMetric(0), 0.1);
-    assertEquals(71.2, _workout2.getMetric(1), 0.1);
+    assertEquals(78.3, _workout2.getMetric(1), 0.1);
     assertEquals(20, _workout2.getMetric(2), 1);
     assertEquals(20, _workout2.getMetric(3), 1);
     assertEquals(20, _workout2.getMetric(4), 1);
@@ -141,14 +141,14 @@ public class WorkoutAndConnectionTest {
     assertEquals(9, _workout2.getMetric(6), 1);
     assertEquals(3700, _workout1.getMetric(0), 1);
     assertEquals(620, _workout2.getMetric("time"), 0.1);
-    assertEquals(71.2, _workout2.getMetric("difficulty"), 0.1);
+    assertEquals(78.3, _workout2.getMetric("difficulty"), 0.1);
     assertEquals(20, _workout2.getMetric("cardio"), 1);
     assertEquals(20, _workout2.getMetric("abs"), 1);
     assertEquals(20, _workout2.getMetric("legs"), 1);
     assertEquals(27, _workout2.getMetric("arms"), 1);
     assertEquals(9, _workout2.getMetric("glutes"), 1);
     assertEquals(3700, _workout1.getMetric(0), 0.1);
-    assertEquals(80, _workout1.getMetric(1), 0.1);
+    assertEquals(96.8, _workout1.getMetric(1), 0.1);
     assertEquals(27, _workout1.getMetric(2), 1);
     assertEquals(0, _workout1.getMetric(3), 1);
     assertEquals(27, _workout1.getMetric(4), 1);
@@ -223,8 +223,8 @@ public class WorkoutAndConnectionTest {
     assertEquals(w2w1.getWeight(), w1w2.getWeight(), 0.01);
     assertEquals(w2w1.getWeight(), w2w1.heuristic(w2w1.getStart(), w2w1.getEnd()), 0.01);
     assertEquals(w2w1.getWeight(), _workout2.calcDistance(_workout1), 0.01);
-    assertEquals(13, w2w1.getWeight(), 1);
-    assertEquals(6, w2w3.getWeight(), 1);
+    assertEquals(14.5, w2w1.getWeight(), 1);
+    assertEquals(8.3, w2w3.getWeight(), 1);
   }
 
 
