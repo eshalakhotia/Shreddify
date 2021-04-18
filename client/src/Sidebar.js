@@ -54,6 +54,8 @@ function Sidebar(props) {
         props.toExplore()
     }
 
+    const user = props.user
+
     return (
         <div id="mySidenav" className="sidenav">
             <a href="javascript:void(0)" className="closebtn" onClick={closeNav}>&times;</a>
@@ -65,14 +67,20 @@ function Sidebar(props) {
             <div className="links">
                 <Link to={{
                     pathname: "/Home",
+                    state: {
+                        user: user,
+                        username: user.username
+                    }
                 }}>
-                    <a href="#">Home</a>
+                    <h4>Home</h4>
                 </Link>
-                <a href="#" onClick={findWorkouts}>Find Workouts</a>
+                &nbsp;
+                <a href="#" onClick={findWorkouts}><h4>Find Workouts</h4></a>
+                &nbsp;
                 <Link to={{
                     pathname: "/Explore",
                 }}>
-                    <a href="#">Explore</a>
+                    <h4>Explore</h4>
                 </Link>
             </div>
         </div>

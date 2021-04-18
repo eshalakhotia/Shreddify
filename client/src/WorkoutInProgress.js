@@ -8,13 +8,12 @@ class WorkoutInProgress extends React.Component {
         super(props)
         //console.log(props.location)
         if (props.location.state !== null) {
-            this.exercises = props.location.state.exercises
+            this.exercises = props.location.state.exercises //table of tables: [name, time, reps, measurement]
             this.cycles = props.location.state.cycles
             this.id = props.location.state.id
             this.name = props.location.state.name
             console.log("workout name: " + this.name)
         }
-        //this.exercises = props.location.state.exercises //list of exercises
         this.state = {
             currExerciseNum: 0,
             currExercise: this.exercises[0],
@@ -53,6 +52,12 @@ class WorkoutInProgress extends React.Component {
         }
         this.time = mins + ":" + seconds
 
+        let duration = ''
+        if (this.state.currExercise[3] == 'reps') { //measure by reps
+            duration = this.state.currExercise[2] + ' reps or '
+        }
+        duration += this.state.currExercise[1] + ' seconds'
+
         return (
             <div className='workout-screen'>
                 <div id="wrapper">
@@ -60,7 +65,7 @@ class WorkoutInProgress extends React.Component {
                         <div id="left-top">
                             <h3>Exercise #{this.state.currExerciseNum + 1} of Cycle #{this.state.currCycle}</h3>
                             <h1>{this.state.currExercise[0]}</h1> {/*exercise name*/}
-                            <h2>{this.state.currExercise[1]} seconds</h2>   {/*exercise time*/}
+                            <h2>{duration}</h2>   {/*exercise reps and time*/}
                         </div>
                         <div id="left-bottom">
                             <button id='prevButton' onClick={this.prevExercise.bind(this)}>

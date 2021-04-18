@@ -9,7 +9,7 @@
     overflow-x: hidden; /* disable horizontal scroll */
     padding-top: 100px;
     transition: 0.5s; /*slide in*/
-    background-image: linear-gradient(to bottom right,  #ff7036, #ff6d59);
+    background-image: linear-gradient(to bottom right, #ff7636, #ff6a59);
 }
 
 /* The navigation menu links */
@@ -65,4 +65,14 @@
 
 .sidenav #h4 {
     margin: 0px;
+}
+
+.sidenav Link {
+    padding: 0px;
+    margin: 0px;
+}
+
+.sidenav h4 {
+    margin:0px;
+    margin-left:10px;
 }
