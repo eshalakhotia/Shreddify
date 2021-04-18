@@ -1,4 +1,4 @@
-package edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify;
+package edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.shredComponents;
 
 import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.graph.Graph;
 import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.shredComponents.Workout;
@@ -132,12 +132,6 @@ public class User {
     totalNumWorkouts++;
     pastWorkouts.add(0, workout);
     lastWorkout = now;
-    if (workout.getMetric("difficulty") > overallFitnessLevel) {
-      overallFitnessLevel += (workout.getMetric("difficulty") / 100);
-    }
-    if (overallFitnessLevel > 100) {
-      overallFitnessLevel = 100;
-    }
   }
 
   public LocalDateTime getLastWorkout() {

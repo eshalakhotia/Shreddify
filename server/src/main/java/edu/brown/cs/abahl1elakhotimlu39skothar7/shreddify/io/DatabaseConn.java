@@ -1,6 +1,6 @@
 package edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.io;
 
-import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.User;
+import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.shredComponents.User;
 import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.graph.OutEdgeCache;
 import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.shredComponents.Exercise;
 import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.shredComponents.Workout;
