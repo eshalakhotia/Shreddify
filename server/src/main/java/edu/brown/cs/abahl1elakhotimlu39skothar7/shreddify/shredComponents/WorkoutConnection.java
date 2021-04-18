@@ -1,4 +1,7 @@
-package edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.graph;
+package edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.shredComponents;
+
+import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.graph.Edge;
+
 /**
  * Edge that connects different Workout objects.
  */

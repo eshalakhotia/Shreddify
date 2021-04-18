@@ -1,9 +1,8 @@
 package edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify;
 
 import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.graph.Graph;
-import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.graph.Workout;
-import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.graph.WorkoutConnection;
-import org.checkerframework.checker.units.qual.A;
+import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.shredComponents.Workout;
+import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.shredComponents.WorkoutConnection;
 
 import java.time.LocalDateTime;
 

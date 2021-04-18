@@ -1,5 +1,8 @@
-package edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.graph;
+package edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.shredComponents;
 
+import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.graph.Graph;
+import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.graph.OutEdgeCache;
+import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.graph.Vertex;
 import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.kdtree.KDNode;
 
 import java.util.*;

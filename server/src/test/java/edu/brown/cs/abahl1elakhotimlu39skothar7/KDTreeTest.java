@@ -1,11 +1,9 @@
 package edu.brown.cs.abahl1elakhotimlu39skothar7;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.graph.Workout;
 import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.kdtree.KDNode;
 import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.kdtree.KDTree;
 import org.junit.Before;
