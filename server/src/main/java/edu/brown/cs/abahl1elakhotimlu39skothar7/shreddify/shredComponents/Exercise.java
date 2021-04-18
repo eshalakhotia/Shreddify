@@ -1,4 +1,4 @@
-package edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.graph;
+package edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.shredComponents;
 
 import java.util.Set;
 

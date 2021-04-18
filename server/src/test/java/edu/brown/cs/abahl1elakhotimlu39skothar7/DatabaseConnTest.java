@@ -1,15 +1,9 @@
 package edu.brown.cs.abahl1elakhotimlu39skothar7;
 
-import java.util.*;
-
-import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.graph.*;
-import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.kdtree.KDNode;
-import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.kdtree.KDTree;
+import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.io.DatabaseConn;
 import org.junit.Before;
 import org.junit.After;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class DatabaseConnTest {
 

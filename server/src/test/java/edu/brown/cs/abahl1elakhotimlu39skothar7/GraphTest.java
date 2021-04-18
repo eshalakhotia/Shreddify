@@ -4,6 +4,9 @@ import java.util.*;
 
 
 import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.graph.*;
+import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.shredComponents.Exercise;
+import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.shredComponents.Workout;
+import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.shredComponents.WorkoutConnection;
 import org.junit.Before;
 import org.junit.After;
 import org.junit.Test;

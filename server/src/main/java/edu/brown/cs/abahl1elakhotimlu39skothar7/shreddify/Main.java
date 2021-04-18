@@ -11,10 +11,8 @@ import java.util.*;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 
-import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.graph.DatabaseConn;
-import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.graph.Exercise;
-import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.graph.OutEdgeCache;
-import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.graph.Workout;
+import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.io.DatabaseConn;
+import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.shredComponents.Workout;
 import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.kdtree.KDTree;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
@@ -423,7 +421,7 @@ public final class Main {
 
       //setting up Ideal Workout to search KDtree with
       String[] metricNames = new String[]{"time", "difficulty", "cardio", "abs", "legs", "arms", "glutes", "back", "chest"};
-      double[] metrics = new double[9];
+      double[] metrics = new double[metricNames.length];
       metrics[0] = time;
       metrics[1] = difficulty;
       for (int i = 2; i < metricNames.length; i++) {
