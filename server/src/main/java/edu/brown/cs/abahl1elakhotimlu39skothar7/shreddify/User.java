@@ -1,9 +1,8 @@
 package edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify;
 
 import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.graph.Graph;
-import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.graph.Workout;
-import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.graph.WorkoutConnection;
-import org.checkerframework.checker.units.qual.A;
+import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.shredComponents.Workout;
+import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.shredComponents.WorkoutConnection;
 
 import java.time.LocalDateTime;
 
@@ -133,6 +132,12 @@ public class User {
     totalNumWorkouts++;
     pastWorkouts.add(0, workout);
     lastWorkout = now;
+    if (workout.getMetric("difficulty") > overallFitnessLevel) {
+      overallFitnessLevel += (workout.getMetric("difficulty") / 100);
+    }
+    if (overallFitnessLevel > 100) {
+      overallFitnessLevel = 100;
+    }
   }
 
   public LocalDateTime getLastWorkout() {

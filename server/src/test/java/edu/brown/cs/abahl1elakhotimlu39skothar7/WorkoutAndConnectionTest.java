@@ -2,12 +2,10 @@ package edu.brown.cs.abahl1elakhotimlu39skothar7;
 
 import java.util.*;
 
-import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.graph.Exercise;
+import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.shredComponents.Exercise;
 import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.graph.OutEdgeCache;
-import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.graph.Workout;
-import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.graph.WorkoutConnection;
-import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.kdtree.KDNode;
-import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.kdtree.KDTree;
+import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.shredComponents.Workout;
+import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.shredComponents.WorkoutConnection;
 import org.junit.Before;
 import org.junit.After;
 import org.junit.Test;
