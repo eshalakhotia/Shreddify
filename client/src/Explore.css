@@ -1,10 +1,10 @@
-.results {
-    margin: 50px;
-    margin-right: 80px;
-}
 
-.Explore {
+.Explore #main {
+    transition: margin-left .5s;
+    padding-top: 80px;
     text-align: center;
+    background-color: whitesmoke;
+    height: max-content;
 }
 
 

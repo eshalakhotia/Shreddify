@@ -5,34 +5,9 @@ import Backend from "./Backend";
 import WorkoutDiv from "./WorkoutDiv"
 import './Explore.css'
 import WorkoutPreview from "./WorkoutPreview";
+import {Link} from "react-router-dom";
 
 class Explore extends React.Component {
-
-    // const requestExplore = () => {
-    //     const toSend = {
-    //     };
-    //     let config = {
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //             'Access-Control-Allow-Origin': '*',
-    //         }
-    //     }
-    //
-    //     axios.post(
-    //         'http://localhost:4567/explore',
-    //         toSend,
-    //         config
-    //     )
-    //         .then(response => {
-    //             //clearing the current canvas to redraw ways
-    //
-    //         })
-    //
-    //         .catch(function (error) {
-    //             console.log(error);
-    //
-    //         });
-    // }
 
     constructor(props) {
         super(props);
@@ -41,6 +16,7 @@ class Explore extends React.Component {
             output : {
                 error: '', success: '', recs: []
             },
+            user: '',
             workoutPreview : new WorkoutPreview({name: '', time: ''})
         }
         this.getRecommendations();
@@ -91,9 +67,12 @@ class Explore extends React.Component {
                 return {
                     output: {
                         error: recs.error, success: recs.success, results: recs.results
-                    }
+                    },
+                    user: recs.user
                 }
             })
+            console.log("user: " + this.state.user)
+            console.log("username: " + this.state.user.username)
         }
     }
 
@@ -103,7 +82,7 @@ class Explore extends React.Component {
             const workouts = this.state.output.results.map((result) => {
                 const exercises = []
                 result.exercises.forEach((ex) => {
-                    exercises.push([ex.name, ex.time])
+                    exercises.push([ex.name, ex.time, ex.reps, ex.mType])
                 })
 
                 return{
@@ -142,6 +121,23 @@ class Explore extends React.Component {
         }
     }
 
+    async toLogOut() {
+        const info = await Backend.logOut()
+        if (info === null) {
+            console.log("response is null, something wrong with backend handler")
+        } else {
+            console.log("success: " + info.success)
+            console.log("error: " + info.error)
+            console.log("User: " + info.results)
+        }
+        //if successful
+        if (info.success) {
+            console.log("going to home")
+            this.setState({authenticated: true})
+        } else {
+            this.setState({error: info.error})
+        }
+    }
 
     render() {
         console.log("rendering wouts")
@@ -151,17 +147,23 @@ class Explore extends React.Component {
             `${this.state.output.error}`
         return (
             <div id="Explore" className="Explore">
-                <Sidebar className="Sidebar" findWorkouts={this.openQuestionnaire}/>
-
+                <Sidebar className="Sidebar" findWorkouts={this.openQuestionnaire} user={this.state.user}/>
                 <div id="main">
-                    <h1>Try Something New!</h1>
-                    <div id="inputs" className="inputs">
-                        <h3>Here are some workouts other users enjoyed:</h3>
+                    <div id="logout">
+                        <Link to={{
+                            pathname: "/",
+                            state: {
+                                input: this.input
+                            }
+                        }}>
+                            <button id='logOutButton' onClick={this.toLogOut.bind(this)}><span>Log Out!</span></button>
+                        </Link>
                     </div>
-                    <hr/>
-                    <div id="results" className="results">
+                    <h1>Try Something New!</h1>
+                    <h3>Here are some workouts other users enjoyed:</h3>
+                    <div id="explore-results" className="results">
                         <h3>Click on any workout to get started!</h3>
-                        <div className="error">{errorMessage}
+                        <div className="error"><h4>{errorMessage}</h4>
                         </div>
                         {this.renderWorkouts()}
                     </div>

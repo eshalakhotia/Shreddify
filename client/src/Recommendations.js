@@ -22,6 +22,7 @@ class Recommendations extends React.Component {
             output : {
                 error: '', success: '', results: []
             },
+            user: '',
             workoutPreview : new WorkoutPreview({name: '', time: ''})
         }
 
@@ -52,7 +53,8 @@ class Recommendations extends React.Component {
                 return {
                     output: {
                         error: recs.error, success: recs.success, results: recs.results
-                    }
+                    },
+                    user: recs.user
                 }
             })
         }
@@ -77,7 +79,7 @@ class Recommendations extends React.Component {
             const workouts = this.state.output.results.map((result) => {
                 const exercises = []
                 result.exercises.forEach((ex) => {
-                    exercises.push([ex.name, ex.time])
+                    exercises.push([ex.name, ex.time, ex.reps, ex.mType])
                 })
 
                 const metricsMap = result.metrics
@@ -141,7 +143,7 @@ class Recommendations extends React.Component {
             `${this.state.output.error}`
         return (
             <div id="Recommendations" className="Recommendations">
-                <Sidebar className="Sidebar" findWorkouts={this.openQuestionnaire}/*closeNav={this.closeNav} openNav={this.openNav}*//>
+                <Sidebar className="Sidebar" findWorkouts={this.openQuestionnaire} user={this.state.user}/>
 
                 <div id="main">
                     <h1>Our Picks For You</h1>

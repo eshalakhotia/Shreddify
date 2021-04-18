@@ -54,7 +54,7 @@ class Home extends React.Component {
 
                 const exercises = []
                 result.exercises.forEach((ex) => {
-                    exercises.push([ex.name, ex.time])
+                    exercises.push([ex.name, ex.time, ex.reps, ex.mType])
                 })
 
                 return{
@@ -128,10 +128,10 @@ class Home extends React.Component {
     render() {
         return (
             <div id="Home" className="Home">
-                <Sidebar className="Sidebar" findWorkouts={this.openQuestionnaire}/>
+                <Sidebar className="Sidebar" findWorkouts={this.openQuestionnaire} user={this.user}/>
                 <div id="main">
                     <div id="logout">
-                        <Link to={{
+                        <Link underline={"none"} to={{
                             pathname: "/",
                             state: {
                                 input: this.input
@@ -144,6 +144,7 @@ class Home extends React.Component {
                     <h3 id="title-h3">Try one of your past workouts, or find some new recommendations on the left. It's time to get SHREDDED!</h3>
                     <div id="past-workouts">
                         <h2>Your Workouts</h2>
+                        <h3>Click on any workout to get started!</h3>
                         {this.renderWorkouts()}
                     </div>
                     <div id="achievements">

@@ -4,11 +4,7 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import SignUp from './SignUp';
 import './SignUp.css'
-import {
-    BrowserRouter as Router,
-    Route,
-    Link,
-} from "react-router-dom";
+
 
 /**
  * Login page

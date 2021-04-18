@@ -1,10 +1,10 @@
 
 .Home #main {
     transition: margin-left .5s;
-    padding-top: 100px;
+    padding-top: 80px;
     text-align: center;
     background-color: whitesmoke;
-    height: 700px;
+    height: max-content;
 }
 .Home #main h1 {
     margin: 0px;
@@ -38,16 +38,18 @@ span {
 }
 #logOutButton {
     font-size: 20px;
-    margin-left: 1000px;
-    margin-top: -80px;
+    margin-left: 900px;
+    margin-top: -100px;
     display: inline;
-    border-radius: 10px;
-    background-color: #ffbea6;
+    border-radius: 6px;
+    background-image: linear-gradient(to right, #ff8c4a, #ff6e6e);
     text-align: center;
     vertical-align: center;
     height:max-content;
     width:max-content;
     padding: 6px 10px;
+    border-style: none;
+    color: white;
 }
 #logOutButton:hover {
     background-image: linear-gradient(to right, #6d87fc, #0da2de);
@@ -57,5 +59,4 @@ span {
     font-size: 20px;
     padding: 6px 10px;
 }
-
 
