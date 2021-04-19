@@ -203,11 +203,8 @@ public class SparkHandlers {
         error = "ERROR: This username is already taken!";
       }
       if (!pwd.equals(username)) {
-        System.out.println("6");
         if (pwd.length() > 7 && username.length() < 21) {
-          System.out.println("7");
           pwdOK = true;
-          System.out.println("8");
         } else {
           error = "ERROR: Your password needs to be between 8 and 20 characters long";
         }
@@ -219,6 +216,7 @@ public class SparkHandlers {
         users.put(newUser.getUsername(), newUser);
         curUser = newUser;
         mainDatabase.addUser(newUser);
+        System.out.println("done creating user");
       }
       // In the React files, use the success boolean to check whether to display the results
       // or the error that prevented results from being obtained
