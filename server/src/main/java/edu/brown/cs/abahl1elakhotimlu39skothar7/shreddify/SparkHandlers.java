@@ -20,6 +20,9 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
+/**
+ * Class containing all spark handlers
+ */
 public class SparkHandlers {
 
   private static DatabaseConn mainDatabase;
@@ -27,6 +30,9 @@ public class SparkHandlers {
   private static User curUser;
   private static Map<String, Workout> allWorkouts;
 
+  /**
+   * Handles requests for Login Page
+   */
   protected static class LoginHandler implements Route {
     @Override
     public Object handle(Request request, Response response) throws Exception {
@@ -86,7 +92,9 @@ public class SparkHandlers {
   }
 
 
-
+  /**
+   * Handles requests for Explore page
+   */
   protected static class ExploreHandler implements Route {
     @Override
     public Object handle(Request request, Response response) throws Exception {
@@ -126,6 +134,9 @@ public class SparkHandlers {
     }
   }
 
+  /**
+   * Handles logging out
+   */
   protected static class LogOutHandler implements Route {
     @Override
     public Object handle(Request request, Response response) throws Exception {
@@ -145,6 +156,9 @@ public class SparkHandlers {
     }
   }
 
+  /**
+   * Handles requests upon finishing workout
+   */
   protected static class FinishWorkoutHandler implements Route {
     @Override
     public Object handle(Request request, Response response) throws Exception {
@@ -165,6 +179,9 @@ public class SparkHandlers {
     }
   }
 
+  /**
+   * Handles requests for creating new user account
+   */
   protected static class NewAccountHandler implements Route {
     @Override
     public Object handle(Request request, Response response) throws Exception {
@@ -234,6 +251,9 @@ public class SparkHandlers {
 //    }
 //  }
 
+  /**
+   * Handler for recommending workouts
+   */
   protected static class RecommendWorkoutsHandler implements Route {
     @Override
     public Object handle(Request request, Response response) throws Exception {

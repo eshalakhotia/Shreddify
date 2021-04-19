@@ -13,7 +13,10 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.*;
 
-
+/**
+ * Class that connects to database and queries database
+ * Creates and populates user, exercise and workout objects for all records
+ */
 public class DatabaseConn {
   private static Connection conn;
   private List<String> usersList;
@@ -21,11 +24,23 @@ public class DatabaseConn {
   private Map<String, Workout> workouts;
   private Map<String, Exercise> exercises;
   private OutEdgeCache cache = new OutEdgeCache();
-  
+
+  /**
+   * Constructor establishing the fielpath of the database
+   * @throws SQLException
+   * @throws ClassNotFoundException
+   */
   public DatabaseConn() throws SQLException, ClassNotFoundException {
     conn = null;
     this.loadDatabase("data/databaseShreddify.sqlite3");
   }
+
+  /**
+   * Helper function that sets class variables to results of sql-queried workouts, exercises, users
+   * @param filename
+   * @throws SQLException
+   * @throws ClassNotFoundException
+   */
   public void loadDatabase(String filename) throws SQLException, ClassNotFoundException {
     try {
       Class.forName("org.sqlite.JDBC");
@@ -78,6 +93,11 @@ public class DatabaseConn {
   }
   */
 
+  /**
+   * Queries exercise table of database for all exercises, populates data structures
+   * @return - map of exercise IDs to corresponding exercise objects
+   * @throws SQLException
+   */
   public Map<String, Exercise> getAllExercises() throws SQLException {
     Map<String, Exercise> exercises = new HashMap<String, Exercise>();
     PreparedStatement exerciseInfo = conn.prepareStatement(
@@ -115,6 +135,11 @@ public class DatabaseConn {
     return exercises;
   }
 
+  /**
+   * Queries workouts table of database for all workouts, populates data structures
+   * @return - map of workout IDs to corresponding exercise objects
+   * @throws SQLException
+   */
   public Map<String, Workout> getAllWorkouts(Map<String, Exercise> allExercises) throws SQLException {
     Map<String, Workout> workouts = new HashMap<String, Workout>();
     PreparedStatement workoutInfo = conn.prepareStatement(
@@ -139,6 +164,11 @@ public class DatabaseConn {
     return workouts;
   }
 
+  /**
+   * Deletes user from database given username
+   * @param username - username to delete
+   * @throws SQLException
+   */
   public void deleteUser(String username) throws SQLException {
     PreparedStatement prep = conn.prepareStatement("DELETE FROM users WHERE users.UserName = ?");
     prep.setString(1, username);
@@ -146,6 +176,11 @@ public class DatabaseConn {
     prep.close();
   }
 
+  /**
+   * Adds user to users table of database, given user object
+   * @param user - user to add to database
+   * @throws SQLException
+   */
   public void addUser(User user) throws SQLException {
     StringBuilder lastWorkoutStringBuilder = new StringBuilder();
     String lastWorkoutString = "";
@@ -194,6 +229,12 @@ public class DatabaseConn {
     prep.close();
   }
 
+  /**
+   * Retrieves all users from database, creates user objects
+   * @param allWorkouts - all workouts from workouts table in database
+   * @return - map of usernames to corresponding user objects
+   * @throws SQLException
+   */
   public Map<String, User> getAllUsers(Map<String, Workout> allWorkouts) throws SQLException {
     Map<String, User> users = new HashMap<String, User>();
     PreparedStatement userInfo = conn.prepareStatement(

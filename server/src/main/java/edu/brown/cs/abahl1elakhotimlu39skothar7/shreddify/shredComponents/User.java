@@ -8,6 +8,9 @@ import java.time.LocalDateTime;
 
 import java.util.*;
 
+/**
+ * Class that represents a user from the users table in the database
+ */
 public class User {
   private String username;
   private int password;
@@ -18,6 +21,13 @@ public class User {
   private int streak;
   private Graph<WorkoutConnection, Workout> connectedPreferences;
 
+  /**
+   * User constructor to create new user
+   * @param username - username of user
+   * @param password - password (unhashed)
+   * @param overallFitnessLevel - fitness level from which to tailor recommendations
+   * @param allWorkouts - all workouts used to retrieve workouts that user has done
+   */
   public User(
           String username,
           String password,
@@ -40,6 +50,17 @@ public class User {
     this.connectedPreferences = new Graph<WorkoutConnection, Workout>(allCloneWorkouts);
   }
 
+  /**
+   * Alternative user constructor for existing user
+   * @param username - corresponding username
+   * @param password - hashed password
+   * @param overallFitnessLevel - fitness level from which to tailor recommendations
+   * @param totalNumWorkouts - number of workouts completed in the past
+   * @param streak - number of consecutive days worked out
+   * @param pastWorkoutIDs - list of previously completed workout IDs
+   * @param lastWorkout - date of last completed workout
+   * @param allWorkouts - all workouts used to retrieve workouts that user has done
+   */
   public User(
           String username,
           int password,
@@ -80,6 +101,11 @@ public class User {
     this.connectedPreferences = new Graph<WorkoutConnection, Workout>(allCloneWorkouts);;
   }
 
+  /**
+   * method to verify password
+   * @param enteredPassword - password to check
+   * @return - true if verified, false if incorrect
+   */
   public boolean checkPassword(String enteredPassword) {
     return (this.password == enteredPassword.hashCode());
   }
@@ -115,10 +141,17 @@ public class User {
     this.streak++;
   }
 
+  /**
+   * resets streak to 0 if last workout date is not previous day
+   */
   public void breakStreak() {
     this.streak = 0;
   }
 
+  /**
+   * method to record new workout date and tally after new workout is started
+   * @param workout - the workout that is started
+   */
   public void startNewWorkout(Workout workout) {
     LocalDateTime now = LocalDateTime.now();
     if (lastWorkout == null) {
@@ -138,6 +171,11 @@ public class User {
     return lastWorkout;
   }
 
+  /**
+   * updates user's preference of workout to update preference graph
+   * @param workoutID - ID of workout whose preference is being updated
+   * @param newPreference - new corresponding preference
+   */
   public void updatePreferences(String workoutID, double newPreference) {
     connectedPreferences.updateParameter(workoutID, newPreference);
   }

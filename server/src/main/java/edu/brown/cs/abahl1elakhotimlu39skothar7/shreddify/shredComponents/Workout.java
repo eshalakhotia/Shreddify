@@ -8,7 +8,7 @@ import edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.kdtree.KDNode;
 import java.util.*;
 
 /**
- * Edge that connects different Workout objects.
+ * Workout class representing a record in the workouts table of the database
  */
 public class Workout implements KDNode<Workout>, Vertex<WorkoutConnection, Workout> {
   //variables accessed from frontend
@@ -36,6 +36,14 @@ public class Workout implements KDNode<Workout>, Vertex<WorkoutConnection, Worko
   private double preference = 50;
   private OutEdgeCache cache;
 
+  /**
+   * Workout constructor
+   * @param name - name of workout to display
+   * @param id - unique ID of workout
+   * @param numCycles - number of times this workout repeats over the set of exercises
+   * @param exercises - specific exercises in the workout
+   * @param cache - cache for edge
+   */
   public Workout(String name, String id, int numCycles, List<Exercise> exercises, OutEdgeCache cache) {
 
     this.workoutID = id;
@@ -105,6 +113,10 @@ public class Workout implements KDNode<Workout>, Vertex<WorkoutConnection, Worko
     }
   }
 
+  /**
+   * alternative Workout constructor to populate map of metric names to metric values
+   * @param metrics
+   */
   public Workout(double[] metrics) {
     this.metrics = new HashMap<>();
     for (int i = 0; i < metricNames.length; i++) {
@@ -147,8 +159,12 @@ public class Workout implements KDNode<Workout>, Vertex<WorkoutConnection, Worko
     return metrics;
   }
 
+  /**
+   * calculates aggregate "closeness"/similarity with provided workout node using the Metrics
+   * @param other - workout to measure distance to
+   * @return - numerical distance
+   */
   @Override
-  //calculates aggregate "closeness"/similarity with provided workout node using the Metrics
   public double calcDistance(Workout other) {
     double differenceSum = 0;
     for (int i = 0; i < metricNames.length; i++) {
@@ -164,6 +180,11 @@ public class Workout implements KDNode<Workout>, Vertex<WorkoutConnection, Worko
     return (differenceSum / (metricNames.length));
   }
 
+  /**
+   * Gets all edges from a specified node
+   * @param graph the graph from which we want to see the traversable edges from.
+   * @return - list of edges (i.e. WorkoutConnection)
+   */
   @Override
   public List<WorkoutConnection> getEdgesFromNode(
           Graph<WorkoutConnection, Workout> graph) {

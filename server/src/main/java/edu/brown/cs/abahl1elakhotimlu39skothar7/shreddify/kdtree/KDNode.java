@@ -1,8 +1,11 @@
 package edu.brown.cs.abahl1elakhotimlu39skothar7.shreddify.kdtree;
 
-import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Interface for nodes in KD Tree
+ * @param <N> - any class type that extensa KDNode
+ */
 public interface KDNode<N extends KDNode> {
 
   //gets number of dimensions in node?
@@ -17,6 +20,10 @@ public interface KDNode<N extends KDNode> {
 
   // boolean getFlexibility();
 
-  //calculates aggregate "closeness"/similarity with provided workout node using the Metrics
+  /**
+   * calculates aggregate "closeness"/similarity with provided workout node using the Metrics
+   * @param n - node from which to calculate distance
+   * @return - numerical distance
+   */
   double calcDistance(N n);
 }
