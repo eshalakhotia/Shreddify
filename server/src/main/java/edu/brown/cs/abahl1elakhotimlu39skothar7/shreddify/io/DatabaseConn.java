@@ -19,7 +19,6 @@ import java.util.*;
  */
 public class DatabaseConn {
   private static Connection conn;
-  private List<String> usersList;
   private Map<String, User> users;
   private Map<String, Workout> workouts;
   private Map<String, Exercise> exercises;
@@ -70,28 +69,7 @@ public class DatabaseConn {
     return conn;
   }
 
-  /*
-  public List<String> getAllExerciseAttributes() throws SQLException {
-    usersList = new ArrayList<>();
-    PreparedStatement idInfo = conn.prepareStatement(
-      "SELECT * FROM exercises;");
-    ResultSet resulting = idInfo.executeQuery();
-    while (resulting.next()) {
-      usersList.add(resulting.getString(1));
-      usersList.add(resulting.getString(2));
-      usersList.add(resulting.getString(3));
-      usersList.add(resulting.getString(4));
-      usersList.add(resulting.getString(5));
-      usersList.add(resulting.getString(6));
-      usersList.add(resulting.getString(7));
-      usersList.add(resulting.getString(8));
-      usersList.add(resulting.getString(9));
-      usersList.add(resulting.getString(10));
-      usersList.add(resulting.getString(11));
-    }
-    return usersList;
-  }
-  */
+
 
   /**
    * Queries exercise table of database for all exercises, populates data structures
