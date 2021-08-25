@@ -1,6 +1,29 @@
-# Shreddify: cs0320 Term Project 2021
+# cs0320 Term Project 2021
 ## Team Members: 
 Megan Lu, Esha Lakhotia, Suyash Kothari, Anika Bahl
+
+## How to Build and Run:
+The app can currently only be used locally. To run, follow these steps (see runTutorial folder if need more help):
+
+-clone repo and run backend and frontend using two terminals:
+
+-for backend: open a terminal, open the src folder and type command: npm start
+
+-for frontend: in another terminal, open the server folder,
+
+type command: mvn package
+
+type command: ./run --gui
+
+A site, http://localhost:3000 should pop up.
+
+To view and play with an already created account use:
+
+Username: anikabahl76
+
+Password: password
+
+## **Project Summary **
 
 Staying fit can be tough, especially when it involves having to plan your workouts around your work, current fitness, diet, and of course, energy level. I want to create a website/app (not sure yet) which will suggest a daily workout for the user based on both an initial questionnaire to establish long-term goals and daily check-ins.
 Desired functionality:
@@ -25,7 +48,7 @@ KD Tree to store different workouts, where each dimension will represent a diffe
 New data points can be added to KDTree when users add customizations to their recommended workout, so that other users can be recommended this option
 Graph containing nodes representing workouts and edges indicating their relatedness to each other uses AI algorithm to change preference metric of all workouts every time user ranks a newly completed workout (preference metric changes different magnitudes based on how similar a workout is to the workout the user just completed)
 
-Create database with specific exercise with the components (intensity, cardio focus, etc) as attributes. 
+Create a database to store and pull workouts, excercises, and user information. Can be found in src.
 
 Storing both user accounts (whose data will be protected) and workouts on graphs with weighted edges so their similarities regarding different metrics can be kept track of easily
 
