@@ -1,4 +1,4 @@
-# cs0320 Term Project 2021
+# Shreddify: cs0320 Term Project 2021
 ## Team Members: 
 Megan Lu, Esha Lakhotia, Suyash Kothari, Anika Bahl
 
