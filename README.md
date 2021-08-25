@@ -3,7 +3,7 @@
 Megan Lu, Esha Lakhotia, Suyash Kothari, Anika Bahl
 
 ## How to Build and Run:
-The app can currently only be used locally. To run, follow these steps (see runTutorial folder if need more help):
+The app can currently only be used locally. To run, follow these steps (see runTutorial in the presentation folder if need more help):
 
 -clone repo and run backend and frontend using two terminals:
 
